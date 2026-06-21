@@ -1,3 +1,41 @@
+## GitHub Logging (Local Runs)
+
+After each local session, write the log to GitHub via the REST API:
+
+```bash
+# Write log to temp file first
+LOG_FILE="/tmp/session_log.md"
+DATE=$(date +%Y-%m-%d)
+
+# Base64 encode
+ENCODED=$(base64 -w 0 "$LOG_FILE" 2>/dev/null || base64 "$LOG_FILE" | tr -d '\n')
+
+# Check if file exists (get SHA if so)
+SHA=$(curl -s -H "Authorization: token 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" \
+  "https://api.github.com/repos/frogman263/trading-agent/contents/logs/${DATE}.md" \
+  | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('sha',''))" 2>/dev/null)
+
+# Create or update file
+if [ -n "$SHA" ]; then
+  PAYLOAD="{"message":"Session log — ${DATE}","content":"${ENCODED}","sha":"${SHA}"}"
+else
+  PAYLOAD="{"message":"Session log — ${DATE}","content":"${ENCODED}"}"
+fi
+
+curl -s -X PUT \
+  -H "Authorization: token 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" \
+  -H "Content-Type: application/json" \
+  -d "$PAYLOAD" \
+  "https://api.github.com/repos/frogman263/trading-agent/contents/logs/${DATE}.md"
+```
+
+GitHub repo: `https://github.com/frogman263/trading-agent`
+Logs folder: `logs/YYYY-MM-DD.md`
+
+Also write to local backup: `~/trading-logs/YYYY-MM-DD.md`
+
+---
+
 ## Telegram Notifications
 
 Send a session summary to Telegram after every local run using:
@@ -304,3 +342,4 @@ Earnings are opportunities, not blackouts.
 | 1.4 | 2026-06-18 | Platform notes; Cowork limitation; Claude Code path |
 | 2.0 | 2026-06-18 | Major rewrite: Grok transfer complete; 14 positions; 4-tier structure; NVDA overweight flag; account ~$7.5-8K; $750 confirmation threshold |
 | 2.1 | 2026-06-18 | Added Thesis Review section: weekly Monday review, monthly extended summary, universe management criteria, macro red flags |
+| 2.2 | 2026-06-21 | Added GitHub logging via REST API for both local and cloud runs; repo frogman263/trading-agent/logs/ |
