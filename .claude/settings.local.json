@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__claude_ai_Robinhood__get_equity_positions",
+      "mcp__claude_ai_Robinhood__get_portfolio",
+      "mcp__claude_ai_Robinhood__get_equity_quotes",
+      "mcp__a2f595e8-3db6-462b-bace-da96c6d1bc15__get_portfolio",
+      "mcp__a2f595e8-3db6-462b-bace-da96c6d1bc15__get_equity_positions",
+      "mcp__a2f595e8-3db6-462b-bace-da96c6d1bc15__get_equity_quotes",
+      "mcp__a2f595e8-3db6-462b-bace-da96c6d1bc15__get_equity_orders",
+      "mcp__a2f595e8-3db6-462b-bace-da96c6d1bc15__place_equity_order"
+    ]
+  }
+}
