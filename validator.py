@@ -116,9 +116,9 @@ def load_state(path):
 
 
 def get_trades_today(state):
-    """Return trade count, resetting if it's a new day."""
+    """Return trade count, resetting if it's a new ET calendar day."""
     last = state.get("last_trade_date")
-    today = str(date.today())
+    today = str(datetime.now(ZoneInfo("America/New_York")).date())
     if last != today:
         return 0
     return state.get("trades_today", 0)
@@ -143,6 +143,12 @@ def validate(proposals, state, dry_run=False):
             positions[sym] = val
     high_water_mark = state.get("high_water_mark", account_value)
     trades_today = get_trades_today(state)
+
+    # ── State integrity check ──────────────────────────────────
+    if high_water_mark > 0 and account_value > 0:
+        if high_water_mark < account_value:
+            logging.warning(f"State integrity: HWM (${high_water_mark:,.2f}) < account value (${account_value:,.2f}). Auto-correcting.")
+            high_water_mark = account_value
 
     # ── Account check ──────────────────────────────────────────
     acct = state.get("account_number", "")
@@ -272,7 +278,9 @@ def update_state(state_path, state, proposals, result_pass):
 
     state["high_water_mark"] = max(high_water_mark, account_value)
     state["trades_today"] = trades_today + len(proposals)
-    state["last_trade_date"] = str(date.today())
+    et_now = datetime.now(ZoneInfo("America/New_York"))
+    state["last_trade_date"] = str(et_now.date())
+    state["last_updated"] = et_now.strftime("%Y-%m-%d %H:%M:%S ET")
 
     with open(state_path, "w") as f:
         json.dump(state, f, indent=2)

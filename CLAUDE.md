@@ -69,7 +69,7 @@ Execute these steps in order on every run:
 
 1. **Check market hours** — only place trades during regular market hours (9:30 AM – 4:00 PM ET, Monday–Friday, non-holiday). If outside market hours, run steps 2–6 only (analysis, no trades).
 2. **Load state** — read `~/trading-agent/state.json` for current high-water mark, trades today, and position values. If file missing, halt and alert user.
-3. **Pull account state** — get live portfolio value, buying power, and all open positions for account 926627357. Update state.json with current values.
+3. **Pull account state** — get live portfolio value, buying power, and all open positions for account 926627357. Merge live values into state.json (overwrite account_value, buying_power, positions — preserve high_water_mark, trades_today, last_trade_date, last_updated).
 4. **Get live quotes** — fetch current prices for all held positions plus any universe stocks not yet held. Use these prices for all calculations in this session.
 5. **Check drawdown** — calculate current drawdown from high-water mark using tiered thresholds:
    - Down ≥10%: reduce max session deployment to 25% of available cash
@@ -92,7 +92,7 @@ Execute these steps in order on every run:
 ```
 9. **Run validator** — execute `python ~/trading-agent/validator.py --proposals ~/trading-agent/proposals.json --state ~/trading-agent/state.json`. These rules are enforced by validator.py in addition to prompt rules. If result is FAIL, log all violations, send notification, and STOP. Do not execute any trades.
 10. **Execute trades** — only if validator returns PASS. Place market orders via Robinhood MCP. Log each with rationale.
-11. **Update state.json** — after session, update high-water mark, position values, and trade count.
+11. **Update state.json** — after session, update_state() handles: new high-water mark (if account_value > current HWM), position values, trade count increment, last_trade_date, and last_updated timestamp.
 12. **Log session** — write summary to `~/trading-logs/YYYY-MM-DD.md`.
 13. **Send notification** — cloud runs: PushNotification tool. Local runs: Telegram curl.
 
@@ -336,7 +336,7 @@ A temporary file written by Claude before each execution step. Contains all prop
 - Full exit of any position
 - Resuming after a drawdown pause
 - Changing target allocations
-- Any single trade > $750
+- Any single trade > $750 (also enforced by validator.py CONFIRMATION_THRESHOLD)
 
 ---
 
@@ -358,25 +358,64 @@ A temporary file written by Claude before each execution step. Contains all prop
 
 ```
 ## Session: [DATE] [TIME ET]
-**Account value:** $X,XXX.XX | **P&L:** +/-$XX.XX
-**Buying power:** $X,XXX.XX
+**Account value:** $X,XXX.XX | **High-water mark:** $X,XXX.XX | **Drawdown:** X.X%
+**Buying power:** $X,XXX.XX | **Cash %:** XX.X% | **P&L today:** +/-$XX.XX
+
+### Validator Results
+- **Status:** PASS / FAIL
+- **Violations (if any):** [list each]
+- **Proposals reviewed:** N
+
+### Proposed Trades (JSON)
+[paste proposals.json output here]
 
 ### Trades Executed
-- [SYMBOL] BUY/SELL $XXX @ $XXX.XX — [rationale]
+- [SYMBOL] BUY/SELL $XXX @ ~$XXX.XX — [rationale]
+- (Note any partial fills or rejections)
 
-### Positions vs Targets
+### Proposed vs Executed
+| Symbol | Proposed | Executed | Variance |
+|--------|----------|----------|----------|
+| NVDA   | SELL $500 | SELL $500 | None |
+
+### Positions vs Targets (post-execution)
 | Symbol | Tier | Current % | Target % | Status |
 |--------|------|-----------|----------|--------|
 ...
 
+### Rule Checklist
+- [ ] Correct account (Agentic only)
+- [ ] Within market hours
+- [ ] No drawdown pause active
+- [ ] All symbols in approved universe
+- [ ] No position exceeds max allocation (post-trade)
+- [ ] Cash reserve ≥ 5% after trades
+- [ ] Trade count ≤ 10 / day
+- [ ] Cash deployment ≤ 50% of available
+- [ ] NVDA trim ≤ $500 (if applicable)
+- [ ] Min trade size ≥ $25 respected
+- [ ] Earnings rule applied
+**Overall: PASS / FAIL (cross-checked by validator.py)**
+
+### Session Metrics
+- Trades today: N | Cumulative this week: N
+- Cash deployed today: $XXX (XX% of available)
+- Tier 3 allocation: XX.X% (target 15–20%)
+- NVDA weight: XX.X% (target 20%, max 25%)
+
 ### Earnings Watch (next 7 days)
-...
+[Symbol — date — 5-day move — action per rule]
 
 ### Flagged for User Review
-...
+- HIGH: [item + reason]
+- MEDIUM: [item + reason]
+- LOW: [item + reason]
 
 ### Opportunities Not Acted On
-...
+[List with brief reason]
+
+### Next Session Priorities
+[List]
 ```
 
 ---
