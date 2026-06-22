@@ -1,0 +1,34 @@
+{
+  "proposals": [
+    {
+      "symbol": "NVDA",
+      "action": "SELL",
+      "amount": 500,
+      "rationale": "Day 3 trim — NVDA at 34.4% vs 25% max. Session cap $500. Proceeds fund Tier 3 builds."
+    },
+    {
+      "symbol": "APLD",
+      "action": "BUY",
+      "amount": 155,
+      "rationale": "Day 3 Tier 3 build — APLD at 0.4% vs 4% target. 5-day move +20.5% but existing position, not new initiation."
+    },
+    {
+      "symbol": "IREN",
+      "action": "BUY",
+      "amount": 155,
+      "rationale": "Day 3 Tier 3 build — IREN at 0.5% vs 4% target. Microsoft AI deal intact."
+    },
+    {
+      "symbol": "CORZ",
+      "action": "BUY",
+      "amount": 155,
+      "rationale": "Day 3 Tier 3 build — CORZ at 0.6% vs 4% target. CoreWeave hosting deal confirmed."
+    },
+    {
+      "symbol": "CRWV",
+      "action": "BUY",
+      "amount": 160,
+      "rationale": "Day 3 Tier 3 build — CRWV at 0.9% vs 4% target. Direct AI compute play."
+    }
+  ]
+}

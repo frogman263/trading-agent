@@ -1,0 +1,26 @@
+{
+  "account_number": "926627357",
+  "account_value": 7751.38,
+  "buying_power": 1250.00,
+  "positions": {
+    "NVDA":  {"value": 2662.90, "pct": 0.344},
+    "AVGO":  {"value":  856.25, "pct": 0.110},
+    "MU":    {"value":  743.44, "pct": 0.096},
+    "GEV":   {"value":  349.39, "pct": 0.045},
+    "CEG":   {"value":  348.82, "pct": 0.045},
+    "BE":    {"value":  250.87, "pct": 0.032},
+    "VST":   {"value":  299.10, "pct": 0.039},
+    "ASML":  {"value":  339.33, "pct": 0.044},
+    "NBIS":  {"value":  330.71, "pct": 0.043},
+    "IREN":  {"value":   39.44, "pct": 0.005},
+    "APLD":  {"value":   32.49, "pct": 0.004},
+    "CORZ":  {"value":   45.04, "pct": 0.006},
+    "CRWV":  {"value":   67.60, "pct": 0.009},
+    "RIOT":  {"value":   13.64, "pct": 0.002}
+  },
+  "high_water_mark": 7751.38,
+  "trades_today": 0,
+  "last_trade_date": "2026-06-20",
+  "build_phase": "Day 3",
+  "notes": "Post-Juneteenth. Day 3 pending. NVDA at 34.4% — trim in progress."
+}

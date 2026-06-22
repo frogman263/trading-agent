@@ -263,13 +263,42 @@ Earnings are opportunities, not blackouts.
 
 | Rule | Limit |
 |------|-------|
-| Drawdown pause | -20% from all-time high (~$1,500 at current account size) → stop all trading |
+| Drawdown tier 1 | -10% from high-water mark → reduce max session deployment to 25% of cash |
+| Drawdown tier 2 | -15% from high-water mark → pause all new buys, trims only |
+| Drawdown tier 3 | -20% from high-water mark → full stop, no trades, notify user, manual reset required |
 | Max trades/day | 10 |
 | Max cash deployed/day | 50% of available cash |
 | Max NVDA trim/day | $500 — do not dump in one session |
 | Margin | Never use |
 | Options | Not permitted |
 | Other accounts | Never touch Income, Growth, or Grok |
+
+---
+
+## Validator & State Management
+
+### validator.py
+A deterministic Python script that enforces all rules in code before any trade reaches Robinhood. Located at `~/trading-agent/validator.py`.
+
+Run on every session. If it returns FAIL, no trades execute regardless of Claude's reasoning.
+
+### state.json
+A persistent JSON file (`~/trading-agent/state.json`) that tracks session-to-session state. Claude reads this at the start of every run and updates it after.
+
+Key fields:
+- `account_number` — verified against Agentic account on every run
+- `account_value` — updated from live MCP data each session
+- `buying_power` — updated from live MCP data each session
+- `positions` — current dollar value and percentage per holding
+- `high_water_mark` — highest account value ever recorded; used for drawdown calculation
+- `trades_today` — resets each new calendar day
+- `last_trade_date` — used to detect day rollover
+- `build_phase` — current build schedule status
+
+**Do not manually edit state.json unless explicitly instructed by user.**
+
+### proposals.json
+A temporary file written by Claude before each execution step. Contains all proposed trades in structured JSON format. Read by the validator before any order is placed. Overwritten each session.
 
 ---
 
