@@ -1,70 +1,70 @@
 {
   "account_number": "926627357",
-  "account_value": 7751.38,
-  "buying_power": 1250.0,
+  "account_value": 7769.9491337818,
+  "buying_power": 636.93,
   "positions": {
     "NVDA": {
-      "value": 2662.9,
-      "pct": 0.344
+      "value": 2152.46,
+      "pct": 0.277
     },
     "AVGO": {
-      "value": 856.25,
-      "pct": 0.11
+      "value": 824.75,
+      "pct": 0.1061
     },
     "MU": {
-      "value": 743.44,
-      "pct": 0.096
-    },
-    "GEV": {
-      "value": 349.39,
-      "pct": 0.045
+      "value": 783.04,
+      "pct": 0.1008
     },
     "CEG": {
-      "value": 348.82,
-      "pct": 0.045
+      "value": 349.06,
+      "pct": 0.0449
     },
-    "BE": {
-      "value": 250.87,
-      "pct": 0.032
+    "GEV": {
+      "value": 352.15,
+      "pct": 0.0453
     },
     "VST": {
-      "value": 299.1,
-      "pct": 0.039
+      "value": 304.49,
+      "pct": 0.0392
     },
-    "ASML": {
-      "value": 339.33,
-      "pct": 0.044
-    },
-    "NBIS": {
-      "value": 330.71,
-      "pct": 0.043
-    },
-    "IREN": {
-      "value": 39.44,
-      "pct": 0.005
-    },
-    "APLD": {
-      "value": 32.49,
-      "pct": 0.004
-    },
-    "CORZ": {
-      "value": 45.04,
-      "pct": 0.006
-    },
-    "CRWV": {
-      "value": 67.6,
-      "pct": 0.009
+    "BE": {
+      "value": 368.45,
+      "pct": 0.0474
     },
     "RIOT": {
-      "value": 13.64,
-      "pct": 0.002
+      "value": 14.0,
+      "pct": 0.0018
+    },
+    "ASML": {
+      "value": 337.36,
+      "pct": 0.0434
+    },
+    "NBIS": {
+      "value": 328.74,
+      "pct": 0.0423
+    },
+    "IREN": {
+      "value": 197.57,
+      "pct": 0.0254
+    },
+    "APLD": {
+      "value": 190.8,
+      "pct": 0.0246
+    },
+    "CORZ": {
+      "value": 204.06,
+      "pct": 0.0263
+    },
+    "CRWV": {
+      "value": 221.83,
+      "pct": 0.0285
     }
   },
-  "high_water_mark": 7751.38,
-  "trades_today": 0,
-  "last_trade_date": "2026-06-20",
+  "high_water_mark": 7769.9491337818,
+  "trades_today": 5,
+  "last_trade_date": "2026-06-22",
   "build_phase": "Day 3",
-  "notes": "Post-Juneteenth. Day 3 pending. NVDA at 34.4% \u2014 trim in progress.",
-  "last_updated": "2026-06-20 11:05:00 ET",
+  "notes": "Day 3 build. NVDA trim ongoing (session 3). Tier3 build +$636 across IREN/APLD/CORZ/CRWV.",
+  "last_updated": "2026-06-22 11:10:00 ET",
   "schema_version": "1.0"
 }
