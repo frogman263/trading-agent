@@ -11,7 +11,7 @@ DATE=$(date +%Y-%m-%d)
 ENCODED=$(base64 -w 0 "$LOG_FILE" 2>/dev/null || base64 "$LOG_FILE" | tr -d '\n')
 
 # Check if file exists (get SHA if so)
-SHA=$(curl -s -H "Authorization: token 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" \
+SHA=$(curl -s -H "Authorization: token $GITHUB_PAT" \
   "https://api.github.com/repos/frogman263/trading-agent/contents/logs/${DATE}.md" \
   | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('sha',''))" 2>/dev/null)
 
@@ -23,7 +23,7 @@ else
 fi
 
 curl -s -X PUT \
-  -H "Authorization: token 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" \
+  -H "Authorization: token $GITHUB_PAT" \
   -H "Content-Type: application/json" \
   -d "$PAYLOAD" \
   "https://api.github.com/repos/frogman263/trading-agent/contents/logs/${DATE}.md"
@@ -39,12 +39,12 @@ Also write to local backup: `~/trading-logs/YYYY-MM-DD.md`
 ## Telegram Notifications
 
 Send a session summary to Telegram after every local run using:
-- **Bot token:** `8864332288:AAG390yniO6C1ZOkQfKrbNIC0hjpC-Ghc9k`
+- **Bot token:** `$TELEGRAM_BOT_TOKEN`
 - **Chat ID:** `8760839839`
 
 ```bash
-curl -s -X POST "https://api.telegram.org/bot8864332288:AAG390yniO6C1ZOkQfKrbNIC0hjpC-Ghc9k/sendMessage" \
-  -d "chat_id=8760839839" \
+curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" \
+  -d "chat_id=$TELEGRAM_CHAT_ID" \
   --data-urlencode "text=MESSAGE"
 ```
 
@@ -67,16 +67,34 @@ If you are ever uncertain which account to use, stop and do nothing.
 
 Execute these steps in order on every run:
 
-1. **Check market hours** — only place trades during regular market hours (9:30 AM – 4:00 PM ET, Monday–Friday, non-holiday). If outside market hours, run steps 2–5 only (analysis, no trades).
-2. **Pull account state** — get portfolio value, buying power, and all open positions for account 926627357.
-3. **Get live quotes** — fetch current prices for all held positions plus any universe stocks not yet held.
-4. **Check drawdown** — if account value is down 20% or more from its all-time high, STOP. Do not trade. Log the pause and halt.
-5. **Evaluate universe** — score each stock against the thesis. Identify overweight, underweight, and missing positions vs targets.
-6. **Check earnings** — for any stock being considered, check if earnings are within 7 days. Apply the Earnings Rule.
-7. **Calculate trades** — determine what to buy/sell to move toward target weights within all risk controls.
-8. **Execute trades** — place market orders. Log each with rationale.
-9. **Log session** — write summary to `~/trading-logs/YYYY-MM-DD.md`.
-10. **Send notification** — cloud runs: PushNotification tool. Local runs: Telegram curl.
+1. **Check market hours** — only place trades during regular market hours (9:30 AM – 4:00 PM ET, Monday–Friday, non-holiday). If outside market hours, run steps 2–6 only (analysis, no trades).
+2. **Load state** — read `~/trading-agent/state.json` for current high-water mark, trades today, and position values. If file missing, halt and alert user.
+3. **Pull account state** — get live portfolio value, buying power, and all open positions for account 926627357. Update state.json with current values.
+4. **Get live quotes** — fetch current prices for all held positions plus any universe stocks not yet held. Use these prices for all calculations in this session.
+5. **Check drawdown** — calculate current drawdown from high-water mark using tiered thresholds:
+   - Down ≥10%: reduce max session deployment to 25% of available cash
+   - Down ≥15%: pause all new buys — trims and rebalancing sells only
+   - Down ≥20%: FULL STOP — no trades of any kind. Log pause, notify user, halt immediately.
+6. **Evaluate universe** — score each stock against the thesis. Identify overweight, underweight, and missing positions vs targets.
+7. **Check earnings** — for any stock being considered, check if earnings are within 7 days. Apply the Earnings Rule. Pull latest 5-day price move for chase rule.
+8. **Output proposed trades as JSON** — before executing anything, write proposed trades to `~/trading-agent/proposals.json` in this exact format:
+```json
+{
+  "proposals": [
+    {
+      "symbol": "CEG",
+      "action": "BUY",
+      "amount": 350,
+      "rationale": "Day 3 Tier 2 top-up; below 5% target by more than 2 percentage points; 5-day move +2.6% clears chase rule"
+    }
+  ]
+}
+```
+9. **Run validator** — execute `python ~/trading-agent/validator.py --proposals ~/trading-agent/proposals.json --state ~/trading-agent/state.json`. These rules are enforced by validator.py in addition to prompt rules. If result is FAIL, log all violations, send notification, and STOP. Do not execute any trades.
+10. **Execute trades** — only if validator returns PASS. Place market orders via Robinhood MCP. Log each with rationale.
+11. **Update state.json** — after session, update high-water mark, position values, and trade count.
+12. **Log session** — write summary to `~/trading-logs/YYYY-MM-DD.md`.
+13. **Send notification** — cloud runs: PushNotification tool. Local runs: Telegram curl.
 
 ---
 
@@ -129,6 +147,8 @@ MAG8 hyperscaler CAPEX is a structural, multi-year tailwind for AI chips, memory
 ---
 
 ## Current State (as of June 18, 2026)
+
+> **Note:** state.json is now the authoritative source for current account value, positions, and high-water mark. This section is a human-readable reference only.
 
 Account value: ~$7,500–8,000 (post-transfer from Grok account)
 14 positions held. Build phase transitioning to rebalance phase.
@@ -206,7 +226,7 @@ Buy a new position when:
 - No open order for that ticker already exists
 
 Add to an existing position when:
-- Current weight is ≥ 2% below target weight
+- Current weight is ≥ 2 percentage points below target weight
 - Position is not at max allocation
 - Cash reserve stays ≥ 5% after the trade
 
@@ -263,9 +283,9 @@ Earnings are opportunities, not blackouts.
 
 | Rule | Limit |
 |------|-------|
-| Drawdown tier 1 | -10% from high-water mark → reduce max session deployment to 25% of cash |
-| Drawdown tier 2 | -15% from high-water mark → pause all new buys, trims only |
-| Drawdown tier 3 | -20% from high-water mark → full stop, no trades, notify user, manual reset required |
+| Drawdown tier 1 | -10% from high-water mark → reduce max session deployment to 25% of cash. Enforced by validator.py. |
+| Drawdown tier 2 | -15% from high-water mark → pause all new buys, trims only. Enforced by validator.py. |
+| Drawdown tier 3 | -20% from high-water mark → full stop, no trades, notify user, manual reset required. Enforced by validator.py. |
 | Max trades/day | 10 |
 | Max cash deployed/day | 50% of available cash |
 | Max NVDA trim/day | $500 — do not dump in one session |
@@ -328,9 +348,9 @@ A temporary file written by Claude before each execution step. Contains all prop
 - [ ] Trade is within approved universe
 - [ ] Position will not exceed max allocation
 - [ ] Cash reserve stays ≥ 5%
-- [ ] Trade size ≥ $25
+- [ ] Trade size ≥ $25 (enforced by validator.py)
 - [ ] Earnings rule checked if applicable
-- [ ] NVDA trim ≤ $500 if trimming NVDA
+- [ ] NVDA trim ≤ $500 if trimming NVDA (enforced by validator.py)
 
 ---
 
@@ -372,3 +392,4 @@ A temporary file written by Claude before each execution step. Contains all prop
 | 2.0 | 2026-06-18 | Major rewrite: Grok transfer complete; 14 positions; 4-tier structure; NVDA overweight flag; account ~$7.5-8K; $750 confirmation threshold |
 | 2.1 | 2026-06-18 | Added Thesis Review section: weekly Monday review, monthly extended summary, universe management criteria, macro red flags |
 | 2.2 | 2026-06-21 | Added GitHub logging via REST API for both local and cloud runs; repo frogman263/trading-agent/logs/ |
+| 2.3 | 2026-06-22 | Added deterministic validator.py + state.json persistence + proposals.json gate + tiered drawdown (-10/-15/-20%) + 13-step run procedure. Credentials moved to environment variables. |
