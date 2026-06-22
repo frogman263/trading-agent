@@ -15,6 +15,8 @@ import sys
 import argparse
 from datetime import date, datetime
 from zoneinfo import ZoneInfo
+import logging
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 
 # ── CONFIG ─────────────────────────────────────────────────────────────────
 # Update these to match your current CLAUDE.md universe and allocations.
@@ -131,10 +133,14 @@ def validate(proposals, state, dry_run=False):
     buying_power = state.get("buying_power", 0)
     # Normalize positions — state.json stores {symbol: {value, pct}} or {symbol: float}
     raw_positions = state.get("positions", {})
-    positions = {
-        sym: (val["value"] if isinstance(val, dict) else val)
-        for sym, val in raw_positions.items()
-    }
+    positions = {}
+    for sym, val in raw_positions.items():
+        if isinstance(val, dict):
+            if "value" not in val:
+                logging.warning(f"Malformed position entry for {sym}: missing 'value' key")
+            positions[sym] = val.get("value", 0)
+        else:
+            positions[sym] = val
     high_water_mark = state.get("high_water_mark", account_value)
     trades_today = get_trades_today(state)
 
@@ -301,6 +307,13 @@ def main():
     print(f"{'='*55}\n")
 
     violations, warnings = validate(proposals, state, args.dry_run)
+
+    if not violations:
+        logging.info(f"Validation PASSED — {len(proposals)} proposal(s) cleared all checks")
+    else:
+        logging.warning(f"Validation FAILED — {len(violations)} violation(s) found")
+        for v in violations:
+            logging.warning(f"  Violation: {v}")
 
     if warnings:
         print("WARNINGS:")
