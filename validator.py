@@ -11,6 +11,7 @@ Output: PASS or FAIL with full violation list. Exits 0 on PASS, 1 on FAIL.
 """
 
 import json
+import shutil
 import sys
 import argparse
 from datetime import date, datetime
@@ -281,6 +282,13 @@ def update_state(state_path, state, proposals, result_pass):
     et_now = datetime.now(ZoneInfo("America/New_York"))
     state["last_trade_date"] = str(et_now.date())
     state["last_updated"] = et_now.strftime("%Y-%m-%d %H:%M:%S ET")
+
+    # Backup current state before overwriting
+    try:
+        shutil.copy(state_path, state_path + ".bak")
+        logging.info(f"State backup written: {state_path}.bak")
+    except FileNotFoundError:
+        pass  # No existing state to back up
 
     with open(state_path, "w") as f:
         json.dump(state, f, indent=2)

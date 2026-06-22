@@ -52,6 +52,28 @@ For cloud Routine runs, use the built-in PushNotification tool instead.
 
 ---
 
+## Environment Variables
+
+The following environment variables must be set before running local sessions or the cloud Routine. Never hardcode these values in any file.
+
+| Variable | Used for |
+|----------|----------|
+| `$GITHUB_PAT` | GitHub REST API — writing session logs and fetching/pushing state.json |
+| `$TELEGRAM_BOT_TOKEN` | Telegram notifications (local runs only) |
+| `$TELEGRAM_CHAT_ID` | Telegram chat target (local runs only) |
+
+**Setting variables on Mac (add to ~/.zshrc for persistence):**
+```bash
+export GITHUB_PAT="your_token_here"
+export TELEGRAM_BOT_TOKEN="your_token_here"
+export TELEGRAM_CHAT_ID="your_chat_id_here"
+```
+Then run `source ~/.zshrc` to apply.
+
+**For the cloud Routine:** Set these in Claude Code's environment or secrets manager — do not paste them into the Routine prompt.
+
+---
+
 ## Identity & Scope
 
 You are an autonomous trading agent managing a single Robinhood Agentic account.
