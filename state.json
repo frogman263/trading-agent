@@ -1,70 +1,98 @@
 {
   "account_number": "926627357",
-  "account_value": 7769.9491337818,
-  "buying_power": 636.93,
+  "account_value": 8754.282138405,
+  "buying_power": 2161.19,
   "positions": {
     "NVDA": {
-      "value": 2152.46,
-      "pct": 0.277
+      "value": 2075.15,
+      "pct": 0.237043,
+      "quantity": 10.274267,
+      "price": 201.975
     },
     "AVGO": {
-      "value": 824.75,
-      "pct": 0.1061
+      "value": 1051.3,
+      "pct": 0.12009,
+      "quantity": 2.7623,
+      "price": 380.59
     },
     "MU": {
-      "value": 783.04,
-      "pct": 0.1008
+      "value": 717.05,
+      "pct": 0.081909,
+      "quantity": 0.656742,
+      "price": 1091.835
     },
     "CEG": {
-      "value": 349.06,
-      "pct": 0.0449
+      "value": 348.83,
+      "pct": 0.039847,
+      "quantity": 1.272681,
+      "price": 274.09
     },
     "GEV": {
-      "value": 352.15,
-      "pct": 0.0453
+      "value": 332.45,
+      "pct": 0.037976,
+      "quantity": 0.314954,
+      "price": 1055.56
     },
     "VST": {
-      "value": 304.49,
-      "pct": 0.0392
+      "value": 301.1,
+      "pct": 0.034394,
+      "quantity": 1.826818,
+      "price": 164.82
     },
     "BE": {
-      "value": 368.45,
-      "pct": 0.0474
+      "value": 350.47,
+      "pct": 0.040035,
+      "quantity": 1.086862,
+      "price": 322.465
     },
     "RIOT": {
-      "value": 14.0,
-      "pct": 0.0018
-    },
-    "ASML": {
-      "value": 337.36,
-      "pct": 0.0434
-    },
-    "NBIS": {
-      "value": 328.74,
-      "pct": 0.0423
-    },
-    "IREN": {
-      "value": 197.57,
-      "pct": 0.0254
-    },
-    "APLD": {
-      "value": 190.8,
-      "pct": 0.0246
+      "value": 13.83,
+      "pct": 0.00158,
+      "quantity": 0.485206,
+      "price": 28.51
     },
     "CORZ": {
-      "value": 204.06,
-      "pct": 0.0263
+      "value": 202.04,
+      "pct": 0.023079,
+      "quantity": 6.993288,
+      "price": 28.89
+    },
+    "IREN": {
+      "value": 187.45,
+      "pct": 0.021413,
+      "quantity": 3.366623,
+      "price": 55.68
     },
     "CRWV": {
-      "value": 221.83,
-      "pct": 0.0285
+      "value": 217.86,
+      "pct": 0.024887,
+      "quantity": 2.021665,
+      "price": 107.765
+    },
+    "NBIS": {
+      "value": 320.84,
+      "pct": 0.03665,
+      "quantity": 1.152174,
+      "price": 278.465
+    },
+    "APLD": {
+      "value": 190.2,
+      "pct": 0.021726,
+      "quantity": 4.184798,
+      "price": 45.45
+    },
+    "ASML": {
+      "value": 314.41,
+      "pct": 0.035916,
+      "quantity": 0.176076,
+      "price": 1785.677
     }
   },
-  "high_water_mark": 7769.9491337818,
-  "trades_today": 5,
-  "last_trade_date": "2026-06-22",
-  "build_phase": "Day 3",
-  "notes": "Day 3 build. NVDA trim ongoing (session 3). Tier3 build +$636 across IREN/APLD/CORZ/CRWV.",
-  "last_updated": "2026-06-22 11:10:00 ET",
+  "high_water_mark": 8787.067682915,
+  "trades_today": 1,
+  "last_trade_date": "2026-06-23",
+  "build_phase": "Day 4",
+  "notes": "Day 4 build. AVGO +$258 (to 12% target). NVDA trim complete (now 23.7%). Tier3 at 9.1% combined \u2014 need user guidance on build pace vs strict 2% rule. MU earnings Jun 24 pm \u2014 watch closely. Broad market selloff today, cause unknown.",
+  "last_updated": "2026-06-23 11:09:00 ET",
   "schema_version": "1.0"
 }
