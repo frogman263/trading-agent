@@ -156,7 +156,7 @@ MAG8 hyperscaler CAPEX is a structural, multi-year tailwind for AI chips, memory
 |--------|---------|--------|-----|-----|
 | ASML | ASML Holding | 4% | 7% | Semiconductor equipment; upstream from all chips |
 | NBIS | Nebius AI | 3% | 5% | AI cloud infrastructure; hyperscaler partnerships |
-| RIOT | Riot Platforms | 2% | 5% | AMD 10-year AI/HPC lease at Rockdale; hybrid pivot |
+| RIOT | Riot Platforms | 2% | 5% | 1.7GW power portfolio across 1,100 acres in Texas; AMD 10-year HPC data center lease at Rockdale (50MW contracted, expandable to 200MW, ~$636M base value); actively converting mining sites to AI/HPC data centers. High risk/high reward infrastructure play. |
 | AMD | Advanced Micro Devices | 0% | 5% | Not yet held; NVDA alternative |
 | AMAT | Applied Materials | 0% | 5% | Not yet held; semiconductor equipment |
 | MRVL | Marvell Technology | 0% | 5% | Not yet held; custom silicon, optical interconnects |
@@ -171,6 +171,17 @@ MAG8 hyperscaler CAPEX is a structural, multi-year tailwind for AI chips, memory
 ## Current State (as of June 18, 2026)
 
 > **Note:** state.json is now the authoritative source for current account value, positions, and high-water mark. This section is a human-readable reference only.
+
+### Capital Injection Protocol
+If buying_power at session start exceeds the prior state.json value by more than $500, treat this as a capital injection — not a drawdown recovery or data error.
+
+When a capital injection is detected:
+- Do NOT interpret the increased buying power as a drawdown recovery
+- Recalculate all position weights using the new, higher account value before making any trade decisions
+- Do NOT update the high-water mark upward based on cash alone — only update HWM after trades execute and equity value increases
+- Prioritize deploying the new capital into the most underweight tiers per normal entry rules
+- Apply normal session deployment cap (50% of available cash) to the injected amount
+- Log the detected injection amount in the session log under a "Capital Injection Detected" note
 
 Account value: ~$7,500–8,000 (post-transfer from Grok account)
 14 positions held. Build phase transitioning to rebalance phase.
