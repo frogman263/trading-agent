@@ -1,0 +1,70 @@
+name: Trading Agent — Session Notification
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'logs/**.md'
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Parse session log
+        id: log
+        run: |
+          # Find the log file pushed in this commit
+          LOG_FILE=$(git diff-tree --no-commit-id -r --name-only ${{ github.sha }} | grep 'logs/.*\.md' | head -1)
+
+          if [ -z "$LOG_FILE" ]; then
+            echo "No log file found in this push — skipping notification"
+            exit 0
+          fi
+
+          DATE=$(basename "$LOG_FILE" .md)
+
+          # Extract key metrics
+          VALIDATOR=$(grep -o 'Validator: [A-Z]*' "$LOG_FILE" | head -1 | sed 's/Validator: //' || echo "UNKNOWN")
+          ACCOUNT=$(grep -o 'Account value: \$[0-9,\.]*' "$LOG_FILE" | head -1 | sed 's/Account value: //' || echo "N/A")
+          TRADES=$(grep -E '^- (NVDA|AVGO|MU|CEG|GEV|VST|BE|IREN|APLD|CORZ|CRWV|ASML|NBIS|RIOT|AMD|AMAT|MRVL|VRT) (BUY|SELL)' "$LOG_FILE" | wc -l | tr -d ' ')
+          HWM=$(grep -o 'High-water mark: \$[0-9,\.]*' "$LOG_FILE" | head -1 | sed 's/High-water mark: //' || echo "N/A")
+          DRAWDOWN=$(grep -o 'Drawdown: [0-9\.]*%' "$LOG_FILE" | head -1 | sed 's/Drawdown: //' || echo "0%")
+          CASH=$(grep -o 'Cash: [0-9\.]*%' "$LOG_FILE" | head -1 | sed 's/Cash: //' || echo "N/A")
+
+          # Set outputs
+          echo "date=$DATE" >> $GITHUB_OUTPUT
+          echo "validator=$VALIDATOR" >> $GITHUB_OUTPUT
+          echo "trades=$TRADES" >> $GITHUB_OUTPUT
+          echo "log_file=$LOG_FILE" >> $GITHUB_OUTPUT
+
+          # Multiline message via heredoc (safe for newlines and special chars)
+          echo "message<<EOF" >> $GITHUB_OUTPUT
+          echo "Validator: ${VALIDATOR}" >> $GITHUB_OUTPUT
+          echo "Trades executed: ${TRADES}" >> $GITHUB_OUTPUT
+          echo "Account value: ${ACCOUNT}" >> $GITHUB_OUTPUT
+          echo "HWM: ${HWM} | Drawdown: ${DRAWDOWN}" >> $GITHUB_OUTPUT
+          echo "Cash: ${CASH}" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Send Pushover notification
+        if: steps.log.outputs.log_file != ''
+        env:
+          PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_API_TOKEN }}
+          PUSHOVER_USER: ${{ secrets.PUSHOVER_USER_KEY }}
+          TITLE: "Trading Agent — ${{ steps.log.outputs.date }} | ${{ steps.log.outputs.validator }} | ${{ steps.log.outputs.trades }} trade(s)"
+          MESSAGE: ${{ steps.log.outputs.message }}
+          LOG_URL: "https://github.com/${{ github.repository }}/blob/main/${{ steps.log.outputs.log_file }}"
+        run: |
+          curl -s \
+            --form-string "token=$PUSHOVER_TOKEN" \
+            --form-string "user=$PUSHOVER_USER" \
+            --form-string "title=$TITLE" \
+            --form-string "message=$MESSAGE" \
+            --form-string "url=$LOG_URL" \
+            --form-string "url_title=View Full Session Log" \
+            --form-string "priority=0" \
+            https://api.pushover.net/1/messages.json
