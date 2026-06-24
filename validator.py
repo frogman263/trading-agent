@@ -17,55 +17,86 @@ import argparse
 from datetime import date, datetime
 from zoneinfo import ZoneInfo
 import logging
-logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 
 # ── CONFIG ─────────────────────────────────────────────────────────────────
-# Update these to match your current CLAUDE.md universe and allocations.
+# Rules are loaded from config.json in the same directory as this script.
+# If config.json is missing, hardcoded defaults are used as fallback.
 
-AGENTIC_ACCOUNT = "926627357"  # Agentic ···7357 — only account this may trade
+import os as _os
 
-UNIVERSE = {
-    "NVDA", "AVGO", "MU",                          # Tier 1
-    "CEG", "GEV", "VST", "BE",                     # Tier 2
-    "IREN", "APLD", "CORZ", "CRWV",                # Tier 3
-    "ASML", "NBIS", "RIOT",                         # Tier 4 — held
-    "AMD", "AMAT", "MRVL", "VRT"                   # Tier 4 — not yet held
-}
+_CONFIG_PATH = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "config.json")
 
-MAX_ALLOCS = {
-    "NVDA": 0.25, "AVGO": 0.15, "MU": 0.12,
-    "CEG": 0.08, "GEV": 0.08, "VST": 0.07, "BE": 0.08,
-    "IREN": 0.07, "APLD": 0.07, "CORZ": 0.07, "CRWV": 0.07,
-    "ASML": 0.07, "NBIS": 0.05, "RIOT": 0.05,
-    "AMD": 0.05, "AMAT": 0.05, "MRVL": 0.05, "VRT": 0.05
-}
+def _load_config():
+    try:
+        with open(_CONFIG_PATH, "r") as _f:
+            _cfg = json.load(_f)
+        logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
+        logging.info(f"Config loaded from {_CONFIG_PATH}")
+        return _cfg
+    except FileNotFoundError:
+        logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
+        logging.warning(f"config.json not found at {_CONFIG_PATH} — using hardcoded defaults")
+        return None
 
-# Risk controls
-MIN_CASH_RESERVE_PCT  = 0.05    # 5% of account value
-MAX_TRADES_PER_DAY    = 10
-MAX_CASH_DEPLOY_PCT   = 0.50    # 50% of available cash per session
-MIN_TRADE_SIZE        = 25      # $ minimum per trade
-CONFIRMATION_THRESHOLD = 750    # $ — trades above this require manual confirmation
-NVDA_MAX_TRIM_SESSION = 500     # $ max NVDA sell per session
+_cfg = _load_config()
 
-# Tiered drawdown thresholds (from high-water mark)
-DRAWDOWN_REDUCE   = 0.10   # -10%: cap deployment at 25% of cash
-DRAWDOWN_PAUSE_BUYS = 0.15 # -15%: no new buys, trims only
-DRAWDOWN_FULL_STOP  = 0.20 # -20%: full stop, notify user
-
-# 2026 US market holidays (NYSE closed)
-MARKET_HOLIDAYS_2026 = {
-    date(2026, 1, 1),   # New Year's Day
-    date(2026, 1, 19),  # MLK Day
-    date(2026, 2, 16),  # Presidents' Day
-    date(2026, 4, 3),   # Good Friday
-    date(2026, 5, 25),  # Memorial Day
-    date(2026, 6, 19),  # Juneteenth
-    date(2026, 7, 3),   # Independence Day (observed)
-    date(2026, 9, 7),   # Labor Day
-    date(2026, 11, 26), # Thanksgiving
-    date(2026, 12, 25), # Christmas
-}
+if _cfg:
+    AGENTIC_ACCOUNT       = _cfg.get("agentic_account", "926627357")
+    UNIVERSE              = set(_cfg.get("universe", []))
+    MAX_ALLOCS            = _cfg.get("max_allocs", {})
+    _rc                   = _cfg.get("risk_controls", {})
+    MIN_CASH_RESERVE_PCT  = _rc.get("min_cash_reserve_pct", 0.05)
+    MAX_TRADES_PER_DAY    = _rc.get("max_trades_per_day", 10)
+    MAX_CASH_DEPLOY_PCT   = _rc.get("max_cash_deploy_pct", 0.50)
+    MIN_TRADE_SIZE        = _rc.get("min_trade_size_usd", 25)
+    CONFIRMATION_THRESHOLD= _rc.get("confirmation_threshold_usd", 750)
+    NVDA_MAX_TRIM_SESSION = _rc.get("nvda_max_trim_per_session_usd", 500)
+    _dd                   = _cfg.get("drawdown", {})
+    DRAWDOWN_REDUCE       = _dd.get("reduce_deploy_at_pct", 0.10)
+    DRAWDOWN_PAUSE_BUYS   = _dd.get("pause_buys_at_pct", 0.15)
+    DRAWDOWN_FULL_STOP    = _dd.get("full_stop_at_pct", 0.20)
+    MARKET_HOLIDAYS_2026  = {
+        date.fromisoformat(d)
+        for d in _cfg.get("market_holidays_2026", [])
+    }
+else:
+    # Hardcoded fallbacks — keep in sync with config.json
+    AGENTIC_ACCOUNT = "926627357"
+    UNIVERSE = {
+        "NVDA", "AVGO", "MU",
+        "CEG", "GEV", "VST", "BE",
+        "IREN", "APLD", "CORZ", "CRWV",
+        "ASML", "NBIS", "RIOT",
+        "AMD", "AMAT", "MRVL", "VRT"
+    }
+    MAX_ALLOCS = {
+        "NVDA": 0.25, "AVGO": 0.15, "MU": 0.12,
+        "CEG": 0.08, "GEV": 0.08, "VST": 0.07, "BE": 0.08,
+        "IREN": 0.07, "APLD": 0.07, "CORZ": 0.07, "CRWV": 0.07,
+        "ASML": 0.07, "NBIS": 0.05, "RIOT": 0.05,
+        "AMD": 0.05, "AMAT": 0.05, "MRVL": 0.05, "VRT": 0.05
+    }
+    MIN_CASH_RESERVE_PCT   = 0.05
+    MAX_TRADES_PER_DAY     = 10
+    MAX_CASH_DEPLOY_PCT    = 0.50
+    MIN_TRADE_SIZE         = 25
+    CONFIRMATION_THRESHOLD = 750
+    NVDA_MAX_TRIM_SESSION  = 500
+    DRAWDOWN_REDUCE        = 0.10
+    DRAWDOWN_PAUSE_BUYS    = 0.15
+    DRAWDOWN_FULL_STOP     = 0.20
+    MARKET_HOLIDAYS_2026   = {
+        date(2026, 1, 1),   # New Year's Day
+        date(2026, 1, 19),  # MLK Day
+        date(2026, 2, 16),  # Presidents' Day
+        date(2026, 4, 3),   # Good Friday
+        date(2026, 5, 25),  # Memorial Day
+        date(2026, 6, 19),  # Juneteenth
+        date(2026, 7, 3),   # Independence Day (observed)
+        date(2026, 9, 7),   # Labor Day
+        date(2026, 11, 26), # Thanksgiving
+        date(2026, 12, 25), # Christmas
+    }
 
 # ── HELPERS ────────────────────────────────────────────────────────────────
 
