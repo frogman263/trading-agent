@@ -1,0 +1,63 @@
+{
+  "_readme": "Trading agent configuration. Edit this file to change rules — no Python editing required. Keep in sync with CLAUDE.md.",
+  "agentic_account": "926627357",
+
+  "universe": [
+    "NVDA", "AVGO", "MU",
+    "CEG", "GEV", "VST", "BE",
+    "IREN", "APLD", "CORZ", "CRWV",
+    "ASML", "NBIS", "RIOT",
+    "AMD", "AMAT", "MRVL", "VRT"
+  ],
+
+  "max_allocs": {
+    "NVDA": 0.25, "AVGO": 0.15, "MU": 0.12,
+    "CEG": 0.08, "GEV": 0.08, "VST": 0.07, "BE": 0.08,
+    "IREN": 0.07, "APLD": 0.07, "CORZ": 0.07, "CRWV": 0.07,
+    "ASML": 0.07, "NBIS": 0.05, "RIOT": 0.05,
+    "AMD": 0.05, "AMAT": 0.05, "MRVL": 0.05, "VRT": 0.05
+  },
+
+  "entry_thresholds": {
+    "_note": "Minimum percentage points below target to trigger an add",
+    "tier1": 2.0,
+    "tier2": 2.0,
+    "tier3_build_phase": 1.5,
+    "tier3_steady_state": 2.0,
+    "tier4": 2.0,
+    "tier3_build_complete_at_pct": 15.0
+  },
+
+  "risk_controls": {
+    "min_cash_reserve_pct": 0.05,
+    "max_trades_per_day": 10,
+    "max_cash_deploy_pct": 0.50,
+    "min_trade_size_usd": 25,
+    "confirmation_threshold_usd": 750,
+    "nvda_max_trim_per_session_usd": 500,
+    "capital_injection_detection_threshold_usd": 500
+  },
+
+  "drawdown": {
+    "reduce_deploy_at_pct": 0.10,
+    "reduce_deploy_cap": 0.25,
+    "pause_buys_at_pct": 0.15,
+    "full_stop_at_pct": 0.20
+  },
+
+  "market_holidays_2026": [
+    "2026-01-01",
+    "2026-01-19",
+    "2026-02-16",
+    "2026-04-03",
+    "2026-05-25",
+    "2026-06-19",
+    "2026-07-03",
+    "2026-09-07",
+    "2026-11-26",
+    "2026-12-25"
+  ],
+
+  "_last_updated": "2026-06-24",
+  "_version": "1.0"
+}

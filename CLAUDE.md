@@ -259,7 +259,9 @@ Buy a new position when:
 - No open order for that ticker already exists
 
 Add to an existing position when:
-- Current weight is ≥ 2 percentage points below target weight
+- **Tier 1 & Tier 2:** Current weight is ≥ 2 percentage points below target weight
+- **Tier 3 (active build phase):** Current weight is ≥ 1.5 percentage points below target weight. Revert to 2% threshold once combined Tier 3 allocation reaches 15% of account value.
+- **Tier 4:** Current weight is ≥ 2 percentage points below target weight
 - Position is not at max allocation
 - Cash reserve stays ≥ 5% after the trade
 
@@ -324,6 +326,7 @@ Earnings are opportunities, not blackouts.
 | Max NVDA trim/day | $500 — do not dump in one session |
 | Margin | Never use |
 | Options | Not permitted |
+| PDT rule | Do not open and close the same position in the same session. All buys are intended as multi-session holds. Avoids Pattern Day Trader violations in a sub-$25K account. |
 | Other accounts | Never touch Income, Growth, or Grok |
 
 ---
@@ -349,6 +352,20 @@ Key fields:
 - `build_phase` — current build schedule status
 
 **Do not manually edit state.json unless explicitly instructed by user.**
+
+### Tax Lot Tracking
+When buying a position, record the lot in state.json under the position entry:
+```json
+"NVDA": {
+  "lots": [
+    {"shares": 4.284, "cost_per_share": 210.14, "date": "2026-06-18"},
+    {"shares": 8.376, "cost_per_share": 185.36, "date": "2026-06-19"}
+  ],
+  "value": 2664.93,
+  "pct": 0.344
+}
+```
+Before trimming any position, check whether shares to be sold are short-term (held < 12 months from purchase date). If a trim would generate short-term capital gains above $500, flag it for user review in the session log. Do not block the trade — flag it.
 
 ### proposals.json
 A temporary file written by Claude before each execution step. Contains all proposed trades in structured JSON format. Read by the validator before any order is placed. Overwritten each session.
@@ -465,3 +482,4 @@ A temporary file written by Claude before each execution step. Contains all prop
 | 2.1 | 2026-06-18 | Added Thesis Review section: weekly Monday review, monthly extended summary, universe management criteria, macro red flags |
 | 2.2 | 2026-06-21 | Added GitHub logging via REST API for both local and cloud runs; repo frogman263/trading-agent/logs/ |
 | 2.3 | 2026-06-22 | Added deterministic validator.py + state.json persistence + proposals.json gate + tiered drawdown (-10/-15/-20%) + 13-step run procedure. Credentials moved to environment variables. |
+| 2.4 | 2026-06-23 | Tiered entry threshold: Tier 3 lowered to 1.5pp during active build phase (revert to 2pp at 15% combined). Capital injection protocol added. RIOT thesis updated to reflect HPC/data center pivot. PDT rule note added. Tax lot tracking added. |
