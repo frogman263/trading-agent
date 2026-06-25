@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-earnings_check.py — Earnings calendar and 5-day move checker v1.0
+earnings_check.py — Earnings calendar and 5-day move checker v1.2
 
-Fetches upcoming earnings dates and recent price moves for all universe
-symbols. Outputs /tmp/earnings.json for the trading agent to consume
-at STEP 7 before trade evaluation.
+Uses Python built-in urllib + http.cookiejar only — no pip install required.
+Implements Yahoo Finance crumb authentication to avoid 429 rate limiting.
+Outputs /tmp/earnings.json for the trading agent at STEP 7.
 
 Usage:
   python3 earnings_check.py
@@ -18,6 +18,10 @@ import json
 import sys
 import argparse
 import logging
+import time
+import urllib.request
+import urllib.error
+import http.cookiejar
 from datetime import datetime, timedelta, date
 from zoneinfo import ZoneInfo
 
@@ -36,75 +40,158 @@ UNIVERSE = [
 
 OUTPUT_PATH = "/tmp/earnings.json"
 
+HEADERS = [
+    ("User-Agent",
+     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+     "AppleWebKit/537.36 (KHTML, like Gecko) "
+     "Chrome/124.0.0.0 Safari/537.36"),
+    ("Accept", "application/json,text/plain,*/*"),
+    ("Accept-Language", "en-US,en;q=0.9"),
+    ("Accept-Encoding", "gzip, deflate"),
+    ("Referer", "https://finance.yahoo.com/"),
+]
 
-def get_5day_move(ticker):
-    """Return 5-session price change as a percentage. None on failure."""
+
+def create_session():
+    """
+    Create an authenticated Yahoo Finance session.
+    Returns (opener, crumb) — crumb is None if auth fails (fallback mode).
+    """
+    jar = http.cookiejar.CookieJar()
+    opener = urllib.request.build_opener(
+        urllib.request.HTTPCookieProcessor(jar)
+    )
+    opener.addheaders = HEADERS
+
+    # Step 1 — seed cookies via fc.yahoo.com
     try:
-        hist = ticker.history(period="10d")
-        if hist.empty or len(hist) < 2:
+        opener.open("https://fc.yahoo.com/", timeout=8)
+        logging.info("Yahoo Finance session cookie obtained")
+    except Exception as e:
+        logging.warning(f"Cookie seed failed (non-fatal): {e}")
+
+    # Step 2 — get crumb token
+    crumb = None
+    for endpoint in [
+        "https://query1.finance.yahoo.com/v1/test/getcrumb",
+        "https://query2.finance.yahoo.com/v1/test/getcrumb",
+    ]:
+        try:
+            resp = opener.open(endpoint, timeout=8)
+            raw = resp.read().decode("utf-8").strip()
+            if raw and raw != "":
+                crumb = raw
+                logging.info(f"Crumb obtained: {crumb[:8]}...")
+                break
+        except Exception as e:
+            logging.warning(f"Crumb endpoint {endpoint} failed: {e}")
+
+    if not crumb:
+        logging.warning("Could not obtain Yahoo Finance crumb — will try without")
+
+    return opener, crumb
+
+
+def fetch_yahoo(opener, url, retries=3):
+    """Fetch a Yahoo Finance URL with retry on 429."""
+    for attempt in range(retries):
+        try:
+            with opener.open(url, timeout=12) as r:
+                raw = r.read()
+                if r.info().get("Content-Encoding") == "gzip":
+                    import gzip
+                    raw = gzip.decompress(raw)
+                return json.loads(raw.decode("utf-8"))
+        except urllib.error.HTTPError as e:
+            if e.code == 429:
+                wait = 2 ** attempt
+                logging.warning(
+                    f"Rate limited (429) — retry {attempt+1}/{retries} in {wait}s"
+                )
+                time.sleep(wait)
+            else:
+                logging.warning(f"HTTP {e.code}: {url[:60]}")
+                return None
+        except urllib.error.URLError as e:
+            logging.warning(f"URL error: {e.reason}")
             return None
-        closes = hist["Close"].dropna()
+        except Exception as e:
+            logging.warning(f"Fetch error: {e}")
+            return None
+    logging.warning(f"All {retries} retries exhausted for {url[:60]}")
+    return None
+
+
+def get_5day_move(opener, crumb, sym):
+    """Return 5-session % change. None on failure."""
+    crumb_param = f"&crumb={crumb}" if crumb else ""
+    url = (
+        f"https://query1.finance.yahoo.com/v8/finance/chart/{sym}"
+        f"?interval=1d&range=10d{crumb_param}"
+    )
+    data = fetch_yahoo(opener, url)
+    if not data:
+        return None
+    try:
+        result = data["chart"]["result"]
+        if not result:
+            return None
+        closes = result[0]["indicators"]["quote"][0]["close"]
+        closes = [c for c in closes if c is not None]
         if len(closes) < 2:
             return None
-        recent = closes.iloc[-min(6, len(closes)):]
-        start = float(recent.iloc[0])
-        end = float(recent.iloc[-1])
+        recent = closes[-min(6, len(closes)):]
+        start, end = recent[0], recent[-1]
         if start == 0:
             return None
         return round(((end - start) / start) * 100, 2)
-    except Exception as e:
-        logging.warning(f"5-day move error: {e}")
+    except (KeyError, IndexError, TypeError) as e:
+        logging.warning(f"{sym} 5-day parse error: {e}")
         return None
 
 
-def get_earnings_date(ticker, sym, lookahead_days):
-    """
-    Return next earnings date if within lookahead_days, else None.
-    Handles yfinance 1.4.x calendar format.
-    """
+def get_earnings_date(opener, crumb, sym, lookahead_days):
+    """Return next earnings date within lookahead_days, or None."""
+    crumb_param = f"&crumb={crumb}" if crumb else ""
+    url = (
+        f"https://query2.finance.yahoo.com/v10/finance/quoteSummary/{sym}"
+        f"?modules=calendarEvents{crumb_param}"
+    )
+    data = fetch_yahoo(opener, url)
+    if not data:
+        return None
     try:
-        cal = ticker.calendar
-        if cal is None:
+        result = data["quoteSummary"]["result"]
+        if not result:
             return None
-
-        if isinstance(cal, dict):
-            ed = cal.get("Earnings Date")
-            if ed is None:
-                return None
-            dates = ed if isinstance(ed, list) else [ed]
-        else:
-            try:
-                dates = cal.loc["Earnings Date"].tolist()
-            except Exception:
-                return None
+        events = result[0].get("calendarEvents", {})
+        earnings = events.get("earnings", {})
+        dates = earnings.get("earningsDate", [])
 
         today = date.today()
         cutoff = today + timedelta(days=lookahead_days)
 
         for d in dates:
-            if hasattr(d, "date"):
-                d = d.date()
-            elif isinstance(d, str):
-                try:
-                    d = date.fromisoformat(d[:10])
-                except Exception:
+            if isinstance(d, dict):
+                raw = d.get("raw")
+                if raw:
+                    dt = date.fromtimestamp(raw)
+                else:
                     continue
-            if isinstance(d, date) and today <= d <= cutoff:
-                return d
+            elif isinstance(d, (int, float)):
+                dt = date.fromtimestamp(d)
+            else:
+                continue
+            if today <= dt <= cutoff:
+                return dt
 
         return None
-
-    except Exception as e:
-        logging.warning(f"{sym} earnings date error: {e}")
+    except (KeyError, IndexError, TypeError) as e:
+        logging.warning(f"{sym} earnings parse error: {e}")
         return None
 
 
 def classify_action(five_day_move, has_earnings, earnings_date, post_earnings):
-    """
-    Pre-earnings:  down 5%+ → buy_weakness | up 10%+ → no_chase | else → hold
-    Post-earnings: post_earnings_check (agent applies beat/raise rule)
-    No earnings:   no_earnings
-    """
     if not has_earnings:
         return "no_earnings"
     if post_earnings:
@@ -118,26 +205,25 @@ def classify_action(five_day_move, has_earnings, earnings_date, post_earnings):
 
 
 def run(symbols, lookahead_days):
-    try:
-        import yfinance as yf
-    except ImportError:
-        logging.error("yfinance not installed. Run: pip3 install yfinance")
-        sys.exit(1)
-
     today = date.today()
     results = {}
 
-    logging.info(f"Checking {len(symbols)} symbols for earnings within {lookahead_days} days...")
+    logging.info(
+        f"earnings_check.py v1.2 — {len(symbols)} symbols, "
+        f"{lookahead_days}-day window"
+    )
 
-    for sym in symbols:
+    opener, crumb = create_session()
+
+    for i, sym in enumerate(symbols):
+        if i > 0:
+            time.sleep(0.4)
         try:
-            ticker = yf.Ticker(sym)
-            five_day = get_5day_move(ticker)
-            earnings_date = get_earnings_date(ticker, sym, lookahead_days)
+            five_day = get_5day_move(opener, crumb, sym)
+            earnings_date = get_earnings_date(opener, crumb, sym, lookahead_days)
 
             has_earnings = earnings_date is not None
             post_earnings = has_earnings and earnings_date <= today
-
             action = classify_action(five_day, has_earnings, earnings_date, post_earnings)
 
             results[sym] = {
@@ -151,10 +237,13 @@ def run(symbols, lookahead_days):
 
             status = f"{five_day:+.1f}%" if five_day is not None else "N/A"
             earn_str = str(earnings_date) if earnings_date else "none"
-            logging.info(f"  {sym:6s} | 5d: {status:8s} | earnings: {earn_str} | action: {action}")
+            logging.info(
+                f"  {sym:6s} | 5d: {status:8s} | "
+                f"earnings: {earn_str} | action: {action}"
+            )
 
         except Exception as e:
-            logging.warning(f"  {sym}: Error — {e}")
+            logging.warning(f"  {sym}: Unexpected error — {e}")
             results[sym] = {
                 "symbol": sym,
                 "five_day_move_pct": None,
@@ -169,6 +258,7 @@ def run(symbols, lookahead_days):
         "generated_at": datetime.now(ZoneInfo("America/New_York")).strftime(
             "%Y-%m-%d %H:%M:%S ET"
         ),
+        "version": "1.2",
         "lookahead_days": lookahead_days,
         "symbols_checked": len(symbols),
         "results": results,
@@ -184,7 +274,7 @@ def run(symbols, lookahead_days):
     with open(OUTPUT_PATH, "w") as f:
         json.dump(output, f, indent=2)
 
-    logging.info(f"\nOutput written to {OUTPUT_PATH}")
+    logging.info(f"Output written to {OUTPUT_PATH}")
     logging.info(f"Summary:")
     logging.info(f"  buy_weakness:        {output['summary']['buy_weakness']}")
     logging.info(f"  no_chase:            {output['summary']['no_chase']}")
@@ -196,7 +286,7 @@ def run(symbols, lookahead_days):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Earnings check v1.0")
+    parser = argparse.ArgumentParser(description="Earnings check v1.2")
     parser.add_argument("--days", type=int, default=7)
     parser.add_argument("--symbols", nargs="+", default=UNIVERSE)
     args = parser.parse_args()
