@@ -31,12 +31,20 @@ import os as _os
 
 _CONFIG_PATH = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "config.json")
 
+VALIDATOR_VERSION = "1.1"
+
 def _load_config():
     try:
         with open(_CONFIG_PATH, "r") as _f:
             _cfg = json.load(_f)
         logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
-        logging.info(f"Config loaded from {_CONFIG_PATH} (version {_cfg.get('_version','?')})")
+        cfg_version = _cfg.get("_version", "unknown")
+        logging.info(f"Config loaded from {_CONFIG_PATH} (version {cfg_version})")
+        if cfg_version != VALIDATOR_VERSION:
+            logging.warning(
+                f"Version mismatch: validator v{VALIDATOR_VERSION} / "
+                f"config v{cfg_version} — verify both files are in sync."
+            )
         return _cfg
     except FileNotFoundError:
         logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
@@ -448,9 +456,12 @@ def main():
         print("ERROR: proposals.json must contain a list under 'proposals' key.")
         sys.exit(1)
 
+    cfg_version = _cfg.get("_version", "fallback") if _cfg else "fallback"
     print(f"\n{'='*55}")
-    print(f"  Trading Agent Validator v1.1 — "
+    print(f"  Trading Agent Validator v{VALIDATOR_VERSION} — "
           f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"  Config:    v{cfg_version}"
+          + (" ✓" if cfg_version == VALIDATOR_VERSION else " ⚠ VERSION MISMATCH"))
     print(f"  Account:   {state.get('account_number','?')}")
     print(f"  Value:     ${state.get('account_value',0):,.2f}")
     print(f"  Cash:      ${state.get('buying_power',0):,.2f}")
