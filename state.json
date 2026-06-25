@@ -1,98 +1,158 @@
 {
   "account_number": "926627357",
   "account_value": 8754.282138405,
-  "buying_power": 2161.19,
+  "buying_power": 1530.19,
+  "high_water_mark": 8787.07,
+  "last_trade_date": "2026-06-24",
+  "trades_today": 0,
+  "last_updated": "2026-06-25 13:46 ChST (manual update)",
+  "build_phase": "Day 6",
+  "schema_version": "1.1",
+  "notes": "Manual state update June 25 Guam. Quantities reflect all trades through June 24 ET (Tier 3 buys IREN/APLD/CORZ/CRWV + AVGO top-up + NVDA trim). account_value and pct fields stale — agent refreshes from live Robinhood MCP at session start. MU buy scheduled June 25 ET 1100 (0100 June 26 Guam). Snowball-sourced lots (Jun 1 Grok buys) flagged pending June Grok statement confirmation. tax_lots added in schema v1.1.",
   "positions": {
     "NVDA": {
-      "value": 2075.15,
-      "pct": 0.237043,
       "quantity": 10.274267,
-      "price": 201.975
+      "avg_cost": 196.28,
+      "price": 201.975,
+      "value": 2075.15,
+      "pct": 0.237043
     },
     "AVGO": {
-      "value": 1051.3,
-      "pct": 0.12009,
-      "quantity": 2.7623,
-      "price": 380.59
+      "quantity": 2.762300,
+      "avg_cost": 401.12,
+      "price": 380.59,
+      "value": 1051.30,
+      "pct": 0.12009
     },
     "MU": {
-      "value": 717.05,
-      "pct": 0.081909,
       "quantity": 0.656742,
-      "price": 1091.835
+      "avg_cost": 1142.00,
+      "price": 1091.835,
+      "value": 717.05,
+      "pct": 0.081909
     },
     "CEG": {
-      "value": 348.83,
-      "pct": 0.039847,
       "quantity": 1.272681,
-      "price": 274.09
+      "avg_cost": 275.01,
+      "price": 274.09,
+      "value": 348.83,
+      "pct": 0.039847
     },
     "GEV": {
-      "value": 332.45,
-      "pct": 0.037976,
       "quantity": 0.314954,
-      "price": 1055.56
+      "avg_cost": 1111.27,
+      "price": 1055.56,
+      "value": 332.45,
+      "pct": 0.037976
     },
     "VST": {
-      "value": 301.1,
-      "pct": 0.034394,
       "quantity": 1.826818,
-      "price": 164.82
+      "avg_cost": 164.22,
+      "price": 164.82,
+      "value": 301.10,
+      "pct": 0.034394
     },
     "BE": {
-      "value": 350.47,
-      "pct": 0.040035,
       "quantity": 1.086862,
-      "price": 322.465
-    },
-    "RIOT": {
-      "value": 13.83,
-      "pct": 0.00158,
-      "quantity": 0.485206,
-      "price": 28.51
-    },
-    "CORZ": {
-      "value": 202.04,
-      "pct": 0.023079,
-      "quantity": 6.993288,
-      "price": 28.89
+      "avg_cost": 306.34,
+      "price": 322.465,
+      "value": 350.47,
+      "pct": 0.040035
     },
     "IREN": {
+      "quantity": 6.626255,
+      "avg_cost": 54.76,
+      "price": 55.68,
       "value": 187.45,
-      "pct": 0.021413,
-      "quantity": 3.366623,
-      "price": 55.68
-    },
-    "CRWV": {
-      "value": 217.86,
-      "pct": 0.024887,
-      "quantity": 2.021665,
-      "price": 107.765
-    },
-    "NBIS": {
-      "value": 320.84,
-      "pct": 0.03665,
-      "quantity": 1.152174,
-      "price": 278.465
+      "pct": 0.021413
     },
     "APLD": {
-      "value": 190.2,
-      "pct": 0.021726,
-      "quantity": 4.184798,
-      "price": 45.45
+      "quantity": 8.104545,
+      "avg_cost": 43.67,
+      "price": 45.45,
+      "value": 190.20,
+      "pct": 0.021726
+    },
+    "CORZ": {
+      "quantity": 12.425759,
+      "avg_cost": 27.93,
+      "price": 28.89,
+      "value": 202.04,
+      "pct": 0.023079
+    },
+    "CRWV": {
+      "quantity": 3.382672,
+      "avg_cost": 105.67,
+      "price": 107.765,
+      "value": 217.86,
+      "pct": 0.024887
     },
     "ASML": {
-      "value": 314.41,
-      "pct": 0.035916,
       "quantity": 0.176076,
-      "price": 1785.677
+      "avg_cost": 1140.19,
+      "price": 1785.677,
+      "value": 314.41,
+      "pct": 0.035916
+    },
+    "NBIS": {
+      "quantity": 1.152174,
+      "avg_cost": 230.31,
+      "price": 278.465,
+      "value": 320.84,
+      "pct": 0.036650
+    },
+    "RIOT": {
+      "quantity": 0.485206,
+      "avg_cost": 22.405,
+      "price": 28.51,
+      "value": 13.83,
+      "pct": 0.001580
     }
   },
-  "high_water_mark": 8787.067682915,
-  "trades_today": 1,
-  "last_trade_date": "2026-06-23",
-  "build_phase": "Day 4",
-  "notes": "Day 4 build. AVGO +$258 (to 12% target). NVDA trim complete (now 23.7%). Tier3 at 9.1% combined \u2014 need user guidance on build pace vs strict 2% rule. MU earnings Jun 24 pm \u2014 watch closely. Broad market selloff today, cause unknown.",
-  "last_updated": "2026-06-23 11:09:00 ET",
-  "schema_version": "1.0"
+  "tax_lots": [
+    {"symbol": "NVDA", "quantity": 0.227930,  "cost_basis": 187.71,   "acquired": "2025-12-29", "term": "short", "notes": "partial lot, 0.219622 sh consumed by FIFO sell 2026-06-23"},
+    {"symbol": "NVDA", "quantity": 2.629987,  "cost_basis": 190.115,  "acquired": "2026-01-05", "term": "short"},
+    {"symbol": "NVDA", "quantity": 0.432549,  "cost_basis": 184.95,   "acquired": "2026-01-13", "term": "short"},
+    {"symbol": "NVDA", "quantity": 1.351533,  "cost_basis": 184.975,  "acquired": "2026-02-02", "term": "short"},
+    {"symbol": "NVDA", "quantity": 0.509762,  "cost_basis": 179.77,   "acquired": "2026-02-27", "term": "short"},
+    {"symbol": "NVDA", "quantity": 0.827746,  "cost_basis": 181.215,  "acquired": "2026-03-05", "term": "short"},
+    {"symbol": "NVDA", "quantity": 0.000459,  "cost_basis": 174.15,   "acquired": "2026-04-02", "term": "short", "notes": "DRIP"},
+    {"symbol": "NVDA", "quantity": 0.010000,  "cost_basis": 208.73,   "acquired": "2026-06-05", "term": "short", "notes": "DRIP - Snowball, confirm vs June Grok statement"},
+    {"symbol": "NVDA", "quantity": 4.284288,  "cost_basis": 210.07,   "acquired": "2026-06-19", "term": "short"},
+    {"symbol": "AVGO", "quantity": 2.084406,  "cost_basis": 407.79,   "acquired": "2026-06-19", "term": "short"},
+    {"symbol": "AVGO", "quantity": 0.677894,  "cost_basis": 380.59,   "acquired": "2026-06-24", "term": "short"},
+    {"symbol": "MU",   "quantity": 0.656742,  "cost_basis": 1142.00,  "acquired": "2026-06-19", "term": "short"},
+    {"symbol": "CEG",  "quantity": 1.272681,  "cost_basis": 275.01,   "acquired": "2026-06-19", "term": "short"},
+    {"symbol": "GEV",  "quantity": 0.314954,  "cost_basis": 1111.27,  "acquired": "2026-06-19", "term": "short"},
+    {"symbol": "VST",  "quantity": 1.826818,  "cost_basis": 164.22,   "acquired": "2026-06-19", "term": "short"},
+    {"symbol": "BE",   "quantity": 0.275313,  "cost_basis": 252.74,   "acquired": "2026-05-19", "term": "short"},
+    {"symbol": "BE",   "quantity": 0.048913,  "cost_basis": 273.34,   "acquired": "2026-06-01", "term": "short", "notes": "Snowball - confirm vs June Grok statement"},
+    {"symbol": "BE",   "quantity": 0.762636,  "cost_basis": 327.81,   "acquired": "2026-06-19", "term": "short"},
+    {"symbol": "IREN", "quantity": 0.555324,  "cost_basis": 48.05,    "acquired": "2026-05-19", "term": "short"},
+    {"symbol": "IREN", "quantity": 0.101956,  "cost_basis": 60.81,    "acquired": "2026-06-01", "term": "short", "notes": "Snowball - confirm vs June Grok statement"},
+    {"symbol": "IREN", "quantity": 2.709343,  "cost_basis": 58.69,    "acquired": "2026-06-23", "term": "short"},
+    {"symbol": "IREN", "quantity": 3.259632,  "cost_basis": 52.46,    "acquired": "2026-06-25", "term": "short"},
+    {"symbol": "APLD", "quantity": 0.590777,  "cost_basis": 37.305,   "acquired": "2026-05-19", "term": "short"},
+    {"symbol": "APLD", "quantity": 0.106675,  "cost_basis": 45.84,    "acquired": "2026-06-01", "term": "short", "notes": "Snowball - confirm vs June Grok statement"},
+    {"symbol": "APLD", "quantity": 3.487346,  "cost_basis": 45.59,    "acquired": "2026-06-23", "term": "short"},
+    {"symbol": "APLD", "quantity": 3.919747,  "cost_basis": 42.86,    "acquired": "2026-06-25", "term": "short"},
+    {"symbol": "CORZ", "quantity": 1.310892,  "cost_basis": 22.70,    "acquired": "2026-05-19", "term": "short"},
+    {"symbol": "CORZ", "quantity": 0.233459,  "cost_basis": 26.69,    "acquired": "2026-06-01", "term": "short", "notes": "Snowball - confirm vs June Grok statement"},
+    {"symbol": "CORZ", "quantity": 5.448937,  "cost_basis": 29.18,    "acquired": "2026-06-23", "term": "short"},
+    {"symbol": "CORZ", "quantity": 5.432471,  "cost_basis": 27.98,    "acquired": "2026-06-25", "term": "short"},
+    {"symbol": "CRWV", "quantity": 0.485158,  "cost_basis": 99.155,   "acquired": "2026-05-19", "term": "short"},
+    {"symbol": "CRWV", "quantity": 0.087430,  "cost_basis": 118.38,   "acquired": "2026-06-01", "term": "short", "notes": "Snowball - confirm vs June Grok statement"},
+    {"symbol": "CRWV", "quantity": 1.449077,  "cost_basis": 109.73,   "acquired": "2026-06-23", "term": "short"},
+    {"symbol": "CRWV", "quantity": 1.361007,  "cost_basis": 102.87,   "acquired": "2026-06-25", "term": "short"},
+    {"symbol": "ASML", "quantity": 0.135096,  "cost_basis": 1110.32,  "acquired": "2025-12-04", "term": "short"},
+    {"symbol": "ASML", "quantity": 0.040469,  "cost_basis": 1235.50,  "acquired": "2026-01-05", "term": "short"},
+    {"symbol": "ASML", "quantity": 0.000316,  "cost_basis": 1515.48,  "acquired": "2026-05-06", "term": "short", "notes": "DRIP"},
+    {"symbol": "ASML", "quantity": 0.000195,  "cost_basis": 1140.19,  "acquired": "2026-01-01", "term": "short", "notes": "residual rounding, date approximate"},
+    {"symbol": "NBIS", "quantity": 0.022549,  "cost_basis": 226.61,   "acquired": "2026-05-28", "term": "short"},
+    {"symbol": "NBIS", "quantity": 0.418644,  "cost_basis": 226.66,   "acquired": "2026-05-28", "term": "short"},
+    {"symbol": "NBIS", "quantity": 0.545566,  "cost_basis": 226.59,   "acquired": "2026-05-29", "term": "short", "notes": "Snowball - confirm vs June Grok statement"},
+    {"symbol": "NBIS", "quantity": 0.165415,  "cost_basis": 252.34,   "acquired": "2026-06-01", "term": "short", "notes": "Snowball - confirm vs June Grok statement"},
+    {"symbol": "RIOT", "quantity": 0.485206,  "cost_basis": 22.405,   "acquired": "2026-05-19", "term": "short"}
+  ],
+  "session_log": []
 }
