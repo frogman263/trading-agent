@@ -26,9 +26,9 @@ jobs:
           echo "log_file=$LOG_FILE" >> $GITHUB_OUTPUT
           echo "date=$DATE" >> $GITHUB_OUTPUT
 
-          VALIDATOR=$(grep -i 'validator' "$LOG_FILE" | grep -oi 'PASS\|FAIL' | head -1 || echo "UNKNOWN")
+          VALIDATOR=$(grep -i 'validator' "$LOG_FILE" | grep -oiE 'PASS|FAIL|N/A' | head -1 || echo "N/A")
           ACCOUNT=$(grep -o 'Account value:.*\$[0-9,\.]*' "$LOG_FILE" | head -1 | grep -o '\$[0-9,\.]*' | head -1 || echo "N/A")
-          HWM=$(grep -o 'High-water mark:.*\$[0-9,\.]*' "$LOG_FILE" | head -1 | grep -o '\$[0-9,\.]*' | head -1 || echo "N/A")
+          HWM=$(grep -i 'high.water' "$LOG_FILE" | grep -o '\$[0-9,\.]*' | head -1 || echo "N/A")
           DRAWDOWN=$(grep -o 'Drawdown:.*[0-9\.]*%' "$LOG_FILE" | head -1 | grep -o '[0-9\.]*%' | head -1 || echo "0%")
           CASH=$(grep -o 'Cash:.*[0-9\.]*%' "$LOG_FILE" | head -1 | grep -o '[0-9\.]*%' | head -1 || echo "N/A")
           TRADES=$(grep -E '(BUY|SELL).*at \$[0-9]' "$LOG_FILE" | wc -l | tr -d ' ' || echo "0")
