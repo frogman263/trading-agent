@@ -1,5 +1,4 @@
 name: Trading Agent — Session Notification
-
 on:
   push:
     branches: [main]
@@ -9,7 +8,6 @@ on:
 jobs:
   notify:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -17,17 +15,17 @@ jobs:
       - name: Parse session log
         id: log
         run: |
-          # Find the log file pushed in this commit
-          LOG_FILE=$(git diff-tree --no-commit-id -r --name-only ${{ github.sha }} | grep 'logs/.*\.md' | head -1)
+          DATE=$(date +%Y-%m-%d)
+          LOG_FILE="logs/${DATE}.md"
 
-          if [ -z "$LOG_FILE" ]; then
-            echo "No log file found in this push — skipping notification"
+          if [ ! -f "$LOG_FILE" ]; then
+            echo "No log file found for today (${LOG_FILE}) — skipping notification"
             exit 0
           fi
 
-          DATE=$(basename "$LOG_FILE" .md)
+          echo "log_file=$LOG_FILE" >> $GITHUB_OUTPUT
+          echo "date=$DATE" >> $GITHUB_OUTPUT
 
-          # Extract key metrics
           VALIDATOR=$(grep -o 'Validator: [A-Z]*' "$LOG_FILE" | head -1 | sed 's/Validator: //' || echo "UNKNOWN")
           ACCOUNT=$(grep -o 'Account value: \$[0-9,\.]*' "$LOG_FILE" | head -1 | sed 's/Account value: //' || echo "N/A")
           TRADES=$(grep -E '^- (NVDA|AVGO|MU|CEG|GEV|VST|BE|IREN|APLD|CORZ|CRWV|ASML|NBIS|RIOT|AMD|AMAT|MRVL|VRT) (BUY|SELL)' "$LOG_FILE" | wc -l | tr -d ' ')
@@ -35,13 +33,9 @@ jobs:
           DRAWDOWN=$(grep -o 'Drawdown: [0-9\.]*%' "$LOG_FILE" | head -1 | sed 's/Drawdown: //' || echo "0%")
           CASH=$(grep -o 'Cash: [0-9\.]*%' "$LOG_FILE" | head -1 | sed 's/Cash: //' || echo "N/A")
 
-          # Set outputs
-          echo "date=$DATE" >> $GITHUB_OUTPUT
           echo "validator=$VALIDATOR" >> $GITHUB_OUTPUT
           echo "trades=$TRADES" >> $GITHUB_OUTPUT
-          echo "log_file=$LOG_FILE" >> $GITHUB_OUTPUT
 
-          # Multiline message via heredoc (safe for newlines and special chars)
           echo "message<<EOF" >> $GITHUB_OUTPUT
           echo "Validator: ${VALIDATOR}" >> $GITHUB_OUTPUT
           echo "Trades executed: ${TRADES}" >> $GITHUB_OUTPUT
