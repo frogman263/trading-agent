@@ -392,8 +392,8 @@ def validate(proposals, state, dry_run=False):
                     )
                 elif gap_pp < threshold_pp:
                     warnings.append(
-                        f"{sym}: BUY proposed with {gap_pp:.2f}pp gap to target "
-                        f"(threshold: {threshold_pp:.1f}pp, {threshold_label}). "
+                        f"{sym}: BUY proposed with {gap_pp:.2f}% gap to target "
+                        f"(threshold: {threshold_pp:.1f}%, {threshold_label}). "
                         f"Verify entry trigger — earnings rule or override may apply."
                     )
 

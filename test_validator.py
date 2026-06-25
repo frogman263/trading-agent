@@ -320,12 +320,12 @@ class TestEntryThresholds(unittest.TestCase):
 
     @MARKET_OPEN
     def test_tier1_below_2pp_threshold_warns(self, _):
-        # MU at 9.13% vs 10% target = 0.87pp — below 2pp Tier 1 threshold.
+        # MU at 9.13% vs 10% target = 0.87% — below 2% Tier 1 threshold.
         _, warnings = validator.validate(
             [make_proposal("MU", "BUY", 80)], BASE_STATE)
         self.assertTrue(
-            any("MU" in w and "0.87pp" in w for w in warnings),
-            "MU buy with 0.87pp gap should warn about Tier 1 2pp threshold")
+            any("MU" in w and "0.87%" in w for w in warnings),
+            "MU buy with 0.87% gap should warn about Tier 1 2% threshold")
 
     @MARKET_OPEN
     def test_threshold_warning_does_not_block_trade(self, _):
