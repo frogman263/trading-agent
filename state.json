@@ -1,11 +1,11 @@
 {
   "account_number": "926627357",
-  "account_value": 8897.8,
-  "buying_power": 1530.19,
+  "account_value": 8880.25,
+  "buying_power": 1430.19,
   "high_water_mark": 8897.8,
   "last_trade_date": "2026-06-24",
   "trades_today": 0,
-  "last_updated": "2026-06-25 10:21 EDT (cloud session \u2014 pre-market, v2.5)",
+  "last_updated": "2026-06-25 07:55 EDT (pre-market analysis, v2.5)",
   "build_phase": "Day 6",
   "schema_version": "1.1",
   "notes": "State updated June 25 pre-market 10:21 EDT. HWM $8897.80. Drawdown 0.0% \u2014 Tier 0 normal operations. No capital injection detected. Pre-market session (6:19 AM EDT) \u2014 no trades executed. Key signals: MU post-earnings beat +17% pre-mkt \u2192 buy at open. IREN -14.7% / CRWV -13.8% / APLD -9.7% / ASML -7.1% 5d pullback (buy_weakness). BE +15.1% 5d \u2014 no_chase active. No universe earnings next 7 days.",
@@ -13,100 +13,100 @@
     "NVDA": {
       "quantity": 10.274267,
       "avg_cost": 196.28,
-      "price": 201.65,
-      "value": 2071.81,
-      "pct": 0.232845
+      "price": 200.56,
+      "value": 2060.61,
+      "pct": 0.232044
     },
     "AVGO": {
       "quantity": 2.7623,
       "avg_cost": 401.12,
-      "price": 389.29,
-      "value": 1075.34,
-      "pct": 0.120855
+      "price": 386.18,
+      "value": 1066.75,
+      "pct": 0.120126
     },
     "MU": {
       "quantity": 0.656742,
       "avg_cost": 1142.0,
-      "price": 1226.8855,
-      "value": 805.75,
-      "pct": 0.090556
+      "price": 1232.23,
+      "value": 809.26,
+      "pct": 0.09113
     },
     "CEG": {
       "quantity": 1.272681,
       "avg_cost": 275.01,
-      "price": 269.97,
-      "value": 343.59,
-      "pct": 0.038615
+      "price": 268.5,
+      "value": 341.71,
+      "pct": 0.03848
     },
     "GEV": {
       "quantity": 0.314954,
       "avg_cost": 1111.27,
-      "price": 1087.089,
-      "value": 342.38,
-      "pct": 0.038479
+      "price": 1082.5,
+      "value": 340.94,
+      "pct": 0.038393
     },
     "VST": {
       "quantity": 1.826818,
       "avg_cost": 164.22,
-      "price": 164.64,
-      "value": 300.77,
-      "pct": 0.033803
+      "price": 164.35,
+      "value": 300.24,
+      "pct": 0.03381
     },
     "BE": {
       "quantity": 1.086862,
       "avg_cost": 306.34,
-      "price": 341.0,
-      "value": 370.62,
-      "pct": 0.041653
+      "price": 340.79,
+      "value": 370.39,
+      "pct": 0.041709
     },
     "RIOT": {
       "quantity": 0.485206,
       "avg_cost": 22.4,
-      "price": 28.3,
-      "value": 13.73,
-      "pct": 0.001543
+      "price": 28.16,
+      "value": 13.66,
+      "pct": 0.001538
     },
     "CORZ": {
       "quantity": 12.425759,
       "avg_cost": 27.93,
-      "price": 28.75,
-      "value": 357.24,
-      "pct": 0.040149
+      "price": 28.61,
+      "value": 355.5,
+      "pct": 0.040033
     },
     "IREN": {
       "quantity": 6.626255,
       "avg_cost": 54.76,
-      "price": 52.18,
-      "value": 345.76,
-      "pct": 0.038859
+      "price": 52.1,
+      "value": 345.23,
+      "pct": 0.038876
     },
     "CRWV": {
       "quantity": 3.382672,
       "avg_cost": 105.67,
-      "price": 104.43,
-      "value": 353.25,
-      "pct": 0.039701
+      "price": 105.1,
+      "value": 355.52,
+      "pct": 0.040035
     },
     "NBIS": {
       "quantity": 1.152174,
       "avg_cost": 230.31,
-      "price": 270.74,
-      "value": 311.94,
-      "pct": 0.035058
+      "price": 271.55,
+      "value": 312.87,
+      "pct": 0.035232
     },
     "APLD": {
       "quantity": 8.104545,
       "avg_cost": 43.67,
-      "price": 43.201,
-      "value": 350.12,
-      "pct": 0.039349
+      "price": 43.46,
+      "value": 352.22,
+      "pct": 0.039663
     },
     "ASML": {
       "quantity": 0.176076,
       "avg_cost": 1140.19,
-      "price": 1840.45,
-      "value": 324.06,
-      "pct": 0.03642
+      "price": 1837.18,
+      "value": 323.48,
+      "pct": 0.036427
     }
   },
   "tax_lots": [
