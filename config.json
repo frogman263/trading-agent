@@ -10,6 +10,22 @@
     "AMD", "AMAT", "MRVL", "VRT"
   ],
 
+  "tiers": {
+    "NVDA": 1, "AVGO": 1, "MU": 1,
+    "CEG": 2, "GEV": 2, "VST": 2, "BE": 2,
+    "IREN": 3, "APLD": 3, "CORZ": 3, "CRWV": 3,
+    "ASML": 4, "NBIS": 4, "RIOT": 4,
+    "AMD": 4, "AMAT": 4, "MRVL": 4, "VRT": 4
+  },
+
+  "target_allocs": {
+    "NVDA": 0.20, "AVGO": 0.12, "MU": 0.10,
+    "CEG": 0.05, "GEV": 0.05, "VST": 0.04, "BE": 0.05,
+    "IREN": 0.04, "APLD": 0.04, "CORZ": 0.04, "CRWV": 0.04,
+    "ASML": 0.04, "NBIS": 0.03, "RIOT": 0.02,
+    "AMD": 0.00, "AMAT": 0.00, "MRVL": 0.00, "VRT": 0.00
+  },
+
   "max_allocs": {
     "NVDA": 0.25, "AVGO": 0.15, "MU": 0.12,
     "CEG": 0.08, "GEV": 0.08, "VST": 0.07, "BE": 0.08,
@@ -58,6 +74,6 @@
     "2026-12-25"
   ],
 
-  "_last_updated": "2026-06-24",
-  "_version": "1.0"
+  "_last_updated": "2026-06-25",
+  "_version": "1.1"
 }
