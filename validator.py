@@ -102,7 +102,7 @@ else:
         "NVDA": 0.20, "AVGO": 0.12, "MU": 0.10,
         "CEG": 0.05, "GEV": 0.05, "VST": 0.04, "BE": 0.05,
         "IREN": 0.04, "APLD": 0.04, "CORZ": 0.04, "CRWV": 0.04,
-        "ASML": 0.04, "NBIS": 0.03, "RIOT": 0.02,
+        "ASML": 0.04, "NBIS": 0.03, "RIOT": 0.03,
         "AMD": 0.00, "AMAT": 0.00, "MRVL": 0.00, "VRT": 0.00
     }
     TIERS = {
