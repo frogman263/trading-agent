@@ -1,112 +1,112 @@
 {
   "account_number": "926627357",
-  "account_value": 8896.6197,
+  "account_value": 8897.8,
   "buying_power": 1530.19,
-  "high_water_mark": 8896.6197,
+  "high_water_mark": 8897.8,
   "last_trade_date": "2026-06-24",
   "trades_today": 0,
-  "last_updated": "2026-06-25 05:52 EDT (cloud session \u2014 pre-market)",
+  "last_updated": "2026-06-25 10:21 EDT (cloud session \u2014 pre-market, v2.5)",
   "build_phase": "Day 6",
   "schema_version": "1.1",
-  "notes": "State updated June 25 0552 EDT. New HWM $8,896.62 (up from $8,893.71). Drawdown 0% \u2014 Tier 0 normal operations. No capital injection. MU post-earnings buy pending at market open: earnings beat June 24 PM, up ~16.5% pre-market to ~$1,222, at 9.02% vs 10% target. Earnings rule override \u2014 buy at open. MRVL new position pending: -9.43% 5d pullback, ~$175. AMAT new position pending: -5.39% 5d pullback, ~$150. No macro red flags. Cash 17.22% \u2014 excess; deploying at next market open.",
+  "notes": "State updated June 25 pre-market 10:21 EDT. HWM $8897.80. Drawdown 0.0% \u2014 Tier 0 normal operations. No capital injection detected. Pre-market session (6:19 AM EDT) \u2014 no trades executed. Key signals: MU post-earnings beat +17% pre-mkt \u2192 buy at open. IREN -14.7% / CRWV -13.8% / APLD -9.7% / ASML -7.1% 5d pullback (buy_weakness). BE +15.1% 5d \u2014 no_chase active. No universe earnings next 7 days.",
   "positions": {
     "NVDA": {
       "quantity": 10.274267,
       "avg_cost": 196.28,
-      "price": 201.74,
-      "value": 2072.73,
-      "pct": 0.232979
+      "price": 201.65,
+      "value": 2071.81,
+      "pct": 0.232845
     },
     "AVGO": {
       "quantity": 2.7623,
       "avg_cost": 401.12,
-      "price": 389.01,
-      "value": 1074.56,
-      "pct": 0.120783
+      "price": 389.29,
+      "value": 1075.34,
+      "pct": 0.120855
     },
     "MU": {
       "quantity": 0.656742,
       "avg_cost": 1142.0,
-      "price": 1222.0,
-      "value": 802.54,
-      "pct": 0.090207
+      "price": 1226.8855,
+      "value": 805.75,
+      "pct": 0.090556
     },
     "CEG": {
       "quantity": 1.272681,
       "avg_cost": 275.01,
       "price": 269.97,
       "value": 343.59,
-      "pct": 0.03862
+      "pct": 0.038615
     },
     "GEV": {
       "quantity": 0.314954,
       "avg_cost": 1111.27,
-      "price": 1085.0,
-      "value": 341.73,
-      "pct": 0.038411
+      "price": 1087.089,
+      "value": 342.38,
+      "pct": 0.038479
     },
     "VST": {
       "quantity": 1.826818,
       "avg_cost": 164.22,
-      "price": 165.5,
-      "value": 302.34,
-      "pct": 0.033984
+      "price": 164.64,
+      "value": 300.77,
+      "pct": 0.033803
     },
     "BE": {
       "quantity": 1.086862,
       "avg_cost": 306.34,
-      "price": 341.5,
-      "value": 371.16,
-      "pct": 0.041719
+      "price": 341.0,
+      "value": 370.62,
+      "pct": 0.041653
     },
     "RIOT": {
       "quantity": 0.485206,
       "avg_cost": 22.4,
-      "price": 28.28,
-      "value": 13.72,
-      "pct": 0.001542
+      "price": 28.3,
+      "value": 13.73,
+      "pct": 0.001543
     },
     "CORZ": {
       "quantity": 12.425759,
       "avg_cost": 27.93,
       "price": 28.75,
       "value": 357.24,
-      "pct": 0.040155
+      "pct": 0.040149
     },
     "IREN": {
       "quantity": 6.626255,
       "avg_cost": 54.76,
-      "price": 52.16,
-      "value": 345.63,
-      "pct": 0.03885
+      "price": 52.18,
+      "value": 345.76,
+      "pct": 0.038859
     },
     "CRWV": {
       "quantity": 3.382672,
       "avg_cost": 105.67,
-      "price": 104.76,
-      "value": 354.37,
-      "pct": 0.039832
+      "price": 104.43,
+      "value": 353.25,
+      "pct": 0.039701
     },
     "NBIS": {
       "quantity": 1.152174,
       "avg_cost": 230.31,
-      "price": 270.44,
-      "value": 311.59,
-      "pct": 0.035023
+      "price": 270.74,
+      "value": 311.94,
+      "pct": 0.035058
     },
     "APLD": {
       "quantity": 8.104545,
       "avg_cost": 43.67,
-      "price": 43.16,
-      "value": 349.79,
-      "pct": 0.039317
+      "price": 43.201,
+      "value": 350.12,
+      "pct": 0.039349
     },
     "ASML": {
       "quantity": 0.176076,
       "avg_cost": 1140.19,
-      "price": 1839.59,
-      "value": 323.91,
-      "pct": 0.036408
+      "price": 1840.45,
+      "value": 324.06,
+      "pct": 0.03642
     }
   },
   "tax_lots": [
