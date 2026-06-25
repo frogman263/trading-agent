@@ -1,112 +1,112 @@
 {
   "account_number": "926627357",
-  "account_value": 8881.58,
+  "account_value": 8887.15,
   "buying_power": 1530.19,
-  "high_water_mark": 8881.58,
+  "high_water_mark": 8887.15,
   "last_trade_date": "2026-06-24",
   "trades_today": 0,
-  "last_updated": "2026-06-25 01:16 EDT (cloud session)",
+  "last_updated": "2026-06-25 01:53 EDT (cloud session)",
   "build_phase": "Day 6",
   "schema_version": "1.1",
-  "notes": "State updated June 25 0116 EDT. MU earnings beat June 24 PM \u2014 up ~18% AH to ~$1,240. New HWM $8,881.58. Analysis-only session (market closed). MU priority buy next session (post-earnings, 9.17% vs 10% target). BE chase rule active (+15.1% 5d). Tier 3 build milestone hit \u2014 all Tier 3 positions near target. Cash 17.25% overweight. No trades executed.",
+  "notes": "State updated June 25 0153 EDT. MU earnings beat June 24 PM \u2014 up ~17.8% AH to ~$1,235. New HWM $8,887.15. Analysis-only session (market closed 01:53 AM EDT). MU priority buy next session (post-earnings rule; 9.13% vs 10% target; ~$78 delta at AH price). BE chase rule active (+16.1% 5d, >10% threshold). Tier 3 milestone maintained at 15.76% (2pp threshold in effect). Cash 17.24% \u2014 excess vs 5-10% target. RIOT at 1.85pp below 2% target (threshold 2pp, not triggered). New position candidates AMD/AMAT/MRVL/VRT clear 5-day screen (all <10% move). No macro red flags. No trades executed.",
   "positions": {
     "NVDA": {
       "quantity": 10.274267,
       "avg_cost": 196.28,
-      "price": 200.3,
-      "value": 2057.94,
-      "pct": 0.231709
+      "price": 200.67,
+      "value": 2061.74,
+      "pct": 0.231991
     },
     "AVGO": {
       "quantity": 2.7623,
       "avg_cost": 401.12,
-      "price": 387.97,
-      "value": 1071.69,
-      "pct": 0.120664
+      "price": 388.4,
+      "value": 1072.88,
+      "pct": 0.120722
     },
     "MU": {
       "quantity": 0.656742,
       "avg_cost": 1142.0,
-      "price": 1240.0,
-      "value": 814.36,
-      "pct": 0.091691
+      "price": 1235.0,
+      "value": 811.08,
+      "pct": 0.091264
     },
     "CEG": {
       "quantity": 1.272681,
       "avg_cost": 275.01,
-      "price": 269.48,
-      "value": 342.96,
-      "pct": 0.038615
+      "price": 269.72,
+      "value": 343.27,
+      "pct": 0.038625
     },
     "GEV": {
       "quantity": 0.314954,
       "avg_cost": 1111.27,
-      "price": 1078.9,
-      "value": 339.8,
-      "pct": 0.038259
+      "price": 1077.01,
+      "value": 339.21,
+      "pct": 0.038168
     },
     "VST": {
       "quantity": 1.826818,
       "avg_cost": 164.22,
-      "price": 164.47,
-      "value": 300.46,
-      "pct": 0.03383
+      "price": 164.52,
+      "value": 300.55,
+      "pct": 0.033818
     },
     "BE": {
       "quantity": 1.086862,
       "avg_cost": 306.34,
-      "price": 344.01,
-      "value": 373.89,
-      "pct": 0.042097
+      "price": 344.79,
+      "value": 374.74,
+      "pct": 0.042166
     },
     "IREN": {
       "quantity": 6.626255,
       "avg_cost": 54.76,
-      "price": 51.75,
-      "value": 342.91,
-      "pct": 0.038609
+      "price": 52.21,
+      "value": 345.96,
+      "pct": 0.038928
     },
     "APLD": {
       "quantity": 8.104545,
       "avg_cost": 43.67,
-      "price": 43.1,
-      "value": 349.31,
-      "pct": 0.03933
+      "price": 43.13,
+      "value": 349.55,
+      "pct": 0.039332
     },
     "CORZ": {
       "quantity": 12.425759,
       "avg_cost": 27.93,
-      "price": 28.32,
-      "value": 351.9,
-      "pct": 0.039621
+      "price": 28.26,
+      "value": 351.15,
+      "pct": 0.039512
     },
     "CRWV": {
       "quantity": 3.382672,
       "avg_cost": 105.67,
-      "price": 104.8,
-      "value": 354.5,
-      "pct": 0.039914
+      "price": 104.66,
+      "value": 354.03,
+      "pct": 0.039836
     },
     "ASML": {
       "quantity": 0.176076,
       "avg_cost": 1140.19,
-      "price": 1848.16,
-      "value": 325.42,
-      "pct": 0.03664
+      "price": 1853.0,
+      "value": 326.27,
+      "pct": 0.036712
     },
     "NBIS": {
       "quantity": 1.152174,
       "avg_cost": 230.31,
-      "price": 269.94,
-      "value": 311.02,
-      "pct": 0.035019
+      "price": 269.98,
+      "value": 311.06,
+      "pct": 0.035002
     },
     "RIOT": {
       "quantity": 0.485206,
       "avg_cost": 22.4,
-      "price": 27.85,
-      "value": 13.51,
-      "pct": 0.001521
+      "price": 27.98,
+      "value": 13.58,
+      "pct": 0.001528
     }
   },
   "tax_lots": [
