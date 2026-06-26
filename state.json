@@ -1,1 +1,193 @@
-ewogICJhY2NvdW50X251bWJlciI6ICI5MjY2MjczNTciLAogICJhY2NvdW50X3ZhbHVlIjogODM5OS4wNiwKICAiYnV5aW5nX3Bvd2VyIjogNjcxLjExLAogICJoaWdoX3dhdGVyX21hcmsiOiA4ODk3LjgsCiAgImxhc3RfdHJhZGVfZGF0ZSI6ICIyMDI2LTA2LTI2IiwKICAidHJhZGVzX3RvZGF5IjogNCwKICAibGFzdF91cGRhdGVkIjogIjIwMjYtMDYtMjZUMTM6MzQ6MDAiLAogICJidWlsZF9waGFzZSI6ICJTdGVhZHkgU3RhdGUiLAogICJzY2hlbWFfdmVyc2lvbiI6ICIxLjEiLAogICJub3RlcyI6ICJTdGF0ZSB1cGRhdGVkIDIwMjYtMDYtMjYgb3BlbiAoOTozMyBBTSBFVCkuIFRpZXIgNCBlbnRyaWVzOiBBTUQsIEFNQVQsIE1SVkwsIFZSVCAkMTY3IGVhY2guIE5vdyAxOCBwb3NpdGlvbnMuIiwKICAicG9zaXRpb25zIjogewogICAgIk5WREEiOiB7CiAgICAgICJxdWFudGl0eSI6IDEwLjI3NDI2NywKICAgICAgImF2Z19idXlfcHJpY2UiOiAxOTYuMjgsCiAgICAgICJsYXN0X3ByaWNlIjogMTk1Ljc0LAogICAgICAidmFsdWUiOiAyMDExLjA5LAogICAgICAicGN0IjogMjMuOTQKICAgIH0sCiAgICAiQVZHTyI6IHsKICAgICAgInF1YW50aXR5IjogMi43NjU4ODUsCiAgICAgICJhdmdfYnV5X3ByaWNlIjogNDAxLjA4LAogICAgICAibGFzdF9wcmljZSI6IDM3OC45MSwKICAgICAgInZhbHVlIjogMTA0OC4wMiwKICAgICAgInBjdCI6IDEyLjQ4CiAgICB9LAogICAgIk1VIjogewogICAgICAicXVhbnRpdHkiOiAwLjczMzMzMSwKICAgICAgImF2Z19idXlfcHJpY2UiOiAxMTQ2LjkzLAogICAgICAibGFzdF9wcmljZSI6IDEyMTMuNTYsCiAgICAgICJ2YWx1ZSI6IDg4OS45NCwKICAgICAgInBjdCI6IDEwLjYKICAgIH0sCiAgICAiQ0VHIjogewogICAgICAicXVhbnRpdHkiOiAxLjI3MjY4MSwKICAgICAgImF2Z19idXlfcHJpY2UiOiAyNzUuMDEsCiAgICAgICJsYXN0X3ByaWNlIjogMjY4LjY5LAogICAgICAidmFsdWUiOiAzNDEuOTYsCiAgICAgICJwY3QiOiA0LjA3CiAgICB9LAogICAgIkdFViI6IHsKICAgICAgInF1YW50aXR5IjogMC4zMTQ5NTQsCiAgICAgICJhdmdfYnV5X3ByaWNlIjogMTExMS4yNywKICAgICAgImxhc3RfcHJpY2UiOiAxMDg1LjQ3LAogICAgICAidmFsdWUiOiAzNDEuODcsCiAgICAgICJwY3QiOiA0LjA3CiAgICB9LAogICAgIlZTVCI6IHsKICAgICAgInF1YW50aXR5IjogMS44MjkzMTIsCiAgICAgICJhdmdfYnV5X3ByaWNlIjogMTY0LjIzLAogICAgICAibGFzdF9wcmljZSI6IDE2Ny43NywKICAgICAgInZhbHVlIjogMzA2LjksCiAgICAgICJwY3QiOiAzLjY1CiAgICB9LAogICAgIkJFIjogewogICAgICAicXVhbnRpdHkiOiAxLjA4Njg2MiwKICAgICAgImF2Z19idXlfcHJpY2UiOiAzMDYuMzQsCiAgICAgICJsYXN0X3ByaWNlIjogMzA5LjE4LAogICAgICAidmFsdWUiOiAzMzYuMDQsCiAgICAgICJwY3QiOiA0LjAKICAgIH0sCiAgICAiUklPVCI6IHsKICAgICAgInF1YW50aXR5IjogNC4wMTkzOTksCiAgICAgICJhdmdfYnV5X3ByaWNlIjogMjcuNTgsCiAgICAgICJsYXN0X3ByaWNlIjogMjcuNzYsCiAgICAgICJ2YWx1ZSI6IDExMS41OCwKICAgICAgInBjdCI6IDEuMzMKICAgIH0sCiAgICAiQ09SWiI6IHsKICAgICAgInF1YW50aXR5IjogMTIuNDI1NzU5LAogICAgICAiYXZnX2J1eV9wcmljZSI6IDI3LjkzLAogICAgICAibGFzdF9wcmljZSI6IDI3LjI3LAogICAgICAidmFsdWUiOiAzMzguODUsCiAgICAgICJwY3QiOiA0LjAzCiAgICB9LAogICAgIklSRU4iOiB7CiAgICAgICJxdWFudGl0eSI6IDYuNjI2MjU1LAogICAgICAiYXZnX2J1eV9wcmljZSI6IDU0Ljc2LAogICAgICAibGFzdF9wcmljZSI6IDQ3Ljc0LAogICAgICAidmFsdWUiOiAzMTYuMzQsCiAgICAgICJwY3QiOiAzLjc3CiAgICB9LAogICAgIkNSV1YiOiB7CiAgICAgICJxdWFudGl0eSI6IDMuMzgyNjcyLAogICAgICAiYXZnX2J1eV9wcmljZSI6IDEwNS42NywKICAgICAgImxhc3RfcHJpY2UiOiA5OC43NiwKICAgICAgInZhbHVlIjogMzM0LjA3LAogICAgICAicGN0IjogMy45OAogICAgfSwKICAgICJOQklTIjogewogICAgICAicXVhbnRpdHkiOiAxLjE1MjE3NCwKICAgICAgImF2Z19idXlfcHJpY2UiOiAyMzAuMzEsCiAgICAgICJsYXN0X3ByaWNlIjogMjU2LjYzLAogICAgICAidmFsdWUiOiAyOTUuNjgsCiAgICAgICJwY3QiOiAzLjUyCiAgICB9LAogICAgIkFQTEQiOiB7CiAgICAgICJxdWFudGl0eSI6IDguMTA0NTQ1LAogICAgICAiYXZnX2J1eV9wcmljZSI6IDQzLjY3LAogICAgICAibGFzdF9wcmljZSI6IDQwLjk1LAogICAgICAidmFsdWUiOiAzMzEuODgsCiAgICAgICJwY3QiOiAzLjk1CiAgICB9LAogICAgIkFTTUwiOiB7CiAgICAgICJxdWFudGl0eSI6IDAuMTc2MDc2LAogICAgICAiYXZnX2J1eV9wcmljZSI6IDExNDAuMTksCiAgICAgICJsYXN0X3ByaWNlIjogMTg0MS4xOCwKICAgICAgInZhbHVlIjogMzI0LjE5LAogICAgICAicGN0IjogMy44NgogICAgfSwKICAgICJBTUQiOiB7CiAgICAgICJxdWFudGl0eSI6IDAuMzMwMjc5LAogICAgICAiYXZnX2J1eV9wcmljZSI6IDUwNS42MywKICAgICAgImxhc3RfcHJpY2UiOiA1MDUuNjMsCiAgICAgICJ2YWx1ZSI6IDE2Ny4wLAogICAgICAicGN0IjogMS45OQogICAgfSwKICAgICJBTUFUIjogewogICAgICAicXVhbnRpdHkiOiAwLjI2MTg2OSwKICAgICAgImF2Z19idXlfcHJpY2UiOiA2MzcuNzIsCiAgICAgICJsYXN0X3ByaWNlIjogNjM3LjcyLAogICAgICAidmFsdWUiOiAxNjcuMCwKICAgICAgInBjdCI6IDEuOTkKICAgIH0sCiAgICAiTVJWTCI6IHsKICAgICAgInF1YW50aXR5IjogMC42MjY1NDcsCiAgICAgICJhdmdfYnV5X3ByaWNlIjogMjY2LjU0LAogICAgICAibGFzdF9wcmljZSI6IDI2Ni41NCwKICAgICAgInZhbHVlIjogMTY3LjAsCiAgICAgICJwY3QiOiAxLjk5CiAgICB9LAogICAgIlZSVCI6IHsKICAgICAgInF1YW50aXR5IjogMC41NDQ0MzUsCiAgICAgICJhdmdfYnV5X3ByaWNlIjogMzA2Ljc0LAogICAgICAibGFzdF9wcmljZSI6IDMwNi43NCwKICAgICAgInZhbHVlIjogMTY3LjAsCiAgICAgICJwY3QiOiAxLjk5CiAgICB9CiAgfSwKICAidGF4X2xvdHMiOiBbCiAgICB7CiAgICAgICJzeW1ib2wiOiAiTlZEQSIsCiAgICAgICJxdWFudGl0eSI6IDAuMjI3OTMsCiAgICAgICJjb3N0X2Jhc2lzIjogMTg3LjcxLAogICAgICAiYWNxdWlyZWQiOiAiMjAyNS0xMi0yOSIsCiAgICAgICJ0ZXJtIjogInNob3J0IiwKICAgICAgIm5vdGVzIjogInBhcnRpYWwgbG90LCAwLjIxOTYyMiBzaCBjb25zdW1lZCBieSBGSUZPIHNlbGwgMjAyNi0wNi0yMyIKICAgIH0sCiAgICB7CiAgICAgICJzeW1ib2wiOiAiTlZEQSIsCiAgICAgICJxdWFudGl0eSI6IDIuNjI5OTg3LAogICAgICAiY29zdF9iYXNpcyI6IDE5MC4xMTUsCiAgICAgICJhY3F1aXJlZCI6ICIyMDI2LTAxLTA1IiwKICAgICAgInRlcm0iOiAic2hvcnQiCiAgICB9LAogICAgewogICAgICAic3ltYm9sIjogIk5WREEiLAogICAgICAicXVhbnRpdHkiOiAwLjQzMjU0OSwKICAgICAgImNvc3RfYmFzaXMiOiAxODQuOTUsCiAgICAgICJhY3F1aXJlZCI6ICIyMDI2LTAxLTEzIiwKICAgICAgInRlcm0iOiAic2hvcnQiCiAgICB9LAogICAgewogICAgICAic3ltYm9sIjogIk5WREEiLAogICAgICAicXVhbnRpdHkiOiAxLjM1MTUzMywKICAgICAgImNvc3RfYmFzaXMiOiAxODQuOTc1LAogICAgICAiYWNxdWlyZWQiOiAiMjAyNi0wMi0wMiIsCiAgICAgICJ0ZXJtIjogInNob3J0IgogICAgfSwKICAgIHsKICAgICAgInN5bWJvbCI6ICJOVkRBIiwKICAgICAgInF1YW50aXR5IjogMC41MDk3NjIsCiAgICAgICJjb3N0X2Jhc2lzIjogMTc5Ljc3LAogICAgICAiYWNxdWlyZWQiOiAiMjAyNi0wMi0yNyIsCiAgICAgICJ0ZXJmIjogInNob3J0IgogICAgfSwKICAgIHsKICAgICAgInN5bWJvbCI6ICJOVkRBIiwKICAgICAgInF1YW50aXR5IjogMC44Mjc3NDYsCiAgICAgICJjb3N0X2Jhc2lzIjogMTgxLjIxNSwKICAgICAgImFjcXVpcmVkIjogIjIwMjYtMDMtMDUiLAogICAgICAidGVybSI6ICJzaG9ydCIKICAgIH0sCiAgICB7CiAgICAgICJzeW1ib2wiOiAiTlZEQSIsCiAgICAgICJxdWFudGl0eSI6IDAuMDAwNDU5LAogICAgICAiY29zdF9iYXNpcyI6IDE3NC4xNSwKICAgICAgImFjcXVpcmVkIjogIjIwMjYtMDQtMDIiLAogICAgICAidGVybSI6ICJzaG9ydCIsCiAgICAgICJub3RlcyI6ICJEUklQIgogICAgfSwKICAgIHsKICAgICAgInN5bWJvbCI6ICJOVkRBIiwKICAgICAgInF1YW50aXR5IjogMC4wMSwKICAgICAgImNvc3RfYmFzaXMiOiAyMDguNzMsCiAgICAgICJhY3F1aXJlZCI6ICIyMDI2LTA2LTA1IiwKICAgICAgInRlcm0iOiAic2hvcnQiLAogICAgICAibm90ZXMiOiAiRFJJUCIKICAgIH0sCiAgICB7CiAgICAgICJzeW1ib2wiOiAiTlZEQSIsCiAgICAgICJxdWFudGl0eSI6IDQuMjg0Mjg4LAogICAgICAiY29zdF9iYXNpcyI6IDIxMC4wNywKICAgICAgImFjcXVpcmVkIjogIjIwMjYtMDYtMTkiLAogICAgICAidGVybSI6ICJzaG9ydCIKICAgIH0sCiAgICB7CiAgICAgICJzeW1ib2wiOiAiQVZHTyIsCiAgICAgICJxdWFudGl0eSI6IDIuMDg0NDA2LAogICAgICAiY29zdF9iYXNpcyI6IDQwNy43OSwKICAgICAgImFjcXVpcmVkIjogIjIwMjYtMDYtMTkiLAogICAgICAidGVybSI6ICJzaG9ydCIKICAgIH0sCiAgICB7CiAgICAgICJzeW1ib2wiOiAiQVZHTyIsCiAgICAgICJxdWFudGl0eSI6IDAuNjc3ODk0LAogICAgICAiY29zdF9iYXNpcyI6IDM4MC41OSwKICAgICAgImFjcXVpcmVkIjogIjIwMjYtMDYtMjQiLAogICAgICAidGVybSI6ICJzaG9ydCIKICAgIH0sCiAgICB7CiAgICAgICJzeW1ib2wiOiAiTVUiLAogICAgICAicXVhbnRpdHkiOiAwLjY1Njc0MiwKICAgICAgImNvc3RfYmFzaXMiOiAxMTQyLjAsCiAgICAgICJhY3F1aXJlZCI6ICIyMDI2LTA2LTE5IiwKICAgICAgInRlcm0iOiAic2hvcnQiCiAgICB9LAogICAgewogICAgICAic3ltYm9sIjogIk1VIiwKICAgICAgInF1YW50aXR5IjogMC4wNzY1ODksCiAgICAgICJjb3N0X2Jhc2lzIjogMTE4OS4yMiwKICAgICAgImFjcXVpcmVkIjogIjIwMjYtMDYtMjUiLAogICAgICAidGVybSI6ICJzaG9ydCIKICAgIH0sCiAgICB7CiAgICAgICJzeW1ib2wiOiAiQ0VHIiwKICAgICAgInF1YW50aXR5IjogMS4yNzI2ODEsCiAgICAgICJjb3N0X2Jhc2lzIjogMjc1LjAxLAogICAgICAiYWNxdWlyZWQiOiAiMjAyNi0wNi0xOSIsCiAgICAgICJ0ZXJtIjogInNob3J0IgogICAgfSwKICAgIHsKICAgICAgInN5bWJvbCI6ICJHRVYiLAogICAgICAicXVhbnRpdHkiOiAwLjMxNDk1NCwKICAgICAgImNvc3RfYmFzaXMiOiAxMTExLjI3LAogICAgICAiYWNxdWlyZWQiOiAiMjAyNi0wNi0xOSIsCiAgICAgICJ0ZXJtIjogInNob3J0IgogICAgfSwKICAgIHsKICAgICAgInN5bWJvbCI6ICJWU1QiLAogICAgICAicXVhbnRpdHkiOiAxLjgyNjgxOCwKICAgICAgImNvc3RfYmFzaXMiOiAxNjQuMjIsCiAgICAgICJhY3F1aXJlZCI6ICIyMDI2LTA2LTE5IiwKICAgICAgInRlcm0iOiAic2hvcnQiCiAgICB9LAogICAgewogICAgICAic3ltYm9sIjogIkJFIiwKICAgICAgInF1YW50aXR5IjogMC4yNzUzMTMsCiAgICAgICJjb3N0X2Jhc2lzIjogMjUyLjc0LAogICAgICAiYWNxdWlyZWQiOiAiMjAyNi0wNS0xOSIsCiAgICAgICJ0ZXJtIjogInNob3J0IgogICAgfSwKICAgIHsKICAgICAgInN5bWJvbCI6ICJCRSIsCiAgICAgICJxdWFudGl0eSI6IDAuMDQ4OTEzLAogICAgICAiY29zdF9iYXNpcyI6IDI3My4zNCwKICAgICAgImFjcXVpcmVkIjogIjIwMjYtMDYtMDEiLAogICAgICAidGVybSI6ICJzaG9ydCIsCiAgICAgICJub3RlcyI6ICJTbm93YmFsbCIKICAgIH0sCiAgICB7CiAgICAgICJzeW1ib2wiOiAiQkUiLAogICAgICAicXVhbnRpdHkiOiAwLjc2MjYzNiwKICAgICAgImNvc3RfYmFzaXMiOiAzMjcuODEsCiAgICAgICJhY3F1aXJlZCI6ICIyMDI2LTA2LTE5IiwKICAgICAgInRlcm0iOiAic2hvcnQiCiAgICB9LAogICAgewogICAgICAic3ltYm9sIjogIklSRU4iLAogICAgICAicXVhbnRpdHkiOiAwLjU1NTMyNCwKICAgICAgImNvc3RfYmFzaXMiOiA0OC4wNSwKICAgICAgImFjcXVpcmVkIjogIjIwMjYtMDUtMTkiLAogICAgICAidGVybSI6ICJzaG9ydCIKICAgIH0sCiAgICB7CiAgICAgICJzeW1ib2wiOiAiSVJFTiIsCiAgICAgICJxdWFudGl0eSI6IDAuMTAxOTU2LAogICAgICAiY29zdF9iYXNpcyI6IDYwLjgxLAogICAgICAiYWNxdWlyZWQiOiAiMjAyNi0wNi0wMSIsCiAgICAgICJ0ZXJtIjogInNob3J0IiwKICAgICAgIm5vdGVzIjogIlNub3diYWxsIgogICAgfSwKICAgIHsKICAgICAgInN5bWJvbCI6ICJJUkVOIiwKICAgICAgInF1YW50aXR5IjogMi43MDkzNDMsCiAgICAgICJjb3N0X2Jhc2lzIjogNTguNjksCiAgICAgICJhY3F1aXJlZCI6ICIyMDI2LTA2LTIzIiwKICAgICAgInRlcm0iOiAic2hvcnQiCiAgICB9LAogICAgewogICAgICAic3ltYm9sIjogIklSRU4iLAogICAgICAicXVhbnRpdHkiOiAzLjI1OTYzMiwKICAgICAgImNvc3RfYmFzaXMiOiA1Mi40NiwKICAgICAgImFjcXVpcmVkIjogIjIwMjYtMDYtMjUiLAogICAgICAidGVybSI6ICJzaG9ydCIKICAgIH0sCiAgICB7CiAgICAgICJzeW1ib2wiOiAiQVBMRCIsCiAgICAgICJxdWFudGl0eSI6IDAuNTkwNzc3LAogICAgICAiY29zdF9iYXNpcyI6IDM3LjMwNSwKICAgICAgImFjcXVpcmVkIjogIjIwMjYtMDUtMTkiLAogICAgICAidGVybSI6ICJzaG9ydCIKICAgIH0sCiAgICB7CiAgICAgICJzeW1ib2wiOiAiQVBMRCIsCiAgICAgICJxdWFudGl0eSI6IDAuMTA2Njc1LAogICAgICAiY29zdF9iYXNpcyI6IDQ1Ljg0LAogICAgICAiYWNxdWlyZWQiOiAiMjAyNi0wNi0wMSIsCiAgICAgICJ0ZXJtIjogInNob3J0IiwKICAgICAgIm5vdGVzIjogIlNub3diYWxsIgogICAgfSwKICAgIHsKICAgICAgInN5bWJvbCI6ICJBUExEIiwKICAgICAgInF1YW50aXR5IjogMy40ODczNDYsCiAgICAgICJjb3N0X2Jhc2lzIjogNDUuNTksCiAgICAgICJhY3F1aXJlZCI6ICIyMDI2LTA2LTIzIiwKICAgICAgInRlcm0iOiAic2hvcnQiCiAgICB9LAogICAgewogICAgICAic3ltYm9sIjogIkFQTEQiLAogICAgICAicXVhbnRpdHkiOiAzLjkxOTc0NywKICAgICAgImNvc3RfYmFzaXMiOiA0Mi44NiwKICAgICAgImFjcXVpcmVkIjogIjIwMjYtMDYtMjUiLAogICAgICAidGVybSI6ICJzaG9ydCIKICAgIH0sCiAgICB7CiAgICAgICJzeW1ib2wiOiAiQ09SWiIsCiAgICAgICJxdWFudGl0eSI6IDEuMzEwODkyLAogICAgICAiY29zdF9iYXNpcyI6IDIyLjcsCiAgICAgICJhY3F1aXJlZCI6ICIyMDI2LTA1LTE5IiwKICAgICAgInRlcm0iOiAic2hvcnQiCiAgICB9LAogICAgewogICAgICAic3ltYm9sIjogIkNPUloiLAogICAgICAicXVhbnRpdHkiOiAwLjIzMzQ1OSwKICAgICAgImNvc3RfYmFzaXMiOiAyNi42OSwKICAgICAgImFjcXVpcmVkIjogIjIwMjYtMDYtMDEiLAogICAgICAidGVybSI6ICJzaG9ydCIsCiAgICAgICJub3RlcyI6ICJTbm93YmFsbCIKICAgIH0sCiAgICB7CiAgICAgICJzeW1ib2wiOiAiQ09SWiIsCiAgICAgICJxdWFudGl0eSI6IDUuNDQ4OTM3LAogICAgICAiY29zdF9iYXNpcyI6IDI5LjE4LAogICAgICAiYWNxdWlyZWQiOiAiMjAyNi0wNi0yMyIsCiAgICAgICJ0ZXJtIjogInNob3J0IgogICAgfSwKICAgIHsKICAgICAgInN5bWJvbCI6ICJDT1JaIiwKICAgICAgInF1YW50aXR5IjogNS40MzI0NzEsCiAgICAgICJjb3N0X2Jhc2lzIjogMjcuOTgsCiAgICAgICJhY3F1aXJlZCI6ICIyMDI2LTA2LTI1IiwKICAgICAgInRlcm0iOiAic2hvcnQiCiAgICB9LAogICAgewogICAgICAic3ltYm9sIjogIkNSV1YiLAogICAgICAicXVhbnRpdHkiOiAwLjQ4NTE1OCwKICAgICAgImNvc3RfYmFzaXMiOiA5OS4xNSwKICAgICAgImFjcXVpcmVkIjogIjIwMjYtMDUtMTkiLAogICAgICAidGVybSI6ICJzaG9ydCIKICAgIH0sCiAgICB7CiAgICAgICJzeW1ib2wiOiAiQ1JXViIsCiAgICAgICJxdWFudGl0eSI6IDAuMDg3NDMsCiAgICAgICJjb3N0X2Jhc2lzIjogMTE4LjM4LAogICAgICAiYWNxdWlyZWQiOiAiMjAyNi0wNi0wMSIsCiAgICAgICJ0ZXJtIjogInNob3J0IiwKICAgICAgIm5vdGVzIjogIlNub3diYWxsIgogICAgfSwKICAgIHsKICAgICAgInN5bWJvbCI6ICJDUldWIiwKICAgICAgInF1YW50aXR5IjogMS40NDkwNzcsCiAgICAgICJjb3N0X2Jhc2lzIjogMTA5LjczLAogICAgICAiYWNxdWlyZWQiOiAiMjAyNi0wNi0yMyIsCiAgICAgICJ0ZXJtIjogInNob3J0IgogICAgfSwKICAgIHsKICAgICAgInN5bWJvbCI6ICJDUldWIiwKICAgICAgInF1YW50aXR5IjogMS4zNjEwMDcsCiAgICAgICJjb3N0X2Jhc2lzIjogMTAyLjg3LAogICAgICAiYWNxdWlyZWQiOiAiMjAyNi0wNi0yNSIsCiAgICAgICJ0ZXJtIjogInNob3J0IgogICAgfSwKICAgIHsKICAgICAgInN5bWJvbCI6ICJBU01MIiwKICAgICAgInF1YW50aXR5IjogMC4xMzUwOTYsCiAgICAgICJjb3N0X2Jhc2lzIjogMTExMC4zMiwKICAgICAgImFjcXVpcmVkIjogIjIwMjUtMTItMDQiLAogICAgICAidGVybSI6ICJzaG9ydCIKICAgIH0sCiAgICB7CiAgICAgICJzeW1ib2wiOiAiQVNNTCIsCiAgICAgICJxdWFudGl0eSI6IDAuMDQwNDY5LAogICAgICAiY29zdF9iYXNpcyI6IDEyMzUuNSwKICAgICAgImFjcXVpcmVkIjogIjIwMjYtMDEtMDUiLAogICAgICAidGVybSI6ICJzaG9ydCIKICAgIH0sCiAgICB7CiAgICAgICJzeW1ib2wiOiAiQVNNTCIsCiAgICAgICJxdWFudGl0eSI6IDAuMDAwMzE2LAogICAgICAiY29zdF9iYXNpcyI6IDE1MTUuNDgsCiAgICAgICJhY3F1aXJlZCI6ICIyMDI2LTA1LTA2IiwKICAgICAgInRlcm0iOiAic2hvcnQiLAogICAgICAibm90ZXMiOiAiRFJJUCIKICAgIH0sCiAgICB7CiAgICAgICJzeW1ib2wiOiAiQVNNTCIsCiAgICAgICJxdWFudGl0eSI6IDAuMDAwMTk1LAogICAgICAiY29zdF9iYXNpcyI6IDExNDAuMTksCiAgICAgICJhY3F1aXJlZCI6ICIyMDI2LTAxLTAxIiwKICAgICAgInRlcm0iOiAic2hvcnQiLAogICAgICAibm90ZXMiOiAicmVzaWR1YWwiCiAgICB9LAogICAgewogICAgICAic3ltYm9sIjogIk5CSVMiLAogICAgICAicXVhbnRpdHkiOiAwLjAyMjU0OSwKICAgICAgImNvc3RfYmFzaXMiOiAyMjYuNjEsCiAgICAgICJhY3F1aXJlZCI6ICIyMDI2LTA1LTI4IiwKICAgICAgInRlcm0iOiAic2hvcnQiCiAgICB9LAogICAgewogICAgICAic3ltYm9sIjogIk5CSVMiLAogICAgICAicXVhbnRpdHkiOiAwLjQxODY0NCwKICAgICAgImNvc3RfYmFzaXMiOiAyMjYuNjYsCiAgICAgICJhY3F1aXJlZCI6ICIyMDI2LTA1LTI4IiwKICAgICAgInRlcm0iOiAic2hvcnQiCiAgICB9LAogICAgewogICAgICAic3ltYm9sIjogIk5CSVMiLAogICAgICAicXVhbnRpdHkiOiAwLjU0NTU2NiwKICAgICAgImNvc3RfYmFzaXMiOiAyMjYuNTksCiAgICAgICJhY3F1aXJlZCI6ICIyMDI2LTA1LTI5IiwKICAgICAgInRlcm0iOiAic2hvcnQiLAogICAgICAibm90ZXMiOiAiU25vd2JhbGwiCiAgICB9LAogICAgewogICAgICAic3ltYm9sIjogIk5CSVMiLAogICAgICAicXVhbnRpdHkiOiAwLjE2NTQxNSwKICAgICAgImNvc3RfYmFzaXMiOiAyNTIuMzQsCiAgICAgICJhY3F1aXJlZCI6ICIyMDI2LTA2LTAxIiwKICAgICAgInRlcm0iOiAic2hvcnQiLAogICAgICAibm90ZXMiOiAiU25vd2JhbGwiCiAgICB9LAogICAgewogICAgICAic3ltYm9sIjogIlJJT1QiLAogICAgICAicXVhbnRpdHkiOiAwLjQ4NTIwNiwKICAgICAgImNvc3RfYmFzaXMiOiAyMi40MDUsCiAgICAgICJhY3F1aXJlZCI6ICIyMDI2LTA1LTE5IiwKICAgICAgInRlcm0iOiAic2hvcnQiCiAgICB9LAogICAgewogICAgICAic3ltYm9sIjogIlJJT1QiLAogICAgICAicXVhbnRpdHkiOiAzLjUzNDE5MywKICAgICAgImNvc3RfYmFzaXMiOiAyOC4zLAogICAgICAiYWNxdWlyZWQiOiAiMjAyNi0wNi0yNSIsCiAgICAgICJ0ZXJtIjogInNob3J0IgogICAgfSwKICAgIHsKICAgICAgInN5bWJvbCI6ICJBTUQiLAogICAgICAicXVhbnRpdHkiOiAwLjMzMDI3OSwKICAgICAgImNvc3RfYmFzaXMiOiA1MDUuNjMsCiAgICAgICJhY3F1aXJlZCI6ICIyMDI2LTA2LTI2IiwKICAgICAgInRlcm0iOiAic2hvcnQiCiAgICB9LAogICAgewogICAgICAic3ltYm9sIjogIkFNQVQiLAogICAgICAicXVhbnRpdHkiOiAwLjI2MTg2OSwKICAgICAgImNvc3RfYmFzaXMiOiA2MzcuNzIsCiAgICAgICJhY3F1aXJlZCI6ICIyMDI2LTA2LTI2IiwKICAgICAgInRlcm0iOiAic2hvcnQiCiAgICB9LAogICAgewogICAgICAic3ltYm9sIjogIk1SVkwiLAogICAgICAicXVhbnRpdHkiOiAwLjYyNjU0NywKICAgICAgImNvc3RfYmFzaXMiOiAyNjYuNTQsCiAgICAgICJhY3F1aXJlZCI6ICIyMDI2LTA2LTI2IiwKICAgICAgInRlcm0iOiAic2hvcnQiCiAgICB9LAogICAgewogICAgICAic3ltYm9sIjogIlZSVCIsCiAgICAgICJxdWFudGl0eSI6IDAuNTQ0NDM1LAogICAgICAiY29zdF9iYXNpcyI6IDMwNi43NCwKICAgICAgImFjcXVpcmVkIjogIjIwMjYtMDYtMjYiLAogICAgICAidGVybSI6ICJzaG9ydCIKICAgIH0KICBdLAogICJzZXNzaW9uX2xvZyI6IFtdLAogICJwZW5kaW5nX3Byb3Bvc2FscyI6IHt9Cn0=
+{
+  "account_number": "926627357",
+  "account_value": 8433.64,
+  "buying_power": 671.11,
+  "high_water_mark": 8897.8,
+  "last_trade_date": "2026-06-26",
+  "trades_today": 4,
+  "last_updated": "2026-06-26T15:11:00",
+  "build_phase": "Steady State",
+  "schema_version": "1.1",
+  "notes": "State updated 2026-06-26 PM session (11:11 AM ET). No trades — no 2pp entry triggers, no buy_weakness signals. BE flagged -13% today (non-earnings; next report July 30). 18 positions. Drawdown 5.22%.",
+  "positions": {
+    "NVDA": {
+      "quantity": 10.274267,
+      "avg_buy_price": 196.28,
+      "last_price": 193.27,
+      "value": 1985.71,
+      "pct": 23.55
+    },
+    "AVGO": {
+      "quantity": 2.765885,
+      "avg_buy_price": 401.08,
+      "last_price": 367.57,
+      "value": 1016.66,
+      "pct": 12.05
+    },
+    "MU": {
+      "quantity": 0.733331,
+      "avg_buy_price": 1146.93,
+      "last_price": 1156.595,
+      "value": 848.17,
+      "pct": 10.06
+    },
+    "CEG": {
+      "quantity": 1.272681,
+      "avg_buy_price": 275.01,
+      "last_price": 263.91,
+      "value": 335.87,
+      "pct": 3.98
+    },
+    "GEV": {
+      "quantity": 0.314954,
+      "avg_buy_price": 1111.27,
+      "last_price": 1055.4,
+      "value": 332.4,
+      "pct": 3.94
+    },
+    "VST": {
+      "quantity": 1.829312,
+      "avg_buy_price": 164.23,
+      "last_price": 165.29,
+      "value": 302.37,
+      "pct": 3.59
+    },
+    "BE": {
+      "quantity": 1.086862,
+      "avg_buy_price": 306.34,
+      "last_price": 269.0,
+      "value": 292.37,
+      "pct": 3.47
+    },
+    "RIOT": {
+      "quantity": 4.019399,
+      "avg_buy_price": 27.58,
+      "last_price": 28.055,
+      "value": 112.76,
+      "pct": 1.34
+    },
+    "CORZ": {
+      "quantity": 12.425759,
+      "avg_buy_price": 27.93,
+      "last_price": 26.59,
+      "value": 330.4,
+      "pct": 3.92
+    },
+    "IREN": {
+      "quantity": 6.626255,
+      "avg_buy_price": 54.76,
+      "last_price": 46.32,
+      "value": 306.93,
+      "pct": 3.64
+    },
+    "CRWV": {
+      "quantity": 3.382672,
+      "avg_buy_price": 105.67,
+      "last_price": 94.325,
+      "value": 319.07,
+      "pct": 3.78
+    },
+    "NBIS": {
+      "quantity": 1.152174,
+      "avg_buy_price": 230.31,
+      "last_price": 238.32,
+      "value": 274.59,
+      "pct": 3.26
+    },
+    "APLD": {
+      "quantity": 8.104545,
+      "avg_buy_price": 43.67,
+      "last_price": 39.485,
+      "value": 320.01,
+      "pct": 3.79
+    },
+    "ASML": {
+      "quantity": 0.176076,
+      "avg_buy_price": 1140.19,
+      "last_price": 1794.555,
+      "value": 315.98,
+      "pct": 3.75
+    },
+    "AMD": {
+      "quantity": 0.330279,
+      "avg_buy_price": 505.63,
+      "last_price": 516.04,
+      "value": 170.44,
+      "pct": 2.02
+    },
+    "AMAT": {
+      "quantity": 0.261869,
+      "avg_buy_price": 637.72,
+      "last_price": 636.2,
+      "value": 166.6,
+      "pct": 1.98
+    },
+    "MRVL": {
+      "quantity": 0.626547,
+      "avg_buy_price": 266.54,
+      "last_price": 266.08,
+      "value": 166.71,
+      "pct": 1.98
+    },
+    "VRT": {
+      "quantity": 0.544435,
+      "avg_buy_price": 306.74,
+      "last_price": 303.985,
+      "value": 165.5,
+      "pct": 1.96
+    }
+  },
+  "tax_lots": [
+    {"symbol": "NVDA", "quantity": 0.22793, "cost_basis": 187.71, "acquired": "2025-12-29", "term": "short", "notes": "partial lot, 0.219622 sh consumed by FIFO sell 2026-06-23"},
+    {"symbol": "NVDA", "quantity": 2.629987, "cost_basis": 190.115, "acquired": "2026-01-05", "term": "short"},
+    {"symbol": "NVDA", "quantity": 0.432549, "cost_basis": 184.95, "acquired": "2026-01-13", "term": "short"},
+    {"symbol": "NVDA", "quantity": 1.351533, "cost_basis": 184.975, "acquired": "2026-02-02", "term": "short"},
+    {"symbol": "NVDA", "quantity": 0.509762, "cost_basis": 179.77, "acquired": "2026-02-27", "term": "short"},
+    {"symbol": "NVDA", "quantity": 0.827746, "cost_basis": 181.215, "acquired": "2026-03-05", "term": "short"},
+    {"symbol": "NVDA", "quantity": 0.000459, "cost_basis": 174.15, "acquired": "2026-04-02", "term": "short", "notes": "DRIP"},
+    {"symbol": "NVDA", "quantity": 0.01, "cost_basis": 208.73, "acquired": "2026-06-05", "term": "short", "notes": "DRIP"},
+    {"symbol": "NVDA", "quantity": 4.284288, "cost_basis": 210.07, "acquired": "2026-06-19", "term": "short"},
+    {"symbol": "AVGO", "quantity": 2.084406, "cost_basis": 407.79, "acquired": "2026-06-19", "term": "short"},
+    {"symbol": "AVGO", "quantity": 0.677894, "cost_basis": 380.59, "acquired": "2026-06-24", "term": "short"},
+    {"symbol": "MU", "quantity": 0.656742, "cost_basis": 1142.0, "acquired": "2026-06-19", "term": "short"},
+    {"symbol": "MU", "quantity": 0.076589, "cost_basis": 1189.22, "acquired": "2026-06-25", "term": "short"},
+    {"symbol": "CEG", "quantity": 1.272681, "cost_basis": 275.01, "acquired": "2026-06-19", "term": "short"},
+    {"symbol": "GEV", "quantity": 0.314954, "cost_basis": 1111.27, "acquired": "2026-06-19", "term": "short"},
+    {"symbol": "VST", "quantity": 1.826818, "cost_basis": 164.22, "acquired": "2026-06-19", "term": "short"},
+    {"symbol": "BE", "quantity": 0.275313, "cost_basis": 252.74, "acquired": "2026-05-19", "term": "short"},
+    {"symbol": "BE", "quantity": 0.048913, "cost_basis": 273.34, "acquired": "2026-06-01", "term": "short", "notes": "Snowball"},
+    {"symbol": "BE", "quantity": 0.762636, "cost_basis": 327.81, "acquired": "2026-06-19", "term": "short"},
+    {"symbol": "IREN", "quantity": 0.555324, "cost_basis": 48.05, "acquired": "2026-05-19", "term": "short"},
+    {"symbol": "IREN", "quantity": 0.101956, "cost_basis": 60.81, "acquired": "2026-06-01", "term": "short", "notes": "Snowball"},
+    {"symbol": "IREN", "quantity": 2.709343, "cost_basis": 58.69, "acquired": "2026-06-23", "term": "short"},
+    {"symbol": "IREN", "quantity": 3.259632, "cost_basis": 52.46, "acquired": "2026-06-25", "term": "short"},
+    {"symbol": "APLD", "quantity": 0.590777, "cost_basis": 37.305, "acquired": "2026-05-19", "term": "short"},
+    {"symbol": "APLD", "quantity": 0.106675, "cost_basis": 45.84, "acquired": "2026-06-01", "term": "short", "notes": "Snowball"},
+    {"symbol": "APLD", "quantity": 3.487346, "cost_basis": 45.59, "acquired": "2026-06-23", "term": "short"},
+    {"symbol": "APLD", "quantity": 3.919747, "cost_basis": 42.86, "acquired": "2026-06-25", "term": "short"},
+    {"symbol": "CORZ", "quantity": 1.310892, "cost_basis": 22.7, "acquired": "2026-05-19", "term": "short"},
+    {"symbol": "CORZ", "quantity": 0.233459, "cost_basis": 26.69, "acquired": "2026-06-01", "term": "short", "notes": "Snowball"},
+    {"symbol": "CORZ", "quantity": 5.448937, "cost_basis": 29.18, "acquired": "2026-06-23", "term": "short"},
+    {"symbol": "CORZ", "quantity": 5.432471, "cost_basis": 27.98, "acquired": "2026-06-25", "term": "short"},
+    {"symbol": "CRWV", "quantity": 0.485158, "cost_basis": 99.15, "acquired": "2026-05-19", "term": "short"},
+    {"symbol": "CRWV", "quantity": 0.08743, "cost_basis": 118.38, "acquired": "2026-06-01", "term": "short", "notes": "Snowball"},
+    {"symbol": "CRWV", "quantity": 1.449077, "cost_basis": 109.73, "acquired": "2026-06-23", "term": "short"},
+    {"symbol": "CRWV", "quantity": 1.361007, "cost_basis": 102.87, "acquired": "2026-06-25", "term": "short"},
+    {"symbol": "ASML", "quantity": 0.135096, "cost_basis": 1110.32, "acquired": "2025-12-04", "term": "short"},
+    {"symbol": "ASML", "quantity": 0.040469, "cost_basis": 1235.5, "acquired": "2026-01-05", "term": "short"},
+    {"symbol": "ASML", "quantity": 0.000316, "cost_basis": 1515.48, "acquired": "2026-05-06", "term": "short", "notes": "DRIP"},
+    {"symbol": "ASML", "quantity": 0.000195, "cost_basis": 1140.19, "acquired": "2026-01-01", "term": "short", "notes": "residual"},
+    {"symbol": "NBIS", "quantity": 0.022549, "cost_basis": 226.61, "acquired": "2026-05-28", "term": "short"},
+    {"symbol": "NBIS", "quantity": 0.418644, "cost_basis": 226.66, "acquired": "2026-05-28", "term": "short"},
+    {"symbol": "NBIS", "quantity": 0.545566, "cost_basis": 226.59, "acquired": "2026-05-29", "term": "short", "notes": "Snowball"},
+    {"symbol": "NBIS", "quantity": 0.165415, "cost_basis": 252.34, "acquired": "2026-06-01", "term": "short", "notes": "Snowball"},
+    {"symbol": "RIOT", "quantity": 0.485206, "cost_basis": 22.405, "acquired": "2026-05-19", "term": "short"},
+    {"symbol": "RIOT", "quantity": 3.534193, "cost_basis": 28.3, "acquired": "2026-06-25", "term": "short"},
+    {"symbol": "AMD", "quantity": 0.330279, "cost_basis": 505.63, "acquired": "2026-06-26", "term": "short"},
+    {"symbol": "AMAT", "quantity": 0.261869, "cost_basis": 637.72, "acquired": "2026-06-26", "term": "short"},
+    {"symbol": "MRVL", "quantity": 0.626547, "cost_basis": 266.54, "acquired": "2026-06-26", "term": "short"},
+    {"symbol": "VRT", "quantity": 0.544435, "cost_basis": 306.74, "acquired": "2026-06-26", "term": "short"}
+  ],
+  "session_log": [],
+  "pending_proposals": {}
+}
