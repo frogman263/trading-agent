@@ -204,6 +204,13 @@
       "term": "short"
     },
     {
+      "symbol": "MU",
+      "quantity": 0.076589,
+      "cost_basis": 1189.22,
+      "acquired": "2026-06-25",
+      "term": "short"
+    },
+    {
       "symbol": "CEG",
       "quantity": 1.272681,
       "cost_basis": 275.01,
@@ -427,6 +434,13 @@
       "quantity": 0.485206,
       "cost_basis": 22.405,
       "acquired": "2026-05-19",
+      "term": "short"
+    },
+    {
+      "symbol": "RIOT",
+      "quantity": 3.534193,
+      "cost_basis": 28.30,
+      "acquired": "2026-06-25",
       "term": "short"
     }
   ],
