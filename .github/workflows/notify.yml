@@ -27,10 +27,16 @@ jobs:
             exit 0
           fi
 
-          FILENAME=$(basename "$LATEST_LOG" .md)   # Remove .md extension
+          BASENAME=$(basename "$LATEST_LOG" .md)     # e.g. 2026-06-26T0746
+
+          # Split into date and time for clean title
+          DATE_PART=$(echo "$BASENAME" | cut -d'T' -f1)   # 2026-06-26
+          TIME_PART=$(echo "$BASENAME" | cut -d'T' -f2)   # 0746
+
+          TITLE="Trading Agent - ${DATE_PART}, ${TIME_PART}"
 
           echo "log_file=$LATEST_LOG" >> $GITHUB_OUTPUT
-          echo "filename=$FILENAME" >> $GITHUB_OUTPUT
+          echo "title=$TITLE" >> $GITHUB_OUTPUT
 
           set +o pipefail
 
@@ -57,7 +63,7 @@ jobs:
         env:
           PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_API_TOKEN }}
           PUSHOVER_USER: ${{ secrets.PUSHOVER_USER_KEY }}
-          TITLE: "Trading Agent — ${{ steps.log.outputs.filename }}"
+          TITLE: "${{ steps.log.outputs.title }}"
         run: |
           set -euo pipefail
 
