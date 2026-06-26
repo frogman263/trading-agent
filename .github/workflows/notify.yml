@@ -17,37 +17,61 @@ jobs:
       - name: Find latest session log
         id: log
         run: |
-          set -euo pipefail
+          set +e
 
-          # Get the most recent .md file in logs/
-          LATEST_LOG=$(ls -t logs/*.md 2>/dev/null | head -1 || echo "")
+          # ── Select latest by FILENAME, not mtime ──────────────────────────
+          # actions/checkout rewrites every file's mtime to checkout time, so
+          # `ls -t` is unreliable in CI. Log names are ISO-8601, so a lexical
+          # sort == chronological order. T-stamped names sort after date-only
+          # names for the same day, so the newest run always wins.
+          LATEST_LOG=$(ls logs/*.md 2>/dev/null | sort | tail -1)
 
           if [ -z "$LATEST_LOG" ]; then
             echo "No log files found"
             exit 0
           fi
 
-          BASENAME=$(basename "$LATEST_LOG" .md)     # e.g. 2026-06-26T0746
+          BASENAME=$(basename "$LATEST_LOG" .md)
 
-          # Split into date and time for clean title
-          DATE_PART=$(echo "$BASENAME" | cut -d'T' -f1)   # 2026-06-26
-          TIME_PART=$(echo "$BASENAME" | cut -d'T' -f2)   # 0746
-
-          TITLE="Trading Agent - ${DATE_PART}, ${TIME_PART}"
+          # ── Title: handle YYYY-MM-DDTHHMM and date-only YYYY-MM-DD ─────────
+          if echo "$BASENAME" | grep -q 'T'; then
+            DATE_PART="${BASENAME%%T*}"
+            TIME_PART="${BASENAME##*T}"
+            TITLE="Trading Agent — ${DATE_PART} ${TIME_PART} ET"
+          else
+            TITLE="Trading Agent — ${BASENAME}"
+          fi
 
           echo "log_file=$LATEST_LOG" >> $GITHUB_OUTPUT
           echo "title=$TITLE" >> $GITHUB_OUTPUT
 
-          set +o pipefail
+          # ── Decode base64 logs; fall back to plaintext ────────────────────
+          # The agent currently commits some logs as a base64 blob. Detect and
+          # decode so the greps below see real markdown. (Fix upstream too — see
+          # note in the chat: the Routine should write decoded markdown.)
+          BODY="/tmp/logbody.txt"
+          if base64 -d "$LATEST_LOG" > "$BODY" 2>/dev/null && \
+             grep -qiE 'session|trades|account' "$BODY"; then
+            echo "Log decoded from base64"
+          else
+            cp "$LATEST_LOG" "$BODY"
+            echo "Log is plaintext"
+          fi
 
-          VALIDATOR=$(grep -i 'validator' "$LATEST_LOG" | grep -oiE 'PASS|FAIL|N/A' | head -1 || echo "N/A")
-          TRADES=$(grep -o 'Trades executed: [0-9]*' "$LATEST_LOG" | head -1 | grep -o '[0-9]*' || echo "0")
-          ACCOUNT=$(grep -o 'Account value:.*\$[0-9,\.]*' "$LATEST_LOG" | head -1 | grep -o '\$[0-9,\.]*' | head -1 || echo "N/A")
-          HWM=$(grep -i 'high.water' "$LATEST_LOG" | grep -o '\$[0-9,\.]*' | head -1 || echo "N/A")
-          DRAWDOWN=$(grep -o 'Drawdown:.*[0-9\.]*%' "$LATEST_LOG" | head -1 | grep -o '[0-9\.]*%' | head -1 || echo "N/A")
-          CASH=$(grep -oE 'Cash[^:]*:[^0-9]*[0-9\.]+%' "$LATEST_LOG" | head -1 | grep -oE '[0-9\.]+%' | head -1 || echo "N/A")
+          # ── Normalize: strip markdown bold so colon patterns match ────────
+          NORM=$(sed 's/\*\*//g' "$BODY")
 
-          set -o pipefail
+          money() { grep -iE "$1" <<<"$NORM" | grep -oE '\$[0-9][0-9,]*\.[0-9]{2}' | head -1; }
+          pct()   { grep -iE "$1" <<<"$NORM" | grep -oE '[0-9]+\.[0-9]+%' | head -1; }
+
+          VALIDATOR=$(grep -iE 'validator' <<<"$NORM" | grep -oiE 'PASS|FAIL|N/A' | head -1)
+          [ -z "$VALIDATOR" ] && VALIDATOR="N/A"
+          TRADES=$(grep -iE 'trades executed' <<<"$NORM" | grep -oE '[0-9]+' | head -1)
+          [ -z "$TRADES" ] && TRADES="0"
+          ACCOUNT=$(money 'account value'); [ -z "$ACCOUNT" ] && ACCOUNT="N/A"
+          HWM=$(money 'high.water');        [ -z "$HWM" ]      && HWM="N/A"
+          DRAWDOWN=$(pct 'drawdown');       [ -z "$DRAWDOWN" ] && DRAWDOWN="N/A"
+          CASH=$(pct 'cash');               [ -z "$CASH" ]     && CASH="N/A"
 
           MESSAGE=$(printf "Validator: %s\nTrades: %s\nAccount Value: %s\nHWM: %s\nDrawdown: %s\nCash: %s" \
             "$VALIDATOR" "$TRADES" "$ACCOUNT" "$HWM" "$DRAWDOWN" "$CASH")
@@ -74,7 +98,7 @@ jobs:
             --form-string "user=$PUSHOVER_USER" \
             --form-string "title=$TITLE" \
             --form "message=</tmp/pushover_message.txt" \
-            --form-string "url=github://github.com/${{ github.repository }}/blob/main/${{ steps.log.outputs.log_file }}" \
+            --form-string "url=https://github.com/${{ github.repository }}/blob/main/${{ steps.log.outputs.log_file }}" \
             --form-string "url_title=View Full Session Log" \
             --form-string "priority=0" \
             https://api.pushover.net/1/messages.json

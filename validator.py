@@ -14,6 +14,10 @@ v1.1 changes:
   - Auto-detects Tier 3 build phase vs steady state
   - Entry threshold check added (warnings, not violations)
   - Version checking between config and validator
+
+v1.2 changes:
+  - Version bumped to match config.json v1.2 (AMD/AMAT/MRVL/VRT @ 2% target).
+    No logic change; validator reads target_allocs dynamically from config.
 """
 
 import json
@@ -28,7 +32,7 @@ import os as _os
 
 _CONFIG_PATH = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "config.json")
 
-VALIDATOR_VERSION = "1.1"
+VALIDATOR_VERSION = "1.2"
 
 def _load_config():
     try:
@@ -391,7 +395,7 @@ def update_state(state_path, state, proposals, result_pass):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Trading Agent Validator v1.1")
+    parser = argparse.ArgumentParser(description="Trading Agent Validator v1.2")
     parser.add_argument("--proposals", required=True)
     parser.add_argument("--state",     required=True)
     parser.add_argument("--dry-run",   action="store_true")
