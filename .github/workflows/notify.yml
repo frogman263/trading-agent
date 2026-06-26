@@ -19,16 +19,18 @@ jobs:
         run: |
           set -euo pipefail
 
-          # Find the most recent log file in logs/
+          # Get the most recent .md file in logs/
           LATEST_LOG=$(ls -t logs/*.md 2>/dev/null | head -1 || echo "")
 
           if [ -z "$LATEST_LOG" ]; then
-            echo "No log files found — skipping notification"
+            echo "No log files found"
             exit 0
           fi
 
+          FILENAME=$(basename "$LATEST_LOG" .md)   # Remove .md extension
+
           echo "log_file=$LATEST_LOG" >> $GITHUB_OUTPUT
-          echo "filename=$(basename "$LATEST_LOG")" >> $GITHUB_OUTPUT
+          echo "filename=$FILENAME" >> $GITHUB_OUTPUT
 
           set +o pipefail
 
@@ -36,7 +38,7 @@ jobs:
           TRADES=$(grep -o 'Trades executed: [0-9]*' "$LATEST_LOG" | head -1 | grep -o '[0-9]*' || echo "0")
           ACCOUNT=$(grep -o 'Account value:.*\$[0-9,\.]*' "$LATEST_LOG" | head -1 | grep -o '\$[0-9,\.]*' | head -1 || echo "N/A")
           HWM=$(grep -i 'high.water' "$LATEST_LOG" | grep -o '\$[0-9,\.]*' | head -1 || echo "N/A")
-          DRAWDOWN=$(grep -o 'Drawdown:.*[0-9\.]*%' "$LATEST_LOG" | head -1 | grep -o '[0-9\.]*%' | head -1 || echo "0%")
+          DRAWDOWN=$(grep -o 'Drawdown:.*[0-9\.]*%' "$LATEST_LOG" | head -1 | grep -o '[0-9\.]*%' | head -1 || echo "N/A")
           CASH=$(grep -oE 'Cash[^:]*:[^0-9]*[0-9\.]+%' "$LATEST_LOG" | head -1 | grep -oE '[0-9\.]+%' | head -1 || echo "N/A")
 
           set -o pipefail
