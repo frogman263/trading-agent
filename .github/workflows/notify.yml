@@ -56,7 +56,7 @@ jobs:
         env:
           PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_API_TOKEN }}
           PUSHOVER_USER: ${{ secrets.PUSHOVER_USER_KEY }}
-          TITLE: "Trading Agent — ${{ steps.log.outputs.date }} | ${{ steps.log.outputs.validator }} | ${{ steps.log.outputs.trades }} trade(s)"
+          TITLE: "Trading Agent — ${{ steps.log.outputs.date }}"
         run: |
           set -euo pipefail
 
