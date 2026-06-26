@@ -31,7 +31,7 @@ import os as _os
 
 _CONFIG_PATH = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "config.json")
 
-VALIDATOR_VERSION = "1.1"
+VALIDATOR_VERSION = "1.2"
 
 def _load_config():
     try:
@@ -103,7 +103,7 @@ else:
         "CEG": 0.05, "GEV": 0.05, "VST": 0.04, "BE": 0.05,
         "IREN": 0.04, "APLD": 0.04, "CORZ": 0.04, "CRWV": 0.04,
         "ASML": 0.04, "NBIS": 0.03, "RIOT": 0.03,
-        "AMD": 0.00, "AMAT": 0.00, "MRVL": 0.00, "VRT": 0.00
+        "AMD": 0.02, "AMAT": 0.02, "MRVL": 0.02, "VRT": 0.02
     }
     TIERS = {
         "NVDA": 1, "AVGO": 1, "MU": 1,
