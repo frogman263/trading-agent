@@ -51,7 +51,7 @@ jobs:
           PUSHOVER_USER: ${{ secrets.PUSHOVER_USER_KEY }}
           TITLE: "Trading Agent — ${{ steps.log.outputs.date }} | ${{ steps.log.outputs.validator }} | ${{ steps.log.outputs.trades }} trade(s)"
           MESSAGE: ${{ steps.log.outputs.message }}
-          LOG_URL: "github://://github.com/${{ github.repository }}/blob/main/${{ steps.log.outputs.log_file }}"
+          LOG_URL: "github://github.com/${{ github.repository }}/blob/main/${{ steps.log.outputs.log_file }}"
         run: |
           curl -s \
             --form-string "token=$PUSHOVER_TOKEN" \
