@@ -33,16 +33,19 @@ jobs:
           set +o pipefail
 
           VALIDATOR=$(grep -i 'validator' "$LOG_FILE" | grep -oiE 'PASS|FAIL|N/A' | head -1 || echo "N/A")
+          TRADES=$(grep -o 'Trades executed: [0-9]*' "$LOG_FILE" | head -1 | grep -o '[0-9]*' || echo "0")
           ACCOUNT=$(grep -o 'Account value:.*\$[0-9,\.]*' "$LOG_FILE" | head -1 | grep -o '\$[0-9,\.]*' | head -1 || echo "N/A")
           HWM=$(grep -i 'high.water' "$LOG_FILE" | grep -o '\$[0-9,\.]*' | head -1 || echo "N/A")
           DRAWDOWN=$(grep -o 'Drawdown:.*[0-9\.]*%' "$LOG_FILE" | head -1 | grep -o '[0-9\.]*%' | head -1 || echo "0%")
           CASH=$(grep -o 'Cash:.*[0-9\.]*%' "$LOG_FILE" | head -1 | grep -o '[0-9\.]*%' | head -1 || echo "N/A")
-          TRADES=$(grep -o 'Trades executed: [0-9]*' "$LOG_FILE" | head -1 | grep -o '[0-9]*' || echo "0")
 
           set -o pipefail
 
-          MESSAGE_B64=$(printf "%s|%s|%s|%s|%s|%s" \
-            "$VALIDATOR" "$TRADES" "$ACCOUNT" "$HWM" "$DRAWDOWN" "$CASH" | base64 -w 0)
+          # Build a clean, readable message
+          MESSAGE=$(printf "Validator: %s\nTrades: %s\nAccount Value: %s\nHWM: %s\nDrawdown: %s\nCash: %s" \
+            "$VALIDATOR" "$TRADES" "$ACCOUNT" "$HWM" "$DRAWDOWN" "$CASH")
+
+          MESSAGE_B64=$(echo -n "$MESSAGE" | base64 -w 0)
 
           echo "validator=$VALIDATOR" >> $GITHUB_OUTPUT
           echo "trades=$TRADES" >> $GITHUB_OUTPUT
