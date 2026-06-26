@@ -1,112 +1,112 @@
 {
   "account_number": "926627357",
-  "account_value": 8519.27,
+  "account_value": 8499.14,
   "buying_power": 1339.11,
-  "high_water_mark": 8897.80,
+  "high_water_mark": 8897.8,
   "last_trade_date": "2026-06-25",
   "trades_today": 0,
-  "last_updated": "2026-06-26T19:40:00",
+  "last_updated": "2026-06-26T12:15:00",
   "build_phase": "Day 6",
   "schema_version": "1.1",
-  "notes": "Cleaned state.json - restored after Base64 corruption. Includes tax lots.",
+  "notes": "State updated 2026-06-26 pre-market (8:15 AM ET, analysis-only run). Pre-market prices used.",
   "positions": {
     "NVDA": {
       "quantity": 10.274267,
       "avg_buy_price": 196.28,
-      "last_price": 195.74,
-      "value": 2011.09,
-      "pct": 23.61
+      "last_price": 193.64,
+      "value": 1989.51,
+      "pct": 23.41
     },
     "AVGO": {
       "quantity": 2.765885,
       "avg_buy_price": 401.08,
-      "last_price": 378.91,
-      "value": 1048.02,
-      "pct": 12.30
+      "last_price": 372.6,
+      "value": 1030.57,
+      "pct": 12.13
     },
     "MU": {
       "quantity": 0.733331,
       "avg_buy_price": 1146.93,
-      "last_price": 1213.56,
-      "value": 889.94,
-      "pct": 10.45
+      "last_price": 1154.0,
+      "value": 846.26,
+      "pct": 9.96
     },
     "CEG": {
       "quantity": 1.272681,
       "avg_buy_price": 275.01,
-      "last_price": 268.69,
-      "value": 341.96,
-      "pct": 4.01
+      "last_price": 265.06,
+      "value": 337.34,
+      "pct": 3.97
     },
     "GEV": {
       "quantity": 0.314954,
       "avg_buy_price": 1111.27,
-      "last_price": 1085.47,
-      "value": 341.87,
-      "pct": 4.01
+      "last_price": 1061.96,
+      "value": 334.47,
+      "pct": 3.94
     },
     "VST": {
-      "quantity": 1.826818,
-      "avg_buy_price": 164.22,
-      "last_price": 167.77,
-      "value": 306.90,
-      "pct": 3.60
+      "quantity": 1.829312,
+      "avg_buy_price": 164.23,
+      "last_price": 165.112,
+      "value": 302.04,
+      "pct": 3.55
     },
     "BE": {
       "quantity": 1.086862,
       "avg_buy_price": 306.34,
-      "last_price": 309.18,
-      "value": 336.04,
-      "pct": 3.94
+      "last_price": 294.0001,
+      "value": 319.54,
+      "pct": 3.76
     },
     "RIOT": {
       "quantity": 4.019399,
       "avg_buy_price": 27.58,
-      "last_price": 27.76,
-      "value": 111.58,
-      "pct": 1.31
+      "last_price": 27.15,
+      "value": 109.13,
+      "pct": 1.28
     },
     "CORZ": {
       "quantity": 12.425759,
       "avg_buy_price": 27.93,
-      "last_price": 27.27,
-      "value": 338.85,
-      "pct": 3.98
+      "last_price": 26.6957,
+      "value": 331.71,
+      "pct": 3.9
     },
     "IREN": {
       "quantity": 6.626255,
       "avg_buy_price": 54.76,
-      "last_price": 47.74,
-      "value": 316.34,
-      "pct": 3.71
+      "last_price": 46.35,
+      "value": 307.13,
+      "pct": 3.61
     },
     "CRWV": {
       "quantity": 3.382672,
       "avg_buy_price": 105.67,
-      "last_price": 98.76,
-      "value": 334.07,
-      "pct": 3.92
+      "last_price": 96.5,
+      "value": 326.43,
+      "pct": 3.84
     },
     "NBIS": {
       "quantity": 1.152174,
       "avg_buy_price": 230.31,
-      "last_price": 256.63,
-      "value": 295.68,
-      "pct": 3.47
+      "last_price": 248.38,
+      "value": 286.18,
+      "pct": 3.37
     },
     "APLD": {
       "quantity": 8.104545,
       "avg_buy_price": 43.67,
-      "last_price": 40.95,
-      "value": 331.88,
-      "pct": 3.90
+      "last_price": 40.0,
+      "value": 324.18,
+      "pct": 3.81
     },
     "ASML": {
       "quantity": 0.176076,
       "avg_buy_price": 1140.19,
-      "last_price": 1841.18,
-      "value": 324.19,
-      "pct": 3.81
+      "last_price": 1793.52,
+      "value": 315.8,
+      "pct": 3.72
     }
   },
   "tax_lots": [
