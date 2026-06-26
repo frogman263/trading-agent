@@ -14,32 +14,30 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Parse session log
+      - name: Find latest session log
         id: log
         run: |
           set -euo pipefail
 
-          DATE=$(date +%Y-%m-%d)
-          LOG_FILE="logs/${DATE}.md"
+          # Find the most recent log file in logs/
+          LATEST_LOG=$(ls -t logs/*.md 2>/dev/null | head -1 || echo "")
 
-          if [ ! -f "$LOG_FILE" ]; then
-            echo "No log file found for today — skipping notification"
+          if [ -z "$LATEST_LOG" ]; then
+            echo "No log files found — skipping notification"
             exit 0
           fi
 
-          echo "log_file=$LOG_FILE" >> $GITHUB_OUTPUT
-          echo "date=$DATE" >> $GITHUB_OUTPUT
+          echo "log_file=$LATEST_LOG" >> $GITHUB_OUTPUT
+          echo "filename=$(basename "$LATEST_LOG")" >> $GITHUB_OUTPUT
 
           set +o pipefail
 
-          VALIDATOR=$(grep -i 'validator' "$LOG_FILE" | grep -oiE 'PASS|FAIL|N/A' | head -1 || echo "N/A")
-          TRADES=$(grep -o 'Trades executed: [0-9]*' "$LOG_FILE" | head -1 | grep -o '[0-9]*' || echo "0")
-          ACCOUNT=$(grep -o 'Account value:.*\$[0-9,\.]*' "$LOG_FILE" | head -1 | grep -o '\$[0-9,\.]*' | head -1 || echo "N/A")
-          HWM=$(grep -i 'high.water' "$LOG_FILE" | grep -o '\$[0-9,\.]*' | head -1 || echo "N/A")
-          DRAWDOWN=$(grep -o 'Drawdown:.*[0-9\.]*%' "$LOG_FILE" | head -1 | grep -o '[0-9\.]*%' | head -1 || echo "0%")
-
-          # More robust Cash parsing
-          CASH=$(grep -oE 'Cash[^:]*:[^0-9]*[0-9\.]+%' "$LOG_FILE" | head -1 | grep -oE '[0-9\.]+%' | head -1 || echo "N/A")
+          VALIDATOR=$(grep -i 'validator' "$LATEST_LOG" | grep -oiE 'PASS|FAIL|N/A' | head -1 || echo "N/A")
+          TRADES=$(grep -o 'Trades executed: [0-9]*' "$LATEST_LOG" | head -1 | grep -o '[0-9]*' || echo "0")
+          ACCOUNT=$(grep -o 'Account value:.*\$[0-9,\.]*' "$LATEST_LOG" | head -1 | grep -o '\$[0-9,\.]*' | head -1 || echo "N/A")
+          HWM=$(grep -i 'high.water' "$LATEST_LOG" | grep -o '\$[0-9,\.]*' | head -1 || echo "N/A")
+          DRAWDOWN=$(grep -o 'Drawdown:.*[0-9\.]*%' "$LATEST_LOG" | head -1 | grep -o '[0-9\.]*%' | head -1 || echo "0%")
+          CASH=$(grep -oE 'Cash[^:]*:[^0-9]*[0-9\.]+%' "$LATEST_LOG" | head -1 | grep -oE '[0-9\.]+%' | head -1 || echo "N/A")
 
           set -o pipefail
 
@@ -57,7 +55,7 @@ jobs:
         env:
           PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_API_TOKEN }}
           PUSHOVER_USER: ${{ secrets.PUSHOVER_USER_KEY }}
-          TITLE: "Trading Agent — ${{ steps.log.outputs.date }}"
+          TITLE: "Trading Agent — ${{ steps.log.outputs.filename }}"
         run: |
           set -euo pipefail
 
