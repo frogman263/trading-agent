@@ -30,7 +30,6 @@ jobs:
           echo "log_file=$LOG_FILE" >> $GITHUB_OUTPUT
           echo "date=$DATE" >> $GITHUB_OUTPUT
 
-          # Relax pipefail only for parsing
           set +o pipefail
 
           VALIDATOR=$(grep -i 'validator' "$LOG_FILE" | grep -oiE 'PASS|FAIL|N/A' | head -1 || echo "N/A")
@@ -38,11 +37,12 @@ jobs:
           ACCOUNT=$(grep -o 'Account value:.*\$[0-9,\.]*' "$LOG_FILE" | head -1 | grep -o '\$[0-9,\.]*' | head -1 || echo "N/A")
           HWM=$(grep -i 'high.water' "$LOG_FILE" | grep -o '\$[0-9,\.]*' | head -1 || echo "N/A")
           DRAWDOWN=$(grep -o 'Drawdown:.*[0-9\.]*%' "$LOG_FILE" | head -1 | grep -o '[0-9\.]*%' | head -1 || echo "0%")
-          CASH=$(grep -o 'Cash[^:]*:.*[0-9\.]*%' "$LOG_FILE" | head -1 | grep -o '[0-9\.]*%' | head -1 || echo "N/A")
+
+          # More robust Cash parsing
+          CASH=$(grep -oE 'Cash[^:]*:[^0-9]*[0-9\.]+%' "$LOG_FILE" | head -1 | grep -oE '[0-9\.]+%' | head -1 || echo "N/A")
 
           set -o pipefail
 
-          # Build clean message
           MESSAGE=$(printf "Validator: %s\nTrades: %s\nAccount Value: %s\nHWM: %s\nDrawdown: %s\nCash: %s" \
             "$VALIDATOR" "$TRADES" "$ACCOUNT" "$HWM" "$DRAWDOWN" "$CASH")
 
@@ -57,7 +57,7 @@ jobs:
         env:
           PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_API_TOKEN }}
           PUSHOVER_USER: ${{ secrets.PUSHOVER_USER_KEY }}
-          TITLE: "Trading Agent — ${{ steps.log.outputs.date }} | ${{ steps.log.outputs.validator }} | ${{ steps.log.outputs.trades }} trade(s)"
+          TITLE: "Trading Agent — ${{ steps.log.outputs.date }}"
         run: |
           set -euo pipefail
 
