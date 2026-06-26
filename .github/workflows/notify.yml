@@ -57,7 +57,7 @@ jobs:
             --form-string "token=$PUSHOVER_TOKEN" \
             --form-string "user=$PUSHOVER_USER" \
             --form-string "title=$TITLE" \
-            --form-string "message=$MESSAGE" \
+            --form-string "message=\"$MESSAGE\"" \
             --form-string "url=$LOG_URL" \
             --form-string "url_title=View Full Session Log" \
             --form-string "priority=0" \
