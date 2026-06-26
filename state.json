@@ -445,38 +445,7 @@
     }
   ],
   "session_log": [],
-  "pending_proposals": {
-    "created_at": "2026-06-25 08:14 EDT",
-    "validator_status": "PASS_RULES_ONLY \u2014 market closed at time of validation",
-    "proposals": [
-      {
-        "symbol": "MU",
-        "action": "BUY",
-        "amount": 79,
-        "reason": "earnings_rule",
-        "note": "Post-earnings beat +17.5% pre-mkt; 9.11% vs 10% target; earnings rule overrides 2pp threshold"
-      },
-      {
-        "symbol": "RIOT",
-        "action": "BUY",
-        "amount": 253,
-        "reason": "standard",
-        "note": "0.15% vs 3% target; 2.85pp gap exceeds 2pp threshold"
-      },
-      {
-        "symbol": "MRVL",
-        "action": "BUY",
-        "amount": 175,
-        "reason": "new_position",
-        "note": "New position; 5d move -4.43%; user-approved; max 5%"
-      },
-      {
-        "symbol": "AMAT",
-        "action": "BUY",
-        "amount": 150,
-        "reason": "new_position",
-        "note": "New position; 5d move -0.67%; user-approved; max 5%"
-      }
+  "pending_proposals": {}
     ],
     "total_deployment": 657,
     "post_trade_cash_pct": 9.85,
