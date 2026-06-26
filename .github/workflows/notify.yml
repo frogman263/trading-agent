@@ -54,7 +54,7 @@ jobs:
             echo "EOF"
           } >> $GITHUB_OUTPUT
 
-      - name: Send Pushover notification
+            - name: Send Pushover notification
         if: steps.log.outputs.log_file != ''
         env:
           PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_API_TOKEN }}
@@ -63,7 +63,10 @@ jobs:
         run: |
           set -euo pipefail
 
-          printf '%s\n' "${{ steps.log.outputs.message }}" > /tmp/pushover_message.txt
+          # Write message using quoted heredoc to safely handle dollar signs ($8,482 etc.)
+          cat > /tmp/pushover_message.txt <<'MESSAGE'
+${{ steps.log.outputs.message }}
+MESSAGE
 
           curl -s \
             --form-string "token=$PUSHOVER_TOKEN" \
