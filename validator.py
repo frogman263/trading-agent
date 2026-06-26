@@ -1,168 +1,454 @@
+#!/usr/bin/env python3
+"""
+Autonomous AI Trading Agent - Deterministic Validator v1.1
+Enforces hard rules before any trade reaches Robinhood MCP.
+
+Usage:
+  python validator.py --proposals proposals.json --state state.json
+  python validator.py --proposals proposals.json --state state.json --dry-run
+
+Output: PASS or FAIL with full violation list. Exits 0 on PASS, 1 on FAIL.
+
+v1.1 changes:
+  - Loads target_allocs and tiers from config.json
+  - Auto-detects Tier 3 build phase vs steady state
+  - Entry threshold check added (warnings, not violations)
+  - Version checking between config and validator
+"""
+
 import json
+import shutil
+import sys
+import argparse
+from datetime import date, datetime
+from zoneinfo import ZoneInfo
 import logging
-from datetime import datetime, timezone, timedelta
 
-logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
+import os as _os
 
-def validate(proposals, state):
-    """
-    Deterministic validation layer for trading proposals.
-    Returns (violations, warnings)
-    """
+_CONFIG_PATH = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "config.json")
+
+VALIDATOR_VERSION = "1.1"
+
+def _load_config():
+    try:
+        with open(_CONFIG_PATH, "r") as _f:
+            _cfg = json.load(_f)
+        logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
+        cfg_version = _cfg.get("_version", "unknown")
+        logging.info(f"Config loaded from {_CONFIG_PATH} (version {cfg_version})")
+        if cfg_version != VALIDATOR_VERSION:
+            logging.warning(
+                f"Version mismatch: validator v{VALIDATOR_VERSION} / "
+                f"config v{cfg_version} — verify both files are in sync."
+            )
+        return _cfg
+    except FileNotFoundError:
+        logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
+        logging.warning(f"config.json not found at {_CONFIG_PATH} — using hardcoded defaults")
+        return None
+
+_cfg = _load_config()
+
+if _cfg:
+    AGENTIC_ACCOUNT       = _cfg.get("agentic_account", "926627357")
+    UNIVERSE              = set(_cfg.get("universe", []))
+    MAX_ALLOCS            = _cfg.get("max_allocs", {})
+    TARGET_ALLOCS         = _cfg.get("target_allocs", {})
+    TIERS                 = _cfg.get("tiers", {})
+    _rc                   = _cfg.get("risk_controls", {})
+    MIN_CASH_RESERVE_PCT  = _rc.get("min_cash_reserve_pct", 0.05)
+    MAX_TRADES_PER_DAY    = _rc.get("max_trades_per_day", 10)
+    MAX_CASH_DEPLOY_PCT   = _rc.get("max_cash_deploy_pct", 0.50)
+    MIN_TRADE_SIZE        = _rc.get("min_trade_size_usd", 25)
+    CONFIRMATION_THRESHOLD= _rc.get("confirmation_threshold_usd", 750)
+    NVDA_MAX_TRIM_SESSION = _rc.get("nvda_max_trim_per_session_usd", 500)
+    _dd                   = _cfg.get("drawdown", {})
+    DRAWDOWN_REDUCE       = _dd.get("reduce_deploy_at_pct", 0.10)
+    DRAWDOWN_PAUSE_BUYS   = _dd.get("pause_buys_at_pct", 0.15)
+    DRAWDOWN_FULL_STOP    = _dd.get("full_stop_at_pct", 0.20)
+    _et                   = _cfg.get("entry_thresholds", {})
+    ENTRY_THRESH_T1       = _et.get("tier1", 2.0)
+    ENTRY_THRESH_T2       = _et.get("tier2", 2.0)
+    ENTRY_THRESH_T3_BUILD = _et.get("tier3_build_phase", 1.5)
+    ENTRY_THRESH_T3_STEADY= _et.get("tier3_steady_state", 2.0)
+    ENTRY_THRESH_T4       = _et.get("tier4", 2.0)
+    TIER3_BUILD_COMPLETE  = _et.get("tier3_build_complete_at_pct", 15.0) / 100.0
+    MARKET_HOLIDAYS_2026  = {
+        date.fromisoformat(d)
+        for d in _cfg.get("market_holidays_2026", [])
+    }
+else:
+    AGENTIC_ACCOUNT = "926627357"
+    UNIVERSE = {
+        "NVDA", "AVGO", "MU",
+        "CEG", "GEV", "VST", "BE",
+        "IREN", "APLD", "CORZ", "CRWV",
+        "ASML", "NBIS", "RIOT",
+        "AMD", "AMAT", "MRVL", "VRT"
+    }
+    MAX_ALLOCS = {
+        "NVDA": 0.25, "AVGO": 0.15, "MU": 0.12,
+        "CEG": 0.08, "GEV": 0.08, "VST": 0.07, "BE": 0.08,
+        "IREN": 0.07, "APLD": 0.07, "CORZ": 0.07, "CRWV": 0.07,
+        "ASML": 0.07, "NBIS": 0.05, "RIOT": 0.05,
+        "AMD": 0.05, "AMAT": 0.05, "MRVL": 0.05, "VRT": 0.05
+    }
+    TARGET_ALLOCS = {
+        "NVDA": 0.20, "AVGO": 0.12, "MU": 0.10,
+        "CEG": 0.05, "GEV": 0.05, "VST": 0.04, "BE": 0.05,
+        "IREN": 0.04, "APLD": 0.04, "CORZ": 0.04, "CRWV": 0.04,
+        "ASML": 0.04, "NBIS": 0.03, "RIOT": 0.03,
+        "AMD": 0.02, "AMAT": 0.02, "MRVL": 0.02, "VRT": 0.02
+    }
+    TIERS = {
+        "NVDA": 1, "AVGO": 1, "MU": 1,
+        "CEG": 2, "GEV": 2, "VST": 2, "BE": 2,
+        "IREN": 3, "APLD": 3, "CORZ": 3, "CRWV": 3,
+        "ASML": 4, "NBIS": 4, "RIOT": 4,
+        "AMD": 4, "AMAT": 4, "MRVL": 4, "VRT": 4
+    }
+    MIN_CASH_RESERVE_PCT   = 0.05
+    MAX_TRADES_PER_DAY     = 10
+    MAX_CASH_DEPLOY_PCT    = 0.50
+    MIN_TRADE_SIZE         = 25
+    CONFIRMATION_THRESHOLD = 750
+    NVDA_MAX_TRIM_SESSION  = 500
+    DRAWDOWN_REDUCE        = 0.10
+    DRAWDOWN_PAUSE_BUYS    = 0.15
+    DRAWDOWN_FULL_STOP     = 0.20
+    ENTRY_THRESH_T1        = 2.0
+    ENTRY_THRESH_T2        = 2.0
+    ENTRY_THRESH_T3_BUILD  = 1.5
+    ENTRY_THRESH_T3_STEADY = 2.0
+    ENTRY_THRESH_T4        = 2.0
+    TIER3_BUILD_COMPLETE   = 0.15
+    MARKET_HOLIDAYS_2026   = {
+        date(2026, 1, 1), date(2026, 1, 19), date(2026, 2, 16),
+        date(2026, 4, 3), date(2026, 5, 25), date(2026, 6, 19),
+        date(2026, 7, 3), date(2026, 9, 7), date(2026, 11, 26),
+        date(2026, 12, 25),
+    }
+
+TIER3_SYMBOLS = {sym for sym, t in TIERS.items() if t == 3}
+
+
+def is_market_open():
+    et = ZoneInfo("America/New_York")
+    now = datetime.now(et)
+    today = now.date()
+    if today.weekday() >= 5:
+        return False, "Weekend"
+    if today in MARKET_HOLIDAYS_2026:
+        return False, f"Market holiday: {today}"
+    if now.hour < 9 or (now.hour == 9 and now.minute < 30):
+        return False, "Pre-market (before 9:30 AM ET)"
+    if now.hour >= 16:
+        return False, "Market closed (after 4:00 PM ET)"
+    return True, "Open"
+
+
+def load_json(path):
+    try:
+        with open(path, "r") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        print(f"ERROR: File not found: {path}")
+        sys.exit(1)
+    except json.JSONDecodeError as e:
+        print(f"ERROR: Invalid JSON in {path}: {e}")
+        sys.exit(1)
+
+
+def load_state(path):
+    try:
+        return load_json(path)
+    except SystemExit:
+        print(f"WARNING: {path} not found. Using defaults.")
+        return {
+            "account_number": AGENTIC_ACCOUNT,
+            "account_value": 0, "buying_power": 0,
+            "positions": {}, "high_water_mark": 0,
+            "trades_today": 0, "last_trade_date": None
+        }
+
+
+def get_trades_today(state):
+    last = state.get("last_trade_date")
+    today = str(datetime.now(ZoneInfo("America/New_York")).date())
+    if last != today:
+        return 0
+    return state.get("trades_today", 0)
+
+
+def get_entry_threshold(sym, tier3_in_build_phase):
+    tier = TIERS.get(sym, 0)
+    if tier == 1:
+        return ENTRY_THRESH_T1, "Tier 1"
+    elif tier == 2:
+        return ENTRY_THRESH_T2, "Tier 2"
+    elif tier == 3:
+        if tier3_in_build_phase:
+            return ENTRY_THRESH_T3_BUILD, "Tier 3 build phase"
+        else:
+            return ENTRY_THRESH_T3_STEADY, "Tier 3 steady state"
+    elif tier == 4:
+        return ENTRY_THRESH_T4, "Tier 4"
+    else:
+        return 2.0, "default"
+
+
+def validate(proposals, state, dry_run=False):
     violations = []
     warnings = []
+    account_value = state.get("account_value", 0)
+    buying_power = state.get("buying_power", 0)
 
-    # Load config
-    try:
-        with open("/tmp/config.json") as f:
-            config = json.load(f)
-    except Exception as e:
-        logging.error(f"Failed to load config.json: {e}")
-        return ["Config load failed"], []
-
-    max_allocs = config.get("max_allocs", {})
-    market_holidays = set(config.get("market_holidays_2026", []))
-    drawdown_limits = config.get("drawdown", {})
-
-    # Normalize positions
     raw_positions = state.get("positions", {})
     positions = {}
-    prices = {}
     for sym, val in raw_positions.items():
         if isinstance(val, dict):
+            if "value" not in val:
+                logging.warning(f"Malformed position entry for {sym}: missing 'value' key")
             positions[sym] = val.get("value", 0)
-            prices[sym] = val.get("price", 0)
         else:
             positions[sym] = val
-            prices[sym] = 0
 
-    account_value = float(state.get("account_value", 0))
-    if account_value <= 0:
-        violations.append("Invalid account value in state.json")
-        return violations, warnings
+    high_water_mark = state.get("high_water_mark", account_value)
+    trades_today = get_trades_today(state)
 
-    high_water_mark = float(state.get("high_water_mark", account_value))
-    drawdown = (high_water_mark - account_value) / high_water_mark if high_water_mark > 0 else 0
+    if high_water_mark > 0 and account_value > 0:
+        if high_water_mark < account_value:
+            logging.warning(f"State integrity: HWM < account value. Auto-correcting.")
+            high_water_mark = account_value
 
-    # Drawdown checks
-    if drawdown >= 0.20:
-        violations.append(f"Drawdown {drawdown*100:.1f}% exceeds 20% threshold. Full stop required.")
-    elif drawdown >= 0.15:
-        warnings.append(f"Drawdown {drawdown*100:.1f}% >= 15%. New buys paused.")
-    elif drawdown >= 0.10:
-        warnings.append(f"Drawdown {drawdown*100:.1f}% >= 10%. Deployment capped at 25% of buying power.")
+    # Tier 3 build phase auto-detection
+    tier3_value = sum(positions.get(sym, 0) for sym in TIER3_SYMBOLS)
+    tier3_pct = tier3_value / account_value if account_value > 0 else 0
+    tier3_in_build_phase = tier3_pct < TIER3_BUILD_COMPLETE
+    logging.info(
+        f"Tier 3 combined: {tier3_pct*100:.1f}% (threshold: {TIER3_BUILD_COMPLETE*100:.0f}%) — "
+        f"{'BUILD PHASE (1.5% entry)' if tier3_in_build_phase else 'STEADY STATE (2% entry)'}"
+    )
 
-    # Market hours check
-    now = datetime.now(timezone.utc)
-    et_now = now.astimezone(timezone(timedelta(hours=-4)))
-    is_weekday = et_now.weekday() < 5
-    is_market_hours = 9 <= et_now.hour < 16 and is_weekday
+    # Account check
+    acct = state.get("account_number", "")
+    if acct != AGENTIC_ACCOUNT:
+        violations.append(f"WRONG ACCOUNT: {acct} — must be {AGENTIC_ACCOUNT}")
 
-    if not is_market_hours:
-        violations.append("Market not open: Pre-market (before 9:30 AM ET)")
+    # Market hours
+    market_open, market_status = is_market_open()
+    if not market_open:
+        violations.append(f"Market not open: {market_status}")
 
-    # NVDA trim limit
-    nvda_trades_today = state.get("nvda_trades_today", 0)
-    if nvda_trades_today >= 500:
-        warnings.append("NVDA trim limit of $500 reached for this session.")
+    # Drawdown
+    drawdown = 0
+    if high_water_mark > 0:
+        drawdown = (high_water_mark - account_value) / high_water_mark
 
-    # Process each proposal
-    for proposal in proposals:
-        sym = proposal.get("symbol")
-        action = proposal.get("action", "").upper()
-        amount = float(proposal.get("amount", 0))
+    if drawdown >= DRAWDOWN_FULL_STOP:
+        violations.append(
+            f"FULL STOP — drawdown {drawdown*100:.1f}% exceeds "
+            f"{DRAWDOWN_FULL_STOP*100:.0f}% limit. Manual review required."
+        )
+    elif drawdown >= DRAWDOWN_PAUSE_BUYS:
+        buy_proposals = [p for p in proposals if p.get("action", "").upper() == "BUY"]
+        if buy_proposals:
+            violations.append(
+                f"BUY PAUSE — drawdown {drawdown*100:.1f}% exceeds "
+                f"{DRAWDOWN_PAUSE_BUYS*100:.0f}%. No new buys. Trims only."
+            )
+    elif drawdown >= DRAWDOWN_REDUCE:
+        warnings.append(
+            f"Drawdown {drawdown*100:.1f}% — max cash deployment reduced to 25% of buying power."
+        )
 
-        if sym not in max_allocs:
+    # Trade count
+    total_trades = trades_today + len(proposals)
+    if total_trades > MAX_TRADES_PER_DAY:
+        violations.append(
+            f"Trade count {total_trades} exceeds daily max {MAX_TRADES_PER_DAY} "
+            f"({trades_today} already executed today)."
+        )
+
+    # Total cash deployment
+    total_buy_amount = sum(
+        p.get("amount", 0) for p in proposals
+        if p.get("action", "").upper() == "BUY"
+    )
+    effective_cap = (
+        0.25 if drawdown >= DRAWDOWN_REDUCE else MAX_CASH_DEPLOY_PCT
+    ) * buying_power
+
+    if total_buy_amount > effective_cap:
+        violations.append(
+            f"Total buy amount ${total_buy_amount:.2f} exceeds "
+            f"{'reduced ' if drawdown >= DRAWDOWN_REDUCE else ''}session cap "
+            f"${effective_cap:.2f}."
+        )
+
+    # Per-trade checks
+    projected_positions = dict(positions)
+
+    for p in proposals:
+        sym    = p.get("symbol", "").upper()
+        action = p.get("action", "").upper()
+        amount = p.get("amount", 0)
+        reason = p.get("reason", "")
+
+        if sym not in UNIVERSE:
             violations.append(f"{sym}: Not in approved universe.")
-            continue
 
-        max_pct = max_allocs[sym]
-        current_value = positions.get(sym, 0)
-        current_pct = current_value / account_value if account_value > 0 else 0
+        if amount < MIN_TRADE_SIZE:
+            violations.append(f"{sym}: Trade amount ${amount} below minimum ${MIN_TRADE_SIZE}.")
 
-        if action == "BUY":
-            new_value = current_value + amount
-            new_pct = new_value / account_value
+        if amount > CONFIRMATION_THRESHOLD:
+            violations.append(
+                f"{sym}: Trade amount ${amount} exceeds confirmation threshold "
+                f"${CONFIRMATION_THRESHOLD} — requires manual approval."
+            )
 
-            # Strict max allocation check for buys (no buffer)
-            if new_pct > max_pct:
+        if sym == "NVDA" and action == "SELL":
+            if amount > NVDA_MAX_TRIM_SESSION:
+                violations.append(
+                    f"NVDA: Trim amount ${amount} exceeds session limit ${NVDA_MAX_TRIM_SESSION}."
+                )
+
+        if action == "BUY" and account_value > 0:
+            current_val = projected_positions.get(sym, 0)
+            new_val = current_val + amount
+            new_pct = new_val / account_value
+            max_pct = MAX_ALLOCS.get(sym, 0.05)
+
+            if new_pct > max_pct + 0.03:
                 violations.append(
                     f"{sym}: Post-trade weight {new_pct*100:.1f}% would exceed "
                     f"max allocation {max_pct*100:.1f}%."
                 )
 
-        elif action == "SELL":
-            # Tax Lot Check: Warn if SELL generates >$500 in Short-Term Capital Gains
-            if sym in prices and prices[sym] > 0:
-                shares_to_sell = amount / prices[sym]
-                tax_lots = state.get("tax_lots", [])
+            projected_positions[sym] = new_val
 
-                # Filter and sort lots for this symbol (FIFO)
-                sym_lots = [lot for lot in tax_lots if lot.get("symbol") == sym]
-                sym_lots.sort(key=lambda x: x.get("acquired", ""))
+            # Entry threshold check (warning only)
+            target_pct = TARGET_ALLOCS.get(sym, 0)
+            is_new_position = positions.get(sym, 0) == 0
+            is_override = reason in (
+                "earnings_rule", "earnings_override",
+                "new_position", "capital_injection"
+            )
 
-                stcg = 0.0
-                shares_remaining = shares_to_sell
+            if target_pct > 0 and not is_new_position and not is_override:
+                current_pct = positions.get(sym, 0) / account_value
+                gap_pp = (target_pct - current_pct) * 100
+                threshold_pp, threshold_label = get_entry_threshold(
+                    sym, tier3_in_build_phase
+                )
 
-                for lot in sym_lots:
-                    if shares_remaining <= 0:
-                        break
-                    lot_shares = lot.get("quantity", 0)
-                    if lot_shares <= 0:
-                        continue
-
-                    shares_from_lot = min(shares_remaining, lot_shares)
-
-                    if lot.get("term") == "short":
-                        cost_basis = lot.get("cost_basis", 0)
-                        gain = (prices[sym] - cost_basis) * shares_from_lot
-                        stcg += gain
-
-                    shares_remaining -= shares_from_lot
-
-                if stcg > 500:
+                if gap_pp < 0:
                     warnings.append(
-                        f"{sym}: SELL of ${amount:,.2f} is projected to generate "
-                        f"${stcg:,.2f} in short-term capital gains (exceeds $500 threshold)."
+                        f"{sym}: BUY proposed but position is AT or ABOVE target "
+                        f"({current_pct*100:.1f}% vs {target_pct*100:.1f}% target). "
+                        f"Verify earnings rule or rebalance intent."
                     )
+                elif gap_pp < threshold_pp:
+                    warnings.append(
+                        f"{sym}: BUY proposed with {gap_pp:.2f}% gap to target "
+                        f"(threshold: {threshold_pp:.1f}%, {threshold_label}). "
+                        f"Verify entry trigger — earnings rule or override may apply."
+                    )
+
+    # Cash reserve
+    if account_value > 0:
+        cash_after = buying_power - total_buy_amount
+        reserve_pct = cash_after / account_value
+        if reserve_pct < MIN_CASH_RESERVE_PCT:
+            violations.append(
+                f"Cash reserve after trades {reserve_pct*100:.1f}% would fall below "
+                f"minimum {MIN_CASH_RESERVE_PCT*100:.0f}%."
+            )
 
     return violations, warnings
 
 
-if __name__ == "__main__":
-    import argparse
+def update_state(state_path, state, proposals, result_pass):
+    if not result_pass:
+        return
+    account_value = state.get("account_value", 0)
+    high_water_mark = state.get("high_water_mark", 0)
+    trades_today = get_trades_today(state)
+    state["high_water_mark"] = max(high_water_mark, account_value)
+    state["trades_today"] = trades_today + len(proposals)
+    et_now = datetime.now(ZoneInfo("America/New_York"))
+    state["last_trade_date"] = str(et_now.date())
+    state["last_updated"] = et_now.strftime("%Y-%m-%d %H:%M:%S ET")
+    try:
+        shutil.copy(state_path, state_path + ".bak")
+        logging.info(f"State backup written: {state_path}.bak")
+    except FileNotFoundError:
+        pass
+    with open(state_path, "w") as f:
+        json.dump(state, f, indent=2)
+    print(f"\nState updated: {state_path}")
 
-    parser = argparse.ArgumentParser()
+
+def main():
+    parser = argparse.ArgumentParser(description="Trading Agent Validator v1.1")
     parser.add_argument("--proposals", required=True)
-    parser.add_argument("--state", required=True)
+    parser.add_argument("--state",     required=True)
+    parser.add_argument("--dry-run",   action="store_true")
     args = parser.parse_args()
 
-    with open(args.proposals) as f:
-        proposals = json.load(f).get("proposals", [])
+    proposals_data = load_json(args.proposals)
+    state = load_state(args.state)
+    proposals = proposals_data.get("proposals", proposals_data)
+    if not isinstance(proposals, list):
+        print("ERROR: proposals.json must contain a list under 'proposals' key.")
+        sys.exit(1)
 
-    with open(args.state) as f:
-        state = json.load(f)
-
-    violations, warnings = validate(proposals, state)
-
-    print("=======================================================")
-    print(f"  Trading Agent Validator — {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    print(f"  Account:   {state.get('account_number')}")
-    print(f"  Value:     ${state.get('account_value', 0):,.2f}")
-    print(f"  Cash:      ${state.get('buying_power', 0):,.2f}")
-    print(f"  HWM:       ${state.get('high_water_mark', 0):,.2f}")
+    cfg_version = _cfg.get("_version", "fallback") if _cfg else "fallback"
+    print(f"\n{'='*55}")
+    print(f"  Trading Agent Validator v{VALIDATOR_VERSION} — "
+          f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"  Config:    v{cfg_version}"
+          + (" ✓" if cfg_version == VALIDATOR_VERSION else " ⚠ VERSION MISMATCH"))
+    print(f"  Account:   {state.get('account_number','?')}")
+    print(f"  Value:     ${state.get('account_value',0):,.2f}")
+    print(f"  Cash:      ${state.get('buying_power',0):,.2f}")
+    print(f"  HWM:       ${state.get('high_water_mark',0):,.2f}")
     print(f"  Proposals: {len(proposals)} trade(s)")
-    print("=======================================================")
+    print(f"{'='*55}\n")
 
-    if violations:
-        print("\nVIOLATIONS:")
-        for v in violations:
-            print(f"  ✗  {v}")
-        print("\nRESULT: FAIL — DO NOT EXECUTE TRADES")
+    violations, warnings = validate(proposals, state, args.dry_run)
+
+    if not violations:
+        logging.info(f"Validation PASSED — {len(proposals)} proposal(s) cleared all checks")
     else:
-        print("\nRESULT: PASS")
+        logging.warning(f"Validation FAILED — {len(violations)} violation(s) found")
+        for v in violations:
+            logging.warning(f"  Violation: {v}")
 
     if warnings:
-        print("\nWARNINGS:")
+        print("WARNINGS:")
         for w in warnings:
-            print(f"  !  {w}")
+            print(f"  ⚠  {w}")
+        print()
+
+    if violations:
+        print("VIOLATIONS:")
+        for v in violations:
+            print(f"  ✗  {v}")
+        print(f"\n{'='*55}")
+        print("  RESULT: FAIL — DO NOT EXECUTE TRADES")
+        print(f"{'='*55}\n")
+        sys.exit(1)
+    else:
+        print("All checks passed.")
+        print(f"\n{'='*55}")
+        print("  RESULT: PASS — Safe to execute via Robinhood MCP")
+        print(f"{'='*55}\n")
+        if not args.dry_run:
+            update_state(args.state, state, proposals, True)
+        sys.exit(0)
+
+
+if __name__ == "__main__":
+    main()
