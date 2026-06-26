@@ -1,4 +1,5 @@
 name: Trading Agent — Session Notification
+
 on:
   push:
     branches: [main]
@@ -15,36 +16,43 @@ jobs:
       - name: Parse session log
         id: log
         run: |
+          set -euo pipefail
+
           DATE=$(date +%Y-%m-%d)
           LOG_FILE="logs/${DATE}.md"
 
           if [ ! -f "$LOG_FILE" ]; then
-            echo "No log file found for today (${LOG_FILE}) — skipping notification"
+            echo "No log file found for today — skipping notification"
             exit 0
           fi
 
           echo "log_file=$LOG_FILE" >> $GITHUB_OUTPUT
           echo "date=$DATE" >> $GITHUB_OUTPUT
 
-          # Keep: Robust regex parsing 
+          # Temporarily relax pipefail for grep-based parsing
+          set +o pipefail
+
           VALIDATOR=$(grep -i 'validator' "$LOG_FILE" | grep -oiE 'PASS|FAIL|N/A' | head -1 || echo "N/A")
           ACCOUNT=$(grep -o 'Account value:.*\$[0-9,\.]*' "$LOG_FILE" | head -1 | grep -o '\$[0-9,\.]*' | head -1 || echo "N/A")
           HWM=$(grep -i 'high.water' "$LOG_FILE" | grep -o '\$[0-9,\.]*' | head -1 || echo "N/A")
           DRAWDOWN=$(grep -o 'Drawdown:.*[0-9\.]*%' "$LOG_FILE" | head -1 | grep -o '[0-9\.]*%' | head -1 || echo "0%")
           CASH=$(grep -o 'Cash:.*[0-9\.]*%' "$LOG_FILE" | head -1 | grep -o '[0-9\.]*%' | head -1 || echo "N/A")
-          TRADES=$(grep -E '(BUY|SELL).*at \$[0-9]' "$LOG_FILE" | wc -l | tr -d ' ' || echo "0")
+          TRADES=$(grep -o 'Trades executed: [0-9]*' "$LOG_FILE" | head -1 | grep -o '[0-9]*' || echo "0")
+
+          set -o pipefail
 
           echo "validator=$VALIDATOR" >> $GITHUB_OUTPUT
           echo "trades=$TRADES" >> $GITHUB_OUTPUT
 
-          # Keep: Excellent use of multiline heredoc syntax for GITHUB_OUTPUT
-          echo "message<<EOF" >> $GITHUB_OUTPUT
-          echo "Validator: ${VALIDATOR}" >> $GITHUB_OUTPUT
-          echo "Trades executed: ${TRADES}" >> $GITHUB_OUTPUT
-          echo "Account value: ${ACCOUNT}" >> $GITHUB_OUTPUT
-          echo "HWM: ${HWM} | Drawdown: ${DRAWDOWN}" >> $GITHUB_OUTPUT
-          echo "Cash: ${CASH}" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          {
+            echo "message<<EOF"
+            echo "Validator: ${VALIDATOR}"
+            echo "Trades executed: ${TRADES}"
+            echo "Account value: ${ACCOUNT}"
+            echo "HWM: ${HWM} | Drawdown: ${DRAWDOWN}"
+            echo "Cash: ${CASH}"
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
 
       - name: Send Pushover notification
         if: steps.log.outputs.log_file != ''
@@ -52,13 +60,16 @@ jobs:
           PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_API_TOKEN }}
           PUSHOVER_USER: ${{ secrets.PUSHOVER_USER_KEY }}
           TITLE: "Trading Agent — ${{ steps.log.outputs.date }} | ${{ steps.log.outputs.validator }} | ${{ steps.log.outputs.trades }} trade(s)"
-          # Change: We read the step output directly in the run context to protect multiline strings
         run: |
+          set -euo pipefail
+
+          printf '%s\n' "${{ steps.log.outputs.message }}" > /tmp/pushover_message.txt
+
           curl -s \
             --form-string "token=$PUSHOVER_TOKEN" \
             --form-string "user=$PUSHOVER_USER" \
             --form-string "title=$TITLE" \
-            --form-string "message=${{ steps.log.outputs.message }}" \
+            --form-file "message=</tmp/pushover_message.txt" \
             --form-string "url=github://github.com/${{ github.repository }}/blob/main/${{ steps.log.outputs.log_file }}" \
             --form-string "url_title=View Full Session Log" \
             --form-string "priority=0" \
