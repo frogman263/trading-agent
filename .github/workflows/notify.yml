@@ -51,7 +51,7 @@ jobs:
           echo "trades=$TRADES" >> $GITHUB_OUTPUT
           echo "message_b64=$MESSAGE_B64" >> $GITHUB_OUTPUT
 
-      - name: Send Pushover notification
+            - name: Send Pushover notification
         if: steps.log.outputs.log_file != ''
         env:
           PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_API_TOKEN }}
@@ -60,14 +60,13 @@ jobs:
         run: |
           set -euo pipefail
 
-          # Decode base64 message into temp file
           echo "${{ steps.log.outputs.message_b64 }}" | base64 -d > /tmp/pushover_message.txt
 
           curl -s \
             --form-string "token=$PUSHOVER_TOKEN" \
             --form-string "user=$PUSHOVER_USER" \
             --form-string "title=$TITLE" \
-            --form-file "message=</tmp/pushover_message.txt" \
+            --form "message=</tmp/pushover_message.txt" \
             --form-string "url=github://github.com/${{ github.repository }}/blob/main/${{ steps.log.outputs.log_file }}" \
             --form-string "url_title=View Full Session Log" \
             --form-string "priority=0" \
