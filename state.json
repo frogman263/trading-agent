@@ -446,12 +446,4 @@
   ],
   "session_log": [],
   "pending_proposals": {}
-    ],
-    "total_deployment": 657,
-    "post_trade_cash_pct": 9.85,
-    "screened_not_proposed": {
-      "AMD": "5d +1.42% \u2014 eligible, no weakness setup, not approved this session",
-      "VRT": "5d -0.36% \u2014 eligible, flat, not approved this session"
-    }
-  }
 }
