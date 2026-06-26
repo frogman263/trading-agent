@@ -3,40 +3,44 @@
 After each local session, write the log to GitHub via the REST API:
 
 ```bash
-# Write log to temp file first
+# Write log to temp file first (plain markdown — do NOT base64 the body itself)
 LOG_FILE="/tmp/session_log.md"
-DATE=$(date +%Y-%m-%d)
+DATE=$(TZ='America/New_York' date +%Y-%m-%d)
+TIME=$(TZ='America/New_York' date +%H%M)
+LOG_PATH="logs/${DATE}T${TIME}.md"
 
-# Base64 encode
+# Base64 encode ONCE, only for the GitHub Contents API `content` field
 ENCODED=$(base64 -w 0 "$LOG_FILE" 2>/dev/null || base64 "$LOG_FILE" | tr -d '\n')
 
 # Check if file exists (get SHA if so)
 SHA=$(curl -s -H "Authorization: token $GITHUB_PAT" \
-  "https://api.github.com/repos/frogman263/trading-agent/contents/logs/${DATE}.md" \
+  "https://api.github.com/repos/frogman263/trading-agent/contents/${LOG_PATH}" \
   | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('sha',''))" 2>/dev/null)
 
 # Create or update file
 if [ -n "$SHA" ]; then
-  PAYLOAD="{"message":"Session log — ${DATE}","content":"${ENCODED}","sha":"${SHA}"}"
+  PAYLOAD="{"message":"Session log — ${DATE}T${TIME}","content":"${ENCODED}","sha":"${SHA}"}"
 else
-  PAYLOAD="{"message":"Session log — ${DATE}","content":"${ENCODED}"}"
+  PAYLOAD="{"message":"Session log — ${DATE}T${TIME}","content":"${ENCODED}"}"
 fi
 
 curl -s -X PUT \
   -H "Authorization: token $GITHUB_PAT" \
   -H "Content-Type: application/json" \
   -d "$PAYLOAD" \
-  "https://api.github.com/repos/frogman263/trading-agent/contents/logs/${DATE}.md"
+  "https://api.github.com/repos/frogman263/trading-agent/contents/${LOG_PATH}"
 ```
 
 GitHub repo: `https://github.com/frogman263/trading-agent`
-Logs folder: `logs/YYYY-MM-DD.md`
+Logs folder: `logs/YYYY-MM-DDTHHMM.md` (Eastern Time, always T-stamped — date-only names break the notify.yml log selector)
 
 Also write to local backup: `~/trading-logs/YYYY-MM-DD.md`
 
 ---
 
 ## Telegram Notifications
+
+> **⚠ DEPRECATED (June 2026).** Notifications now run through **Pushover via the GitHub Actions workflow `notify.yml`**, which fires after each session log is pushed. The Telegram path below is retained for history only and is not used. Pushover credentials live in GitHub repo secrets (`PUSHOVER_API_TOKEN`, `PUSHOVER_USER_KEY`); the direct-curl helper in the Routine is disabled in cloud runs (proxy blocks `api.pushover.net`).
 
 Send a session summary to Telegram after every local run using:
 - **Bot token:** `$TELEGRAM_BOT_TOKEN`
@@ -151,16 +155,16 @@ MAG8 hyperscaler CAPEX is a structural, multi-year tailwind for AI chips, memory
 | CORZ | Core Scientific | 4% | 7% | Multibillion CoreWeave hosting deal; fully pivoted |
 | CRWV | CoreWeave | 4% | 7% | AI cloud/GPU compute; hyperscaler-grade infrastructure |
 
-### Tier 4 — Supporting & Opportunistic (8–12% of account)
+### Tier 4 — Supporting & Opportunistic (8–18% of account)
 | Symbol | Company | Target | Max | Why |
 |--------|---------|--------|-----|-----|
 | ASML | ASML Holding | 4% | 7% | Semiconductor equipment; upstream from all chips |
 | NBIS | Nebius AI | 3% | 5% | AI cloud infrastructure; hyperscaler partnerships |
-| RIOT | Riot Platforms | 2% | 5% | 1.7GW power portfolio across 1,100 acres in Texas; AMD 10-year HPC data center lease at Rockdale (50MW contracted, expandable to 200MW, ~$636M base value); actively converting mining sites to AI/HPC data centers. High risk/high reward infrastructure play. |
-| AMD | Advanced Micro Devices | 0% | 5% | Not yet held; NVDA alternative |
-| AMAT | Applied Materials | 0% | 5% | Not yet held; semiconductor equipment |
-| MRVL | Marvell Technology | 0% | 5% | Not yet held; custom silicon, optical interconnects |
-| VRT | Vertiv | 0% | 5% | Not yet held; data center cooling/power |
+| RIOT | Riot Platforms | 3% | 5% | 1.7GW power portfolio across 1,100 acres in Texas; AMD 10-year HPC data center lease at Rockdale (50MW contracted, expandable to 200MW, ~$636M base value); actively converting mining sites to AI/HPC data centers. High risk/high reward infrastructure play. |
+| AMD | Advanced Micro Devices | 2% | 5% | Not yet held; NVDA alternative |
+| AMAT | Applied Materials | 2% | 5% | Not yet held; semiconductor equipment |
+| MRVL | Marvell Technology | 2% | 5% | Not yet held; custom silicon, optical interconnects |
+| VRT | Vertiv | 2% | 5% | Not yet held; data center cooling/power |
 
 **Cash reserve: 5–10% minimum at all times.**
 
@@ -168,9 +172,9 @@ MAG8 hyperscaler CAPEX is a structural, multi-year tailwind for AI chips, memory
 
 ---
 
-## Current State (as of June 18, 2026)
+## Current State (as of June 26, 2026)
 
-> **Note:** state.json is now the authoritative source for current account value, positions, and high-water mark. This section is a human-readable reference only.
+> **Note:** state.json is now the authoritative source for current account value, positions, and high-water mark. This section is a human-readable reference only — when it conflicts with live MCP data or state.json, the live data wins.
 
 ### Capital Injection Protocol
 If buying_power at session start exceeds the prior state.json value by more than $500, treat this as a capital injection — not a drawdown recovery or data error.
@@ -183,25 +187,24 @@ When a capital injection is detected:
 - Apply normal session deployment cap (50% of available cash) to the injected amount
 - Log the detected injection amount in the session log under a "Capital Injection Detected" note
 
-Account value: ~$7,500–8,000 (post-transfer from Grok account)
-14 positions held. Build phase transitioning to rebalance phase.
+Account value: ~$8,500. High-water mark $8,897.80. 14 positions held. Build phase complete — now in rebalance/steady-state phase.
 
-### Known Overweight — Priority Action
-**NVDA is currently ~34% of account** — significantly above the 20% target and 25% max. 
-- Trim NVDA gradually toward 25% max, then 20% target over multiple sessions
-- Do not sell more than $500 of NVDA per session to minimize market impact and tax drag
-- Use proceeds to build underweight Tier 3 positions
+### NVDA — Trim Phase Complete
+**NVDA is ~23–24% of account** — within the 20% target / 25% max band. The multi-session trim from its earlier ~34% overweight is finished.
+- Do NOT trim NVDA on autopilot. Hold and let Tier 2/3/4 builds dilute it naturally toward the 20% target.
+- Only consider a trim if NVDA rallies back above the 25% max, and never more than $500/session.
 
 ### Known Underweight — Build Priority
-- Tier 3 (IREN, APLD, CORZ, CRWV): currently ~2% combined, target 15–20%
-- Tier 2 (CEG, VST, BE, GEV): currently ~17%, target 20–28%
-- Tier 4 (ASML, NBIS, RIOT): partially held, top up toward targets
+- Tier 2 (CEG, VST, BE, GEV): ~15% combined, target 20–28% — top up toward targets as cash allows
+- Tier 4 names AMD / AMAT / MRVL / VRT: 0% held vs 2% target each — eligible for entry (they sit ~2pp below target); screen the 5-day move / no-chase rule first
+- RIOT: ~1.3% vs 3% target — building; ~1.7pp gap, approaching the 2pp entry threshold
+- Cash: ~15–16%, above the 10% upper target — deploy into the above at the next in-hours session
 
-### Pending Actions (Monday June 23 open)
-1. Trim NVDA toward 25% max (sell up to $500)
-2. Deploy proceeds into underweight Tier 3 names
-3. Top up Tier 2 toward targets
-4. Screen AMD, AMAT, MRVL, VRT for Tier 4 entry (check 5-day move rule first)
+### Pending Actions (next open)
+1. Screen AMD, AMAT, MRVL, VRT for Tier 4 entry (check 5-day move rule first); ~$200 each, mind the 50% single-session deploy cap
+2. Top up Tier 2 toward targets (CEG, GEV, BE ~1pp below)
+3. RIOT top-up once it crosses the 2pp threshold
+4. No NVDA trim unless it re-crosses 25% max
 
 ---
 
@@ -273,7 +276,7 @@ Minimum trade size: $25.
 
 Trim a position when:
 - It exceeds max allocation by ≥ 3% — trim back toward max
-- Exception: trim NVDA from current ~34% toward 25% max gradually (≤$500/session)
+- NVDA: trim phase complete (~23–24%, within band). Do not trim unless it re-crosses the 25% max; never more than $500/session.
 
 Full exit requires explicit user instruction except:
 - Stock is acquired, delisted, or fundamentally leaves the thesis
@@ -483,3 +486,4 @@ A temporary file written by Claude before each execution step. Contains all prop
 | 2.2 | 2026-06-21 | Added GitHub logging via REST API for both local and cloud runs; repo frogman263/trading-agent/logs/ |
 | 2.3 | 2026-06-22 | Added deterministic validator.py + state.json persistence + proposals.json gate + tiered drawdown (-10/-15/-20%) + 13-step run procedure. Credentials moved to environment variables. |
 | 2.4 | 2026-06-23 | Tiered entry threshold: Tier 3 lowered to 1.5pp during active build phase (revert to 2pp at 15% combined). Capital injection protocol added. RIOT thesis updated to reflect HPC/data center pivot. PDT rule note added. Tax lot tracking added. |
+| 2.5 | 2026-06-26 | Synced to config.json v1.2: RIOT target 2%→3%; AMD/AMAT/MRVL/VRT 0%→2%; Tier 4 band 8–12%→8–18%. Refreshed Current State to June 26 (NVDA trim phase complete ~23–24%, removed stale ~34% trim instruction). Logging filename → ET T-stamped `logs/YYYY-MM-DDTHHMM.md` (date-only broke notify.yml). Telegram marked deprecated — Pushover via GitHub Actions is the live channel. |
