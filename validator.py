@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Autonomous AI Trading Agent - Deterministic Validator v1.1
+Autonomous AI Trading Agent - Deterministic Validator v1.2
 Enforces hard rules before any trade reaches Robinhood MCP.
 
 Usage:
