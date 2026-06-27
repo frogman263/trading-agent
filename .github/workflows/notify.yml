@@ -71,7 +71,7 @@ jobs:
           ACCOUNT=$(money 'account value'); [ -z "$ACCOUNT" ] && ACCOUNT="N/A"
           HWM=$(money 'high.water');        [ -z "$HWM" ]      && HWM="N/A"
           DRAWDOWN=$(pct 'drawdown');       [ -z "$DRAWDOWN" ] && DRAWDOWN="N/A"
-          CASH=$(pct 'cash');               [ -z "$CASH" ]     && CASH="N/A"
+          CASH=$(pct 'cash %:');            [ -z "$CASH" ]     && CASH="N/A"
 
           MESSAGE=$(printf "Validator: %s\nTrades: %s\nAccount Value: %s\nHWM: %s\nDrawdown: %s\nCash: %s" \
             "$VALIDATOR" "$TRADES" "$ACCOUNT" "$HWM" "$DRAWDOWN" "$CASH")

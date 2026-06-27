@@ -3,12 +3,13 @@
   "account_value": 8433.64,
   "buying_power": 671.11,
   "high_water_mark": 8897.8,
+  "prior_session_value": 8433.64,
   "last_trade_date": "2026-06-26",
   "trades_today": 4,
   "last_updated": "2026-06-26T15:11:00",
   "build_phase": "Steady State",
-  "schema_version": "1.1",
-  "notes": "State updated 2026-06-26 PM session (11:11 AM ET). No trades — no 2pp entry triggers, no buy_weakness signals. BE flagged -13% today (non-earnings; next report July 30). 18 positions. Drawdown 5.22%.",
+  "schema_version": "1.2",
+  "notes": "State updated 2026-06-26 PM session (11:11 AM ET). No trades \u2014 no 2pp entry triggers, no buy_weakness signals. BE flagged -13% today (non-earnings; next report July 30). 18 positions. Drawdown 5.22%.",
   "positions": {
     "NVDA": {
       "quantity": 10.274267,
@@ -138,56 +139,361 @@
     }
   },
   "tax_lots": [
-    {"symbol": "NVDA", "quantity": 0.22793, "cost_basis": 187.71, "acquired": "2025-12-29", "term": "short", "notes": "partial lot, 0.219622 sh consumed by FIFO sell 2026-06-23"},
-    {"symbol": "NVDA", "quantity": 2.629987, "cost_basis": 190.115, "acquired": "2026-01-05", "term": "short"},
-    {"symbol": "NVDA", "quantity": 0.432549, "cost_basis": 184.95, "acquired": "2026-01-13", "term": "short"},
-    {"symbol": "NVDA", "quantity": 1.351533, "cost_basis": 184.975, "acquired": "2026-02-02", "term": "short"},
-    {"symbol": "NVDA", "quantity": 0.509762, "cost_basis": 179.77, "acquired": "2026-02-27", "term": "short"},
-    {"symbol": "NVDA", "quantity": 0.827746, "cost_basis": 181.215, "acquired": "2026-03-05", "term": "short"},
-    {"symbol": "NVDA", "quantity": 0.000459, "cost_basis": 174.15, "acquired": "2026-04-02", "term": "short", "notes": "DRIP"},
-    {"symbol": "NVDA", "quantity": 0.01, "cost_basis": 208.73, "acquired": "2026-06-05", "term": "short", "notes": "DRIP"},
-    {"symbol": "NVDA", "quantity": 4.284288, "cost_basis": 210.07, "acquired": "2026-06-19", "term": "short"},
-    {"symbol": "AVGO", "quantity": 2.084406, "cost_basis": 407.79, "acquired": "2026-06-19", "term": "short"},
-    {"symbol": "AVGO", "quantity": 0.677894, "cost_basis": 380.59, "acquired": "2026-06-24", "term": "short"},
-    {"symbol": "MU", "quantity": 0.656742, "cost_basis": 1142.0, "acquired": "2026-06-19", "term": "short"},
-    {"symbol": "MU", "quantity": 0.076589, "cost_basis": 1189.22, "acquired": "2026-06-25", "term": "short"},
-    {"symbol": "CEG", "quantity": 1.272681, "cost_basis": 275.01, "acquired": "2026-06-19", "term": "short"},
-    {"symbol": "GEV", "quantity": 0.314954, "cost_basis": 1111.27, "acquired": "2026-06-19", "term": "short"},
-    {"symbol": "VST", "quantity": 1.826818, "cost_basis": 164.22, "acquired": "2026-06-19", "term": "short"},
-    {"symbol": "BE", "quantity": 0.275313, "cost_basis": 252.74, "acquired": "2026-05-19", "term": "short"},
-    {"symbol": "BE", "quantity": 0.048913, "cost_basis": 273.34, "acquired": "2026-06-01", "term": "short", "notes": "Snowball"},
-    {"symbol": "BE", "quantity": 0.762636, "cost_basis": 327.81, "acquired": "2026-06-19", "term": "short"},
-    {"symbol": "IREN", "quantity": 0.555324, "cost_basis": 48.05, "acquired": "2026-05-19", "term": "short"},
-    {"symbol": "IREN", "quantity": 0.101956, "cost_basis": 60.81, "acquired": "2026-06-01", "term": "short", "notes": "Snowball"},
-    {"symbol": "IREN", "quantity": 2.709343, "cost_basis": 58.69, "acquired": "2026-06-23", "term": "short"},
-    {"symbol": "IREN", "quantity": 3.259632, "cost_basis": 52.46, "acquired": "2026-06-25", "term": "short"},
-    {"symbol": "APLD", "quantity": 0.590777, "cost_basis": 37.305, "acquired": "2026-05-19", "term": "short"},
-    {"symbol": "APLD", "quantity": 0.106675, "cost_basis": 45.84, "acquired": "2026-06-01", "term": "short", "notes": "Snowball"},
-    {"symbol": "APLD", "quantity": 3.487346, "cost_basis": 45.59, "acquired": "2026-06-23", "term": "short"},
-    {"symbol": "APLD", "quantity": 3.919747, "cost_basis": 42.86, "acquired": "2026-06-25", "term": "short"},
-    {"symbol": "CORZ", "quantity": 1.310892, "cost_basis": 22.7, "acquired": "2026-05-19", "term": "short"},
-    {"symbol": "CORZ", "quantity": 0.233459, "cost_basis": 26.69, "acquired": "2026-06-01", "term": "short", "notes": "Snowball"},
-    {"symbol": "CORZ", "quantity": 5.448937, "cost_basis": 29.18, "acquired": "2026-06-23", "term": "short"},
-    {"symbol": "CORZ", "quantity": 5.432471, "cost_basis": 27.98, "acquired": "2026-06-25", "term": "short"},
-    {"symbol": "CRWV", "quantity": 0.485158, "cost_basis": 99.15, "acquired": "2026-05-19", "term": "short"},
-    {"symbol": "CRWV", "quantity": 0.08743, "cost_basis": 118.38, "acquired": "2026-06-01", "term": "short", "notes": "Snowball"},
-    {"symbol": "CRWV", "quantity": 1.449077, "cost_basis": 109.73, "acquired": "2026-06-23", "term": "short"},
-    {"symbol": "CRWV", "quantity": 1.361007, "cost_basis": 102.87, "acquired": "2026-06-25", "term": "short"},
-    {"symbol": "ASML", "quantity": 0.135096, "cost_basis": 1110.32, "acquired": "2025-12-04", "term": "short"},
-    {"symbol": "ASML", "quantity": 0.040469, "cost_basis": 1235.5, "acquired": "2026-01-05", "term": "short"},
-    {"symbol": "ASML", "quantity": 0.000316, "cost_basis": 1515.48, "acquired": "2026-05-06", "term": "short", "notes": "DRIP"},
-    {"symbol": "ASML", "quantity": 0.000195, "cost_basis": 1140.19, "acquired": "2026-01-01", "term": "short", "notes": "residual"},
-    {"symbol": "NBIS", "quantity": 0.022549, "cost_basis": 226.61, "acquired": "2026-05-28", "term": "short"},
-    {"symbol": "NBIS", "quantity": 0.418644, "cost_basis": 226.66, "acquired": "2026-05-28", "term": "short"},
-    {"symbol": "NBIS", "quantity": 0.545566, "cost_basis": 226.59, "acquired": "2026-05-29", "term": "short", "notes": "Snowball"},
-    {"symbol": "NBIS", "quantity": 0.165415, "cost_basis": 252.34, "acquired": "2026-06-01", "term": "short", "notes": "Snowball"},
-    {"symbol": "RIOT", "quantity": 0.485206, "cost_basis": 22.405, "acquired": "2026-05-19", "term": "short"},
-    {"symbol": "RIOT", "quantity": 3.534193, "cost_basis": 28.3, "acquired": "2026-06-25", "term": "short"},
-    {"symbol": "AMD", "quantity": 0.330279, "cost_basis": 505.63, "acquired": "2026-06-26", "term": "short"},
-    {"symbol": "AMAT", "quantity": 0.261869, "cost_basis": 637.72, "acquired": "2026-06-26", "term": "short"},
-    {"symbol": "MRVL", "quantity": 0.626547, "cost_basis": 266.54, "acquired": "2026-06-26", "term": "short"},
-    {"symbol": "VRT", "quantity": 0.544435, "cost_basis": 306.74, "acquired": "2026-06-26", "term": "short"}
+    {
+      "symbol": "NVDA",
+      "quantity": 0.22793,
+      "cost_basis": 187.71,
+      "acquired": "2025-12-29",
+      "term": "short",
+      "notes": "partial lot, 0.219622 sh consumed by FIFO sell 2026-06-23"
+    },
+    {
+      "symbol": "NVDA",
+      "quantity": 2.629987,
+      "cost_basis": 190.115,
+      "acquired": "2026-01-05",
+      "term": "short"
+    },
+    {
+      "symbol": "NVDA",
+      "quantity": 0.432549,
+      "cost_basis": 184.95,
+      "acquired": "2026-01-13",
+      "term": "short"
+    },
+    {
+      "symbol": "NVDA",
+      "quantity": 1.351533,
+      "cost_basis": 184.975,
+      "acquired": "2026-02-02",
+      "term": "short"
+    },
+    {
+      "symbol": "NVDA",
+      "quantity": 0.509762,
+      "cost_basis": 179.77,
+      "acquired": "2026-02-27",
+      "term": "short"
+    },
+    {
+      "symbol": "NVDA",
+      "quantity": 0.827746,
+      "cost_basis": 181.215,
+      "acquired": "2026-03-05",
+      "term": "short"
+    },
+    {
+      "symbol": "NVDA",
+      "quantity": 0.000459,
+      "cost_basis": 174.15,
+      "acquired": "2026-04-02",
+      "term": "short",
+      "notes": "DRIP"
+    },
+    {
+      "symbol": "NVDA",
+      "quantity": 0.01,
+      "cost_basis": 208.73,
+      "acquired": "2026-06-05",
+      "term": "short",
+      "notes": "DRIP"
+    },
+    {
+      "symbol": "NVDA",
+      "quantity": 4.284288,
+      "cost_basis": 210.07,
+      "acquired": "2026-06-19",
+      "term": "short"
+    },
+    {
+      "symbol": "AVGO",
+      "quantity": 2.084406,
+      "cost_basis": 407.79,
+      "acquired": "2026-06-19",
+      "term": "short"
+    },
+    {
+      "symbol": "AVGO",
+      "quantity": 0.677894,
+      "cost_basis": 380.59,
+      "acquired": "2026-06-24",
+      "term": "short"
+    },
+    {
+      "symbol": "MU",
+      "quantity": 0.656742,
+      "cost_basis": 1142.0,
+      "acquired": "2026-06-19",
+      "term": "short"
+    },
+    {
+      "symbol": "MU",
+      "quantity": 0.076589,
+      "cost_basis": 1189.22,
+      "acquired": "2026-06-25",
+      "term": "short"
+    },
+    {
+      "symbol": "CEG",
+      "quantity": 1.272681,
+      "cost_basis": 275.01,
+      "acquired": "2026-06-19",
+      "term": "short"
+    },
+    {
+      "symbol": "GEV",
+      "quantity": 0.314954,
+      "cost_basis": 1111.27,
+      "acquired": "2026-06-19",
+      "term": "short"
+    },
+    {
+      "symbol": "VST",
+      "quantity": 1.826818,
+      "cost_basis": 164.22,
+      "acquired": "2026-06-19",
+      "term": "short"
+    },
+    {
+      "symbol": "BE",
+      "quantity": 0.275313,
+      "cost_basis": 252.74,
+      "acquired": "2026-05-19",
+      "term": "short"
+    },
+    {
+      "symbol": "BE",
+      "quantity": 0.048913,
+      "cost_basis": 273.34,
+      "acquired": "2026-06-01",
+      "term": "short",
+      "notes": "Snowball"
+    },
+    {
+      "symbol": "BE",
+      "quantity": 0.762636,
+      "cost_basis": 327.81,
+      "acquired": "2026-06-19",
+      "term": "short"
+    },
+    {
+      "symbol": "IREN",
+      "quantity": 0.555324,
+      "cost_basis": 48.05,
+      "acquired": "2026-05-19",
+      "term": "short"
+    },
+    {
+      "symbol": "IREN",
+      "quantity": 0.101956,
+      "cost_basis": 60.81,
+      "acquired": "2026-06-01",
+      "term": "short",
+      "notes": "Snowball"
+    },
+    {
+      "symbol": "IREN",
+      "quantity": 2.709343,
+      "cost_basis": 58.69,
+      "acquired": "2026-06-23",
+      "term": "short"
+    },
+    {
+      "symbol": "IREN",
+      "quantity": 3.259632,
+      "cost_basis": 52.46,
+      "acquired": "2026-06-25",
+      "term": "short"
+    },
+    {
+      "symbol": "APLD",
+      "quantity": 0.590777,
+      "cost_basis": 37.305,
+      "acquired": "2026-05-19",
+      "term": "short"
+    },
+    {
+      "symbol": "APLD",
+      "quantity": 0.106675,
+      "cost_basis": 45.84,
+      "acquired": "2026-06-01",
+      "term": "short",
+      "notes": "Snowball"
+    },
+    {
+      "symbol": "APLD",
+      "quantity": 3.487346,
+      "cost_basis": 45.59,
+      "acquired": "2026-06-23",
+      "term": "short"
+    },
+    {
+      "symbol": "APLD",
+      "quantity": 3.919747,
+      "cost_basis": 42.86,
+      "acquired": "2026-06-25",
+      "term": "short"
+    },
+    {
+      "symbol": "CORZ",
+      "quantity": 1.310892,
+      "cost_basis": 22.7,
+      "acquired": "2026-05-19",
+      "term": "short"
+    },
+    {
+      "symbol": "CORZ",
+      "quantity": 0.233459,
+      "cost_basis": 26.69,
+      "acquired": "2026-06-01",
+      "term": "short",
+      "notes": "Snowball"
+    },
+    {
+      "symbol": "CORZ",
+      "quantity": 5.448937,
+      "cost_basis": 29.18,
+      "acquired": "2026-06-23",
+      "term": "short"
+    },
+    {
+      "symbol": "CORZ",
+      "quantity": 5.432471,
+      "cost_basis": 27.98,
+      "acquired": "2026-06-25",
+      "term": "short"
+    },
+    {
+      "symbol": "CRWV",
+      "quantity": 0.485158,
+      "cost_basis": 99.15,
+      "acquired": "2026-05-19",
+      "term": "short"
+    },
+    {
+      "symbol": "CRWV",
+      "quantity": 0.08743,
+      "cost_basis": 118.38,
+      "acquired": "2026-06-01",
+      "term": "short",
+      "notes": "Snowball"
+    },
+    {
+      "symbol": "CRWV",
+      "quantity": 1.449077,
+      "cost_basis": 109.73,
+      "acquired": "2026-06-23",
+      "term": "short"
+    },
+    {
+      "symbol": "CRWV",
+      "quantity": 1.361007,
+      "cost_basis": 102.87,
+      "acquired": "2026-06-25",
+      "term": "short"
+    },
+    {
+      "symbol": "ASML",
+      "quantity": 0.135096,
+      "cost_basis": 1110.32,
+      "acquired": "2025-12-04",
+      "term": "short"
+    },
+    {
+      "symbol": "ASML",
+      "quantity": 0.040469,
+      "cost_basis": 1235.5,
+      "acquired": "2026-01-05",
+      "term": "short"
+    },
+    {
+      "symbol": "ASML",
+      "quantity": 0.000316,
+      "cost_basis": 1515.48,
+      "acquired": "2026-05-06",
+      "term": "short",
+      "notes": "DRIP"
+    },
+    {
+      "symbol": "ASML",
+      "quantity": 0.000195,
+      "cost_basis": 1140.19,
+      "acquired": "2026-01-01",
+      "term": "short",
+      "notes": "residual"
+    },
+    {
+      "symbol": "NBIS",
+      "quantity": 0.022549,
+      "cost_basis": 226.61,
+      "acquired": "2026-05-28",
+      "term": "short"
+    },
+    {
+      "symbol": "NBIS",
+      "quantity": 0.418644,
+      "cost_basis": 226.66,
+      "acquired": "2026-05-28",
+      "term": "short"
+    },
+    {
+      "symbol": "NBIS",
+      "quantity": 0.545566,
+      "cost_basis": 226.59,
+      "acquired": "2026-05-29",
+      "term": "short",
+      "notes": "Snowball"
+    },
+    {
+      "symbol": "NBIS",
+      "quantity": 0.165415,
+      "cost_basis": 252.34,
+      "acquired": "2026-06-01",
+      "term": "short",
+      "notes": "Snowball"
+    },
+    {
+      "symbol": "RIOT",
+      "quantity": 0.485206,
+      "cost_basis": 22.405,
+      "acquired": "2026-05-19",
+      "term": "short"
+    },
+    {
+      "symbol": "RIOT",
+      "quantity": 3.534193,
+      "cost_basis": 28.3,
+      "acquired": "2026-06-25",
+      "term": "short"
+    },
+    {
+      "symbol": "AMD",
+      "quantity": 0.330279,
+      "cost_basis": 505.63,
+      "acquired": "2026-06-26",
+      "term": "short"
+    },
+    {
+      "symbol": "AMAT",
+      "quantity": 0.261869,
+      "cost_basis": 637.72,
+      "acquired": "2026-06-26",
+      "term": "short"
+    },
+    {
+      "symbol": "MRVL",
+      "quantity": 0.626547,
+      "cost_basis": 266.54,
+      "acquired": "2026-06-26",
+      "term": "short"
+    },
+    {
+      "symbol": "VRT",
+      "quantity": 0.544435,
+      "cost_basis": 306.74,
+      "acquired": "2026-06-26",
+      "term": "short"
+    }
   ],
-  "session_log": [],
   "pending_proposals": {}
 }

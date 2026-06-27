@@ -120,7 +120,7 @@ Execute these steps in order on every run:
 10. **Execute trades** — only if validator returns PASS. Place market orders via Robinhood MCP. Log each with rationale.
 11. **Update state.json** — after session, update_state() handles: new high-water mark (if account_value > current HWM), position values, trade count increment, last_trade_date, and last_updated timestamp.
 12. **Log session** — write summary to `~/trading-logs/YYYY-MM-DD.md`.
-13. **Send notification** — cloud runs: PushNotification tool. Local runs: Telegram curl.
+13. **Send notification** — cloud runs: handled automatically by notify.yml (GitHub Actions → Pushover) after the log is pushed; built-in PushNotification tool is a fallback only. Local runs: Telegram curl.
 
 ---
 
@@ -201,10 +201,11 @@ Account value: ~$8,500. High-water mark $8,897.80. 14 positions held. Build phas
 - Cash: ~15–16%, above the 10% upper target — deploy into the above at the next in-hours session
 
 ### Pending Actions (next open)
-1. Screen AMD, AMAT, MRVL, VRT for Tier 4 entry (check 5-day move rule first); ~$200 each, mind the 50% single-session deploy cap
-2. Top up Tier 2 toward targets (CEG, GEV, BE ~1pp below)
-3. RIOT top-up once it crosses the 2pp threshold
-4. No NVDA trim unless it re-crosses 25% max
+1. Monday June 29 — full weekly thesis review due (Monday protocol)
+2. Monitor BE — flagged -13% on June 26 (non-earnings; next report July 30). Check news; evaluate buy only if gap reaches 2pp or buy_weakness conditions met
+3. RIOT at ~1.3% (1.66pp below 3% target) — monitor for 2pp crossing
+4. Tier 2 (CEG, GEV, BE) all 1–1.5pp below target — watch for drift to 2pp
+5. No NVDA trim unless it re-crosses 25% max
 
 ---
 

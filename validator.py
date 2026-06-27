@@ -49,8 +49,11 @@ def _load_config():
         return _cfg
     except FileNotFoundError:
         logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
-        logging.warning(f"config.json not found at {_CONFIG_PATH} — using hardcoded defaults")
-        return None
+        logging.error(
+            f"config.json not found at {_CONFIG_PATH} — refusing to run on "
+            f"stale hardcoded defaults. Fetch config.json before validating."
+        )
+        sys.exit(1)
 
 _cfg = _load_config()
 
