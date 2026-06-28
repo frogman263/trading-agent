@@ -414,5 +414,33 @@ class TestEmptyProposals(unittest.TestCase):
             "Empty proposals must produce no warnings")
 
 
+
+
+class TestTierBandInvariant(unittest.TestCase):
+    """B2: per-name target sums must fall within each tier's band."""
+
+    def test_current_config_satisfies_bands(self):
+        # The shipped config.json must be internally consistent.
+        ok, msgs = validator.check_tier_band_invariant(validator._cfg)
+        self.assertTrue(ok, "Shipped config violates tier bands: " + "; ".join(msgs))
+
+    def test_detects_tier_below_floor(self):
+        # Simulate the historical Tier 2 bug (VST 4%, ASML 4% -> Tier 2 = 19%).
+        import copy
+        bad = copy.deepcopy(validator._cfg)
+        bad["target_allocs"]["VST"] = 0.04
+        bad["target_allocs"]["ASML"] = 0.04
+        ok, msgs = validator.check_tier_band_invariant(bad)
+        self.assertFalse(ok)
+        self.assertTrue(any("Tier 2" in m and "OUTSIDE" in m for m in msgs))
+
+    def test_missing_bands_skips_gracefully(self):
+        import copy
+        nob = copy.deepcopy(validator._cfg)
+        nob.pop("tier_bands", None)
+        ok, msgs = validator.check_tier_band_invariant(nob)
+        self.assertTrue(ok)  # no bands defined -> skip, not fail
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
