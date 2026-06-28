@@ -41,6 +41,25 @@
     "MRVL": 4,
     "VRT": 4
   },
+  "tier_bands": {
+    "_note": "Per-tier allocation bands as fractions. The sum of per-name target_allocs in each tier MUST fall within [floor, ceiling]. validator.py checks this on load.",
+    "1": {
+      "floor": 0.4,
+      "ceiling": 0.5
+    },
+    "2": {
+      "floor": 0.2,
+      "ceiling": 0.28
+    },
+    "3": {
+      "floor": 0.15,
+      "ceiling": 0.2
+    },
+    "4": {
+      "floor": 0.08,
+      "ceiling": 0.18
+    }
+  },
   "target_allocs": {
     "NVDA": 0.2,
     "AVGO": 0.12,
@@ -117,6 +136,6 @@
     "2026-11-26",
     "2026-12-25"
   ],
-  "_last_updated": "2026-06-27",
-  "_version": "1.3"
+  "_last_updated": "2026-06-28",
+  "_version": "1.4"
 }
