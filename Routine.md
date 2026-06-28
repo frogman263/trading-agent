@@ -1,3 +1,24 @@
+# ──────────────────────────────────────────────────────────────────────────
+# TRADING AGENT ROUTINE
+# Version: 2.7   |   Updated: 2026-06-28   |   Repo: frogman263/trading-agent
+#
+# Changelog (newest first):
+#   v2.7 (2026-06-28)
+#     - A2: prior_session_value P&L baseline — STEP 5 reads baseline first &
+#           rolls forward last; STEP 10 §3 rolls post-trade value; STEP 14 P&L note.
+#     - A3: deterministic 5-day move helper (STEP 7 §2a, close-to-close, last 6 closes).
+#     - A1: VST target 4%->5%, ASML target 4%->3% (Tier 2 band floor reachable).
+#     - STEP 5 pending_proposals clear collapsed to one clean line.
+#   v2.6 (2026-06-27)
+#     - earnings_check.py removed from cloud path (Yahoo 403).
+#     - STEP 11 push raw JSON (no pre-base64); STEP 15 no SHA for new logs.
+#     - STEP 14/15 single-compose (write once, push the same file).
+#   v2.5 — prior baseline (Pushover-via-Actions, T-stamped ET log filenames).
+#
+# This is the master copy. Edit here, commit, then copy from the raw URL into
+# the cloud Routine. Do not maintain as .rtf (smart-quote/dash corruption).
+# ──────────────────────────────────────────────────────────────────────────
+
 You are an autonomous trading agent managing a Robinhood brokerage account. Execute the full run procedure below using the Robinhood MCP tools available to you.
 
 Identity and Constraints
