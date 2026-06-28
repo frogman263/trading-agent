@@ -32,7 +32,7 @@ import os as _os
 
 _CONFIG_PATH = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "config.json")
 
-VALIDATOR_VERSION = "1.2"
+VALIDATOR_VERSION = "1.4"
 
 def _load_config():
     try:
@@ -54,6 +54,43 @@ def _load_config():
             f"stale hardcoded defaults. Fetch config.json before validating."
         )
         sys.exit(1)
+
+
+def check_tier_band_invariant(cfg):
+    """
+    Verify the sum of per-name target_allocs in each tier falls within that
+    tier's [floor, ceiling] band (config.json -> tier_bands). This catches an
+    internally inconsistent config (e.g. Tier 2 per-name targets summing below
+    the band floor) at load time and in CI, before any live run.
+    Returns (ok: bool, messages: list[str]).
+    """
+    tiers = cfg.get("tiers", {})
+    targets = cfg.get("target_allocs", {})
+    bands = cfg.get("tier_bands", {})
+    if not bands:
+        return True, ["tier_bands not defined - invariant check skipped"]
+    sums = {}
+    for sym, t in tiers.items():
+        sums[str(t)] = sums.get(str(t), 0.0) + targets.get(sym, 0.0)
+    ok = True
+    msgs = []
+    for t in sorted(k for k in bands.keys() if k != "_note"):
+        s = round(sums.get(t, 0.0), 6)
+        floor = bands[t]["floor"]
+        ceil = bands[t]["ceiling"]
+        if s < floor - 1e-9 or s > ceil + 1e-9:
+            ok = False
+            msgs.append(
+                f"Tier {t}: target sum {s*100:.1f}% OUTSIDE band "
+                f"{floor*100:.0f}-{ceil*100:.0f}%"
+            )
+        else:
+            msgs.append(
+                f"Tier {t}: target sum {s*100:.1f}% within band "
+                f"{floor*100:.0f}-{ceil*100:.0f}%"
+            )
+    return ok, msgs
+
 
 _cfg = _load_config()
 
@@ -138,6 +175,19 @@ else:
     }
 
 TIER3_SYMBOLS = {sym for sym, t in TIERS.items() if t == 3}
+
+# B2: config-consistency check at load (soft warning; CI test enforces hard).
+if _cfg:
+    _band_ok, _band_msgs = check_tier_band_invariant(_cfg)
+    for _m in _band_msgs:
+        logging.info("Tier band check - " + _m)
+    if not _band_ok:
+        logging.warning(
+            "CONFIG INCONSISTENCY: one or more tier target sums fall outside "
+            "their band. Per-name targets and tier_bands disagree - fix config.json."
+        )
+
+
 
 
 def is_market_open():
