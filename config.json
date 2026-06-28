@@ -1,39 +1,86 @@
 {
-  "_readme": "Trading agent configuration. Edit this file to change rules — no Python editing required. Keep in sync with CLAUDE.md.",
+  "_readme": "Trading agent configuration. Edit this file to change rules \u2014 no Python editing required. Keep in sync with CLAUDE.md.",
   "agentic_account": "926627357",
-
   "universe": [
-    "NVDA", "AVGO", "MU",
-    "CEG", "GEV", "VST", "BE",
-    "IREN", "APLD", "CORZ", "CRWV",
-    "ASML", "NBIS", "RIOT",
-    "AMD", "AMAT", "MRVL", "VRT"
+    "NVDA",
+    "AVGO",
+    "MU",
+    "CEG",
+    "GEV",
+    "VST",
+    "BE",
+    "IREN",
+    "APLD",
+    "CORZ",
+    "CRWV",
+    "ASML",
+    "NBIS",
+    "RIOT",
+    "AMD",
+    "AMAT",
+    "MRVL",
+    "VRT"
   ],
-
   "tiers": {
-    "NVDA": 1, "AVGO": 1, "MU": 1,
-    "CEG": 2, "GEV": 2, "VST": 2, "BE": 2,
-    "IREN": 3, "APLD": 3, "CORZ": 3, "CRWV": 3,
-    "ASML": 4, "NBIS": 4, "RIOT": 4,
-    "AMD": 4, "AMAT": 4, "MRVL": 4, "VRT": 4
+    "NVDA": 1,
+    "AVGO": 1,
+    "MU": 1,
+    "CEG": 2,
+    "GEV": 2,
+    "VST": 2,
+    "BE": 2,
+    "IREN": 3,
+    "APLD": 3,
+    "CORZ": 3,
+    "CRWV": 3,
+    "ASML": 4,
+    "NBIS": 4,
+    "RIOT": 4,
+    "AMD": 4,
+    "AMAT": 4,
+    "MRVL": 4,
+    "VRT": 4
   },
-
   "target_allocs": {
-    "NVDA": 0.20, "AVGO": 0.12, "MU": 0.10,
-    "CEG": 0.05, "GEV": 0.05, "VST": 0.04, "BE": 0.05,
-    "IREN": 0.04, "APLD": 0.04, "CORZ": 0.04, "CRWV": 0.04,
-    "ASML": 0.04, "NBIS": 0.03, "RIOT": 0.03,
-    "AMD": 0.02, "AMAT": 0.02, "MRVL": 0.02, "VRT": 0.02
+    "NVDA": 0.2,
+    "AVGO": 0.12,
+    "MU": 0.1,
+    "CEG": 0.05,
+    "GEV": 0.05,
+    "VST": 0.05,
+    "BE": 0.05,
+    "IREN": 0.04,
+    "APLD": 0.04,
+    "CORZ": 0.04,
+    "CRWV": 0.04,
+    "ASML": 0.03,
+    "NBIS": 0.03,
+    "RIOT": 0.03,
+    "AMD": 0.02,
+    "AMAT": 0.02,
+    "MRVL": 0.02,
+    "VRT": 0.02
   },
-
   "max_allocs": {
-    "NVDA": 0.25, "AVGO": 0.15, "MU": 0.12,
-    "CEG": 0.08, "GEV": 0.08, "VST": 0.07, "BE": 0.08,
-    "IREN": 0.07, "APLD": 0.07, "CORZ": 0.07, "CRWV": 0.07,
-    "ASML": 0.07, "NBIS": 0.05, "RIOT": 0.05,
-    "AMD": 0.05, "AMAT": 0.05, "MRVL": 0.05, "VRT": 0.05
+    "NVDA": 0.25,
+    "AVGO": 0.15,
+    "MU": 0.12,
+    "CEG": 0.08,
+    "GEV": 0.08,
+    "VST": 0.07,
+    "BE": 0.08,
+    "IREN": 0.07,
+    "APLD": 0.07,
+    "CORZ": 0.07,
+    "CRWV": 0.07,
+    "ASML": 0.07,
+    "NBIS": 0.05,
+    "RIOT": 0.05,
+    "AMD": 0.05,
+    "AMAT": 0.05,
+    "MRVL": 0.05,
+    "VRT": 0.05
   },
-
   "entry_thresholds": {
     "_note": "Minimum percentage points below target to trigger an add",
     "tier1": 2.0,
@@ -43,24 +90,21 @@
     "tier4": 2.0,
     "tier3_build_complete_at_pct": 15.0
   },
-
   "risk_controls": {
     "min_cash_reserve_pct": 0.05,
     "max_trades_per_day": 10,
-    "max_cash_deploy_pct": 0.50,
+    "max_cash_deploy_pct": 0.5,
     "min_trade_size_usd": 25,
     "confirmation_threshold_usd": 750,
     "nvda_max_trim_per_session_usd": 500,
     "capital_injection_detection_threshold_usd": 500
   },
-
   "drawdown": {
-    "reduce_deploy_at_pct": 0.10,
+    "reduce_deploy_at_pct": 0.1,
     "reduce_deploy_cap": 0.25,
     "pause_buys_at_pct": 0.15,
-    "full_stop_at_pct": 0.20
+    "full_stop_at_pct": 0.2
   },
-
   "market_holidays_2026": [
     "2026-01-01",
     "2026-01-19",
@@ -73,7 +117,6 @@
     "2026-11-26",
     "2026-12-25"
   ],
-
-  "_last_updated": "2026-06-26",
-  "_version": "1.2"
+  "_last_updated": "2026-06-27",
+  "_version": "1.3"
 }
