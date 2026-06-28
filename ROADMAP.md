@@ -1,7 +1,7 @@
 # Trading Agent — Optimization Roadmap
 
 Tracking file for `frogman263/trading-agent`. Status of fixes and planned work.
-Last updated: 2026-06-28
+Last updated: 2026-06-28 (v2)
 
 ---
 
@@ -36,7 +36,7 @@ MCP path that previously double-encoded.
        contradiction. [interlocks with B3]
 - B3 — CI: GitHub Actions runs test_validator.py on every push to
        validator.py or config.json. Catches regressions before a live run.
-       Absorbs C4. [Grok suggestion — adopted]
+       Absorbs C4. [Grok suggestion — adopted] [UP NEXT]
 - B4 — metrics.json capture layer: append per-session data every run; compute
        the low-sample-size-safe metrics now (Tier Allocation Drift, Capital
        Efficiency, Validator Pass Rate). Start capturing inputs for D2 today.
@@ -54,6 +54,12 @@ Suggested sequence: B2 -> B3 -> B4.
 - C4 — Test for the Fix 9 config-missing exit path. [folds into B3]
 - C5 — Post-push verification curl in STEP 15: confirm raw URL starts with
        '## Session:' not 'ewog'. [Grok suggestion — adopted]
+- C6 — Standardize state.json position schema between runs. Agent occasionally
+       rebuilds positions dict with slightly different field order/names (e.g.
+       'shares' vs 'quantity', single-line vs expanded dicts). Add explicit
+       schema note to STEP 5 instructing the agent to preserve the exact field
+       structure from the fetched state.json when writing positions back.
+       Flagged from 2026-06-28 Saturday run.
 
 ---
 
