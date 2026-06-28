@@ -144,7 +144,7 @@ MAG8 hyperscaler CAPEX is a structural, multi-year tailwind for AI chips, memory
 |--------|---------|--------|-----|-----|
 | CEG | Constellation Energy | 5% | 8% | Nuclear baseload; hyperscaler contracts |
 | GEV | GE Vernova | 5% | 8% | Grid equipment, transformers; 2–3 year backlog |
-| VST | Vistra | 4% | 7% | Power gen; data center offtake deals |
+| VST | Vistra | 5% | 7% | Power gen; data center offtake deals |
 | BE | Bloom Energy | 5% | 8% | On-site power for data centers |
 
 ### Tier 3 — AI Data Center Infrastructure (15–20% of account)
@@ -158,7 +158,7 @@ MAG8 hyperscaler CAPEX is a structural, multi-year tailwind for AI chips, memory
 ### Tier 4 — Supporting & Opportunistic (8–18% of account)
 | Symbol | Company | Target | Max | Why |
 |--------|---------|--------|-----|-----|
-| ASML | ASML Holding | 4% | 7% | Semiconductor equipment; upstream from all chips |
+| ASML | ASML Holding | 3% | 7% | Semiconductor equipment; upstream from all chips |
 | NBIS | Nebius AI | 3% | 5% | AI cloud infrastructure; hyperscaler partnerships |
 | RIOT | Riot Platforms | 3% | 5% | 1.7GW power portfolio across 1,100 acres in Texas; AMD 10-year HPC data center lease at Rockdale (50MW contracted, expandable to 200MW, ~$636M base value); actively converting mining sites to AI/HPC data centers. High risk/high reward infrastructure play. |
 | AMD | Advanced Micro Devices | 2% | 5% | Not yet held; NVDA alternative |
