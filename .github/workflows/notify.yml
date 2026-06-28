@@ -98,7 +98,7 @@ jobs:
             --form-string "user=$PUSHOVER_USER" \
             --form-string "title=$TITLE" \
             --form "message=</tmp/pushover_message.txt" \
-            --form-string "url=https://github.com/${{ github.repository }}/blob/main/${{ steps.log.outputs.log_file }}" \
+            --form-string "url=github://github.com/${{ github.repository }}/blob/main/${{ steps.log.outputs.log_file }}" \
             --form-string "url_title=View Full Session Log" \
             --form-string "priority=0" \
             https://api.pushover.net/1/messages.json
