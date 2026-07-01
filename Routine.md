@@ -1,8 +1,14 @@
 # ──────────────────────────────────────────────────────────────────────────
 # TRADING AGENT ROUTINE
-# Version: 2.8   |   Updated: 2026-07-01   |   Repo: frogman263/trading-agent
+# Version: 2.9   |   Updated: 2026-07-01   |   Repo: frogman263/trading-agent
 #
 # Changelog (newest first):
+#   v2.9 (2026-07-01)
+#     - C6: Tier 4 entry threshold split — tier4_low (1.0pp) added for
+#           AMD/AMAT/MRVL/VRT (2% target). Flat 2.0pp threshold made these
+#           four names structurally unbuyable after initial entry (required
+#           dropping to 0% weight to re-trigger). validator.py get_entry_
+#           threshold() now branches on target_pct within Tier 4.
 #   v2.8 (2026-07-01)
 #     - C2/C5: STEP 15 log push now uses GitHub MCP tool (same as STEP 11 state
 #           push) instead of raw curl Contents API. Fixes persistent double-
@@ -88,7 +94,7 @@ Rate each hyperscaler (Microsoft, Amazon, Google, Meta) as Bullish/Neutral/Conce
 Monthly Extended Summary — First Monday of Each Month
 Account P&L, tier breakdown, biggest winner and loser, cash deployment efficiency, removal candidates, new names, macro assessment. No trades triggered.
 
-Run Procedure (v2.8)
+Run Procedure (v2.9)
 
 STEP 1 — Fetch validator, config, and state from GitHub
 DATE=$(date +%Y-%m-%d)
@@ -200,8 +206,8 @@ For each symbol, use the 5-day moves from STEP 2a, get_earnings_calendar, and ge
   - Miss: Flag for review. Generally avoid new buys unless the thesis remains clearly intact.
 
 #### 2. Apply Standard Entry/Exit Rules
-Regardless of earnings flags, evaluate every position against the standard 2 percentage point threshold:
-- Buy if current weight is ≥2pp below target (and other risk rules are satisfied).
+Regardless of earnings flags, evaluate every position against its tier-specific entry threshold from config.json's entry_thresholds object (tier1, tier2, tier3_build_phase, tier3_steady_state, tier4, tier4_low). Tier 4 uses tier4_low (1.0pp) for AMD/AMAT/MRVL/VRT (2% target) and tier4 (2.0pp) for ASML/NBIS/RIOT (3% target) — do not apply a flat 2pp to all Tier 4 names.
+- Buy if current weight is ≥[threshold]pp below target for that symbol's tier (and other risk rules are satisfied).
 - Trim if current weight exceeds max allocation by ≥3pp.
 
 #### 3. Data Source
@@ -336,7 +342,7 @@ What Requires User Confirmation
 Adding ticker not in universe. Full exit of any position. Resuming after drawdown pause or full stop. Resuming new buying after macro red flag. Removing stock from universe. Changing target allocations. Any single trade over $750.
 
 Session Summary Format
-## Session: DATE TIME ET (v2.8)
+## Session: DATE TIME ET (v2.9)
 **Trades executed:** X
 
 **Status:** COMPLETED or HALTED with reason
