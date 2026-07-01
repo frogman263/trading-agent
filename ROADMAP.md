@@ -41,8 +41,16 @@ MCP path that previously double-encoded.
        the low-sample-size-safe metrics now (Tier Allocation Drift, Capital
        Efficiency, Validator Pass Rate). Start capturing inputs for D2 today.
        [Grok suggestion — reframed: capture now, compute later]
+- B5 — Earnings calendar integration (STEP 7): call get_earnings_results via
+       Robinhood MCP at session open to auto-flag any universe name reporting
+       within 7 days. Replaces disabled earnings_check.py (Yahoo 403). Surfaces
+       report date, timing (AM/PM), EPS estimate, and verified/tentative status
+       in session log before buy/sell logic runs. Wires earnings awareness into
+       buy-weakness rule. 18 MCP calls/session, soft-fail on errors.
+       Confirmed tools live: get_earnings_calendar + get_earnings_results
+       as of 2026-06-30. [UP NEXT after B3]
 
-Suggested sequence: B2 -> B3 -> B4.
+Suggested sequence: B2 -> B3 -> B4 -> B5.
 
 ---
 
