@@ -1,8 +1,13 @@
 # ──────────────────────────────────────────────────────────────────────────
 # TRADING AGENT ROUTINE
-# Version: 2.7   |   Updated: 2026-06-28   |   Repo: frogman263/trading-agent
+# Version: 2.8   |   Updated: 2026-07-01   |   Repo: frogman263/trading-agent
 #
 # Changelog (newest first):
+#   v2.8 (2026-07-01)
+#     - C2/C5: STEP 15 log push now uses GitHub MCP tool (same as STEP 11 state
+#           push) instead of raw curl Contents API. Fixes persistent double-
+#           base64-encoding of session logs (state.json was fixed in v2.6/Fix 1,
+#           logs were never fixed — same root cause).
 #   v2.7 (2026-06-28)
 #     - A2: prior_session_value P&L baseline — STEP 5 reads baseline first &
 #           rolls forward last; STEP 10 §3 rolls post-trade value; STEP 14 P&L note.
@@ -83,7 +88,7 @@ Rate each hyperscaler (Microsoft, Amazon, Google, Meta) as Bullish/Neutral/Conce
 Monthly Extended Summary — First Monday of Each Month
 Account P&L, tier breakdown, biggest winner and loser, cash deployment efficiency, removal candidates, new names, macro assessment. No trades triggered.
 
-Run Procedure (v2.7)
+Run Procedure (v2.8)
 
 STEP 1 — Fetch validator, config, and state from GitHub
 DATE=$(date +%Y-%m-%d)
@@ -275,19 +280,12 @@ Write the full session summary to /tmp/session_log.md as plain UTF-8 markdown, u
 Then output the contents of /tmp/session_log.md as your response. Do not recompose it — output the same file you just wrote.
 
 STEP 15 — Write session log to GitHub
-Build the log filename from Eastern Time (to match the ET timestamps inside the log body and the title shown in the Pushover notification). Always use the full timestamped format — never a date-only name.
-DATE=$(TZ='America/New_York' date +%Y-%m-%d)
-TIME=$(TZ='America/New_York' date +%H%M)
-LOG_FILENAME="logs/${DATE}T${TIME}.md"
-This always produces logs/YYYY-MM-DDTHHMM.md (for example logs/2026-06-29T1100.md). Do not improvise a different name, and do not drop the T${TIME} portion.
-
-/tmp/session_log.md was already written in STEP 14. Do not recompose it. The file body is plain readable markdown — do not base64-encode the body itself.
-
-Push it to GitHub using the Contents API:
-Endpoint: https://api.github.com/repos/frogman263/trading-agent/contents/${LOG_FILENAME}
-The Contents API requires the content field to be base64. Base64-encode the markdown exactly once, only for that content field. The GitHub API decodes it on receipt and stores the decoded markdown, so the committed file is clean markdown — not base64. (The previous bug was double-encoding: the body was pre-encoded and then encoded again for the API, so the repo ended up storing a base64 blob.)
-Do not include a SHA — each log file is a new unique filename and will never already exist.
-Commit message: e.g. Session log — ${DATE}T${TIME}.
+Push it to GitHub using the GitHub MCP create_or_update_file tool (same tool and pattern as STEP 11):
+- path: ${LOG_FILENAME}
+- content: the RAW markdown text of /tmp/session_log.md — pass it exactly as-is, do NOT base64-encode it first. The tool encodes internally. Pre-encoding produces a double-encoded blob that renders as base64 gibberish instead of markdown on GitHub.
+- sha: omit — each log file is a new unique filename and will never already exist.
+- message: Session log — ${DATE}T${TIME}
+- branch: main
 After the push, confirm the committed file is readable markdown (not a base64 blob) — open the raw URL or note [INFO] Session log push: OK in the summary. If the push fails, log [WARNING] Session log push failed with the reason and continue (do not halt).
 
 Field labels notify.yml depends on — do not rename
@@ -338,7 +336,7 @@ What Requires User Confirmation
 Adding ticker not in universe. Full exit of any position. Resuming after drawdown pause or full stop. Resuming new buying after macro red flag. Removing stock from universe. Changing target allocations. Any single trade over $750.
 
 Session Summary Format
-## Session: DATE TIME ET (v2.7)
+## Session: DATE TIME ET (v2.8)
 **Trades executed:** X
 
 **Status:** COMPLETED or HALTED with reason
