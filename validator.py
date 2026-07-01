@@ -117,6 +117,7 @@ if _cfg:
     ENTRY_THRESH_T3_BUILD = _et.get("tier3_build_phase", 1.5)
     ENTRY_THRESH_T3_STEADY= _et.get("tier3_steady_state", 2.0)
     ENTRY_THRESH_T4       = _et.get("tier4", 2.0)
+    ENTRY_THRESH_T4_LOW   = _et.get("tier4_low", 1.0)
     TIER3_BUILD_COMPLETE  = _et.get("tier3_build_complete_at_pct", 15.0) / 100.0
     MARKET_HOLIDAYS_2026  = {
         date.fromisoformat(d)
@@ -166,6 +167,7 @@ else:
     ENTRY_THRESH_T3_BUILD  = 1.5
     ENTRY_THRESH_T3_STEADY = 2.0
     ENTRY_THRESH_T4        = 2.0
+    ENTRY_THRESH_T4_LOW    = 1.0
     TIER3_BUILD_COMPLETE   = 0.15
     MARKET_HOLIDAYS_2026   = {
         date(2026, 1, 1), date(2026, 1, 19), date(2026, 2, 16),
@@ -250,7 +252,11 @@ def get_entry_threshold(sym, tier3_in_build_phase):
         else:
             return ENTRY_THRESH_T3_STEADY, "Tier 3 steady state"
     elif tier == 4:
-        return ENTRY_THRESH_T4, "Tier 4"
+        target_pct = TARGET_ALLOCS.get(sym, 0)
+        if target_pct <= 0.025:  # AMD/AMAT/MRVL/VRT — 2% target
+            return ENTRY_THRESH_T4_LOW, "Tier 4 (low-target)"
+        else:  # ASML/NBIS/RIOT — 3% target
+            return ENTRY_THRESH_T4, "Tier 4"
     else:
         return 2.0, "default"
 
