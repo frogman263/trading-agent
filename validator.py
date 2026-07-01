@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Autonomous AI Trading Agent - Deterministic Validator v1.2
+Autonomous AI Trading Agent - Deterministic Validator v1.4
 Enforces hard rules before any trade reaches Robinhood MCP.
 
 Usage:
@@ -119,6 +119,8 @@ if _cfg:
     ENTRY_THRESH_T4       = _et.get("tier4", 2.0)
     ENTRY_THRESH_T4_LOW   = _et.get("tier4_low", 1.0)
     TIER3_BUILD_COMPLETE  = _et.get("tier3_build_complete_at_pct", 15.0) / 100.0
+    MAX_ALLOC_BUFFER_PP   = _rc.get("max_alloc_buffer_pp", 3.0) / 100.0
+    DRAWDOWN_REDUCE_CAP   = _dd.get("reduce_deploy_cap", 0.25)
     MARKET_HOLIDAYS_2026  = {
         date.fromisoformat(d)
         for d in _cfg.get("market_holidays_2026", [])
@@ -169,6 +171,8 @@ else:
     ENTRY_THRESH_T4        = 2.0
     ENTRY_THRESH_T4_LOW    = 1.0
     TIER3_BUILD_COMPLETE   = 0.15
+    MAX_ALLOC_BUFFER_PP    = 0.03
+    DRAWDOWN_REDUCE_CAP    = 0.25
     MARKET_HOLIDAYS_2026   = {
         date(2026, 1, 1), date(2026, 1, 19), date(2026, 2, 16),
         date(2026, 4, 3), date(2026, 5, 25), date(2026, 6, 19),
@@ -264,6 +268,17 @@ def get_entry_threshold(sym, tier3_in_build_phase):
 def validate(proposals, state, dry_run=False):
     violations = []
     warnings = []
+
+    # H2: coerce every proposal amount to float up front. A non-numeric amount
+    # becomes a clean violation instead of crashing the summation math below.
+    for p in proposals:
+        raw = p.get("amount", 0)
+        try:
+            p["amount"] = float(raw)
+        except (TypeError, ValueError):
+            sym = p.get("symbol", "?").upper()
+            violations.append(f"{sym}: non-numeric amount {raw!r}.")
+            p["amount"] = 0.0
     account_value = state.get("account_value", 0)
     buying_power = state.get("buying_power", 0)
 
@@ -340,7 +355,7 @@ def validate(proposals, state, dry_run=False):
         if p.get("action", "").upper() == "BUY"
     )
     effective_cap = (
-        0.25 if drawdown >= DRAWDOWN_REDUCE else MAX_CASH_DEPLOY_PCT
+        DRAWDOWN_REDUCE_CAP if drawdown >= DRAWDOWN_REDUCE else MAX_CASH_DEPLOY_PCT
     ) * buying_power
 
     if total_buy_amount > effective_cap:
@@ -357,7 +372,8 @@ def validate(proposals, state, dry_run=False):
         sym    = p.get("symbol", "").upper()
         action = p.get("action", "").upper()
         amount = p.get("amount", 0)
-        reason = p.get("reason", "")
+        # H1: accept either 'reason' or 'rationale' (docs use 'rationale')
+        reason = p.get("reason", p.get("rationale", ""))
 
         if sym not in UNIVERSE:
             violations.append(f"{sym}: Not in approved universe.")
@@ -383,7 +399,7 @@ def validate(proposals, state, dry_run=False):
             new_pct = new_val / account_value
             max_pct = MAX_ALLOCS.get(sym, 0.05)
 
-            if new_pct > max_pct + 0.03:
+            if new_pct > max_pct + MAX_ALLOC_BUFFER_PP:
                 violations.append(
                     f"{sym}: Post-trade weight {new_pct*100:.1f}% would exceed "
                     f"max allocation {max_pct*100:.1f}%."
@@ -454,7 +470,7 @@ def update_state(state_path, state, proposals, result_pass):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Trading Agent Validator v1.2")
+    parser = argparse.ArgumentParser(description="Trading Agent Validator v1.4")
     parser.add_argument("--proposals", required=True)
     parser.add_argument("--state",     required=True)
     parser.add_argument("--dry-run",   action="store_true")
