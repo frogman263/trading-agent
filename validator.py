@@ -338,7 +338,8 @@ def validate(proposals, state, dry_run=False):
             )
     elif drawdown >= DRAWDOWN_REDUCE:
         warnings.append(
-            f"Drawdown {drawdown*100:.1f}% — max cash deployment reduced to 25% of buying power."
+            f"Drawdown {drawdown*100:.1f}% — max cash deployment reduced to "
+            f"{DRAWDOWN_REDUCE_CAP*100:.0f}% of buying power."
         )
 
     # Trade count
@@ -349,20 +350,37 @@ def validate(proposals, state, dry_run=False):
             f"({trades_today} already executed today)."
         )
 
-    # Total cash deployment
+    # Total cash deployment (N4: net sells against buys — a rebalance funded
+    # by same-session sales is not net-new cash deployment).
     total_buy_amount = sum(
         p.get("amount", 0) for p in proposals
         if p.get("action", "").upper() == "BUY"
     )
+    total_sell_amount = sum(
+        p.get("amount", 0) for p in proposals
+        if p.get("action", "").upper() == "SELL"
+    )
+    net_deployment = total_buy_amount - total_sell_amount
     effective_cap = (
         DRAWDOWN_REDUCE_CAP if drawdown >= DRAWDOWN_REDUCE else MAX_CASH_DEPLOY_PCT
     ) * buying_power
 
-    if total_buy_amount > effective_cap:
+    if net_deployment > effective_cap:
         violations.append(
-            f"Total buy amount ${total_buy_amount:.2f} exceeds "
+            f"Net cash deployment ${net_deployment:.2f} exceeds "
             f"{'reduced ' if drawdown >= DRAWDOWN_REDUCE else ''}session cap "
             f"${effective_cap:.2f}."
+        )
+
+    # N2: PDT rule — same symbol proposed as both BUY and SELL in one session.
+    _buys  = {p.get("symbol","").upper() for p in proposals
+              if p.get("action","").upper() == "BUY"}
+    _sells = {p.get("symbol","").upper() for p in proposals
+              if p.get("action","").upper() == "SELL"}
+    for _sym in sorted(_buys & _sells):
+        violations.append(
+            f"{_sym}: PDT risk — BUY and SELL of the same symbol in one "
+            f"session is not permitted (sub-$25K account)."
         )
 
     # Per-trade checks
@@ -381,16 +399,34 @@ def validate(proposals, state, dry_run=False):
         if amount < MIN_TRADE_SIZE:
             violations.append(f"{sym}: Trade amount ${amount} below minimum ${MIN_TRADE_SIZE}.")
 
+        # N3: >$750 is blocked in autonomous runs (no one to confirm at run
+        # time). A proposal may carry "confirmed": true — set only by the user
+        # in a supervised run — which downgrades the block to a warning.
         if amount > CONFIRMATION_THRESHOLD:
-            violations.append(
-                f"{sym}: Trade amount ${amount} exceeds confirmation threshold "
-                f"${CONFIRMATION_THRESHOLD} — requires manual approval."
-            )
+            if p.get("confirmed", False) is True:
+                warnings.append(
+                    f"{sym}: Trade amount ${amount:.2f} exceeds ${CONFIRMATION_THRESHOLD} "
+                    f"but carries confirmed=true — allowed."
+                )
+            else:
+                violations.append(
+                    f"{sym}: Trade amount ${amount:.2f} exceeds confirmation threshold "
+                    f"${CONFIRMATION_THRESHOLD} — set \"confirmed\": true to approve."
+                )
 
         if sym == "NVDA" and action == "SELL":
             if amount > NVDA_MAX_TRIM_SESSION:
                 violations.append(
                     f"NVDA: Trim amount ${amount} exceeds session limit ${NVDA_MAX_TRIM_SESSION}."
+                )
+
+        # N1: a SELL cannot exceed the current value of the held position.
+        if action == "SELL":
+            held_val = positions.get(sym, 0)
+            if amount > held_val + 1e-6:
+                violations.append(
+                    f"{sym}: SELL ${amount:.2f} exceeds held position value "
+                    f"${held_val:.2f}."
                 )
 
         if action == "BUY" and account_value > 0:
@@ -435,9 +471,10 @@ def validate(proposals, state, dry_run=False):
                         f"Verify entry trigger — earnings rule or override may apply."
                     )
 
-    # Cash reserve
+    # Cash reserve (N4: sell proceeds add to cash — credit them so a
+    # cash-neutral rebalance is not falsely blocked below the floor).
     if account_value > 0:
-        cash_after = buying_power - total_buy_amount
+        cash_after = buying_power - total_buy_amount + total_sell_amount
         reserve_pct = cash_after / account_value
         if reserve_pct < MIN_CASH_RESERVE_PCT:
             violations.append(
