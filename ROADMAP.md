@@ -129,6 +129,12 @@ workarounds are belt-and-suspenders rather than required. Safe to remove after
        field structure from the fetched state.json when writing positions back.
        Flagged from 2026-06-28 Saturday run. [renumbered from C6 — that number now
        refers to the Tier 4 threshold fix shipped 2026-07-01]
+       RECURRED 2026-07-01: test run added a new 'last_price' field to every
+       position that wasn't in the prior schema. Harmless (validator ignores
+       unknown keys), but confirms this is a live, repeating pattern, not a
+       one-off. Consider having STEP 5 enumerate the exact allowed per-position
+       keys explicitly (value, pct, shares, avg_cost, lots) rather than leaving
+       it to the agent's judgment each run.
 - C9 — Periodic tax-lot reconciliation. From the 2026-07-01 audit: AVGO
        (2.765885 sh held vs 2.762300 in tax_lots) and VST (1.829312 vs 1.826818)
        have sub-share drift between positions.shares and sum(tax_lots.quantity),
@@ -145,6 +151,30 @@ workarounds are belt-and-suspenders rather than required. Safe to remove after
         CLAUDE.md where the >$750 rule is described, so the escape hatch is
         discoverable. Also note that full position exits remain documented-but-
         unenforced in the validator (same class as N3). [audit follow-up]
+- C12 — Test-run market-hours self-check used a hand-rolled UTC-4 offset after
+        `import pytz` failed (not installed, correctly — pip blocked in cloud).
+        Got the right answer only because the test ran during EDT season; the
+        same hardcoded-offset pattern would silently misjudge market hours
+        during EST season (Nov-Mar, UTC-5). Low risk today because validator.py's
+        actual is_market_open() (proper zoneinfo, stdlib, no pip needed) is the
+        real gate and is unaffected — this was just the agent's own supplementary
+        pre-check. Fix: add a one-line note to Routine.md STEP 2 telling the
+        agent to use Python's stdlib zoneinfo (already used by validator.py),
+        never a manual UTC offset, for any ad hoc time check. [test run 2026-07-01]
+- C13 — Pre/post-market runs value positions from the officially settled prior
+        close, but write account_value from Robinhood MCP's live total_value
+        (which already includes pre/post-market marks) — the two bases don't
+        reconcile. Confirmed on the 2026-07-01 test run: sum(positions.value) +
+        cash = $8,712.77 vs account_value written = $8,681.62, a $31.15 gap,
+        94% of it traced to BE's single-name pre-market pop (close $302.70 vs
+        premarket $329.77). Harmless today — validator only reads
+        positions[sym]["value"], never the stored pct, and STEP 5 overwrites
+        everything fresh from live MCP data on the next real run regardless.
+        But it leaves state.json internally inconsistent for anyone reviewing a
+        pre/post-market snapshot. Fix: STEP 4/5 should specify using the live
+        quote (last_trade_price or last_non_reg_trade_price) for position math
+        consistently, matching the same basis Robinhood's own total_value
+        already uses — not the settled close. [test run 2026-07-01]        
 
 ---
 
