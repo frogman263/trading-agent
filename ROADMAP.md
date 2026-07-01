@@ -141,6 +141,10 @@ workarounds are belt-and-suspenders rather than required. Safe to remove after
         on New Year's / MLK Day 2027. Rename to market_holidays and add 2027
         dates before year-end; the validator gate should not rely on Robinhood
         rejecting holiday orders. [audit N7 — annual maintenance]
+- C11 — Document the N3 "confirmed": true proposal field in Routine.md and
+        CLAUDE.md where the >$750 rule is described, so the escape hatch is
+        discoverable. Also note that full position exits remain documented-but-
+        unenforced in the validator (same class as N3). [audit follow-up]
 
 ---
 
