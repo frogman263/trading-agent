@@ -62,7 +62,19 @@ MCP path that previously double-encoded.
         but editing config now actually takes effect.
   - L2  validator.py version strings (docstring + argparse) synced to 1.4.
   - Tests 43 -> 50 (new TestAuditFixes class). [validator v1.4, config v1.4]
-
+- C7b — Validator enforcement gaps (2026-07-01 second audit). One commit:
+        N1  SELL orders validated against held position value (was unchecked —
+            agent could propose selling more than it holds).
+        N2  PDT rule enforced in code (same-symbol BUY+SELL in one session
+            blocked; was prompt-only on a sub-$25K account).
+        N3  $750 confirmation reconciled: hard-block by default (no confirmer in
+            autonomous 1 AM runs), with a proposal-level "confirmed": true escape
+            hatch that downgrades to a warning for supervised large trades.
+        N4  Cash-neutral rebalances no longer falsely blocked — sell proceeds
+            now credited to both the deployment cap and the cash-reserve floor.
+        N6  Drawdown reduce-cap warning text reads DRAWDOWN_REDUCE_CAP instead
+            of a hardcoded 25%.
+        Tests 50 -> 59. [validator v1.4]
 ---
 
 ## TIER B — Real robustness, moderate effort (in progress)
@@ -123,6 +135,12 @@ workarounds are belt-and-suspenders rather than required. Safe to remove after
        almost certainly un-logged DRIP. Harmless in dollar terms but erodes the
        short-term-gains >$500 flag accuracy over time. Reconcile on next Reno
        return / quarterly. [audit M3]
+- C10 — Market holidays are year-locked (MARKET_HOLIDAYS_2026 / config key
+        market_holidays_2026). On 2027-01-01 the set is stale — is_market_open()
+        would not recognize any 2027 holiday and could think the market is open
+        on New Year's / MLK Day 2027. Rename to market_holidays and add 2027
+        dates before year-end; the validator gate should not rely on Robinhood
+        rejecting holiday orders. [audit N7 — annual maintenance]
 
 ---
 
