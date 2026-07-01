@@ -424,6 +424,87 @@ class TestEntryThresholds(unittest.TestCase):
         self.assertEqual(label, "Tier 4")
 
 
+class TestAuditFixes(unittest.TestCase):
+    """H1/H2/M1/M2 — audit fixes from 2026-07-01 review."""
+
+    @MARKET_OPEN
+    def test_h1_rationale_field_suppresses_override_warning(self, _):
+        # H1: agent writes 'rationale' (per docs), not 'reason'. Earnings override
+        # must still be recognized. BE at 3.65% vs 5% target = 1.35pp (below 2pp).
+        # earnings_rule override should suppress the threshold warning.
+        state = copy.deepcopy(BASE_STATE)
+        state["positions"]["BE"] = {"value": 316.54, "pct": 0.0365}
+        prop = [{"symbol": "BE", "action": "BUY", "amount": 50,
+                 "rationale": "earnings_rule"}]
+        _, warnings = validator.validate(prop, state)
+        self.assertFalse(
+            any("BE" in w and "threshold" in w.lower() for w in warnings),
+            "earnings_rule via 'rationale' field must suppress threshold warning (H1)")
+
+    @MARKET_OPEN
+    def test_h1_reason_field_still_works(self, _):
+        # H1: 'reason' field must continue to work (backward compat).
+        state = copy.deepcopy(BASE_STATE)
+        state["positions"]["BE"] = {"value": 316.54, "pct": 0.0365}
+        prop = [{"symbol": "BE", "action": "BUY", "amount": 50,
+                 "reason": "earnings_rule"}]
+        _, warnings = validator.validate(prop, state)
+        self.assertFalse(
+            any("BE" in w and "threshold" in w.lower() for w in warnings),
+            "earnings_rule via 'reason' field must still suppress warning (H1 compat)")
+
+    @MARKET_OPEN
+    def test_h2_garbage_amount_does_not_crash(self, _):
+        # H2: a non-numeric amount must produce a clean violation, not a crash.
+        # This previously crashed the total_buy_amount summation before per-trade checks.
+        prop = [{"symbol": "AMD", "action": "BUY", "amount": "fifty",
+                 "reason": "standard"}]
+        try:
+            violations, _ = validator.validate(prop, BASE_STATE)
+        except TypeError:
+            self.fail("Non-numeric amount must not raise TypeError (H2)")
+        self.assertTrue(
+            any("AMD" in v and "non-numeric" in v.lower() for v in violations),
+            "Garbage amount must produce a non-numeric violation (H2)")
+
+    @MARKET_OPEN
+    def test_h2_none_amount_does_not_crash(self, _):
+        # H2: amount=None (missing/null) must be caught cleanly, not crash.
+        prop = [{"symbol": "AMD", "action": "BUY", "amount": None,
+                 "reason": "standard"}]
+        try:
+            violations, _ = validator.validate(prop, BASE_STATE)
+        except TypeError:
+            self.fail("None amount must not raise TypeError (H2)")
+        self.assertTrue(
+            any("non-numeric" in v.lower() for v in violations),
+            "None amount must produce a non-numeric violation (H2)")
+
+    @MARKET_OPEN
+    def test_h2_numeric_string_via_float_is_accepted(self, _):
+        # H2 nuance: we coerce with float(), so a clean numeric value works.
+        prop = [{"symbol": "MU", "action": "BUY", "amount": 80, "reason": "standard"}]
+        violations, _ = validator.validate(prop, BASE_STATE)
+        self.assertFalse(
+            any("non-numeric" in v.lower() for v in violations),
+            "Numeric amount must not be flagged non-numeric (H2)")
+
+    @MARKET_OPEN
+    def test_m1_max_buffer_is_configurable(self, _):
+        # M1: the max-alloc buffer is now MAX_ALLOC_BUFFER_PP, default 0.03.
+        # NVDA at 23.2% + $430 = 28.03% > 25%+3% -> violation (behavior preserved).
+        self.assertAlmostEqual(validator.MAX_ALLOC_BUFFER_PP, 0.03, places=6)
+        violations, _ = validator.validate(
+            [make_proposal("NVDA", "BUY", 430)], BASE_STATE)
+        self.assertTrue(
+            any("NVDA" in v and "exceed" in v.lower() for v in violations),
+            "NVDA over max+buffer must still block (M1 preserves behavior)")
+
+    def test_m2_drawdown_reduce_cap_is_configurable(self):
+        # M2: reduce cap is now DRAWDOWN_REDUCE_CAP, default 0.25 (was hardcoded).
+        self.assertAlmostEqual(validator.DRAWDOWN_REDUCE_CAP, 0.25, places=6)
+
+        
 class TestTier3AutoDetection(unittest.TestCase):
     """Tier 3 build phase auto-detection from live position data."""
 
