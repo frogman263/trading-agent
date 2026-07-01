@@ -107,6 +107,7 @@
     "tier3_build_phase": 1.5,
     "tier3_steady_state": 2.0,
     "tier4": 2.0,
+    "tier4_low": 1.0,
     "tier3_build_complete_at_pct": 15.0
   },
   "risk_controls": {
