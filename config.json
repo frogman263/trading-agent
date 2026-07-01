@@ -117,7 +117,8 @@
     "min_trade_size_usd": 25,
     "confirmation_threshold_usd": 750,
     "nvda_max_trim_per_session_usd": 500,
-    "capital_injection_detection_threshold_usd": 500
+    "capital_injection_detection_threshold_usd": 500,
+    "max_alloc_buffer_pp": 3.0
   },
   "drawdown": {
     "reduce_deploy_at_pct": 0.1,
@@ -137,6 +138,6 @@
     "2026-11-26",
     "2026-12-25"
   ],
-  "_last_updated": "2026-06-28",
+  "_last_updated": "2026-07-01",
   "_version": "1.4"
 }
