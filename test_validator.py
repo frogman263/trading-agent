@@ -504,7 +504,113 @@ class TestAuditFixes(unittest.TestCase):
         # M2: reduce cap is now DRAWDOWN_REDUCE_CAP, default 0.25 (was hardcoded).
         self.assertAlmostEqual(validator.DRAWDOWN_REDUCE_CAP, 0.25, places=6)
 
+
+class TestValidatorEnforcementGaps(unittest.TestCase):
+    """N1-N4/N6 — second-audit fixes: enforce documented rules in code."""
+
+    @MARKET_OPEN
+    def test_n1_sell_exceeding_position_blocked(self, _):
+        state = copy.deepcopy(BASE_STATE)
+        state["positions"]["RIOT"] = {"value": 108.79}
+        prop = [{"symbol": "RIOT", "action": "SELL", "amount": 500,
+                 "reason": "rebalance"}]
+        violations, _ = validator.validate(prop, state)
+        self.assertTrue(
+            any("RIOT" in v and "exceeds held" in v.lower() for v in violations),
+            "SELL exceeding held position value must be blocked (N1)")
+
+    @MARKET_OPEN
+    def test_n1_valid_sell_allowed(self, _):
+        state = copy.deepcopy(BASE_STATE)
+        state["positions"]["RIOT"] = {"value": 108.79}
+        prop = [{"symbol": "RIOT", "action": "SELL", "amount": 100,
+                 "reason": "rebalance"}]
+        violations, _ = validator.validate(prop, state)
+        self.assertFalse(
+            any("RIOT" in v and "exceeds held" in v.lower() for v in violations),
+            "SELL within held value must be allowed (N1)")
+
+    @MARKET_OPEN
+    def test_n2_pdt_same_symbol_buy_and_sell_blocked(self, _):
+        prop = [
+            {"symbol": "AMD", "action": "BUY", "amount": 50, "reason": "standard"},
+            {"symbol": "AMD", "action": "SELL", "amount": 50, "reason": "rebalance"},
+        ]
+        violations, _ = validator.validate(prop, BASE_STATE)
+        self.assertTrue(
+            any("AMD" in v and "PDT" in v for v in violations),
+            "Same-symbol BUY+SELL in one session must be blocked (N2)")
+
+    @MARKET_OPEN
+    def test_n2_different_symbols_buy_sell_allowed(self, _):
+        prop = [
+            {"symbol": "CEG", "action": "BUY", "amount": 50, "reason": "rebalance"},
+            {"symbol": "NVDA", "action": "SELL", "amount": 50, "reason": "rebalance"},
+        ]
+        violations, _ = validator.validate(prop, BASE_STATE)
+        self.assertFalse(
+            any("PDT" in v for v in violations),
+            "Different-symbol BUY/SELL must not trigger PDT (N2)")
+
+    @MARKET_OPEN
+    def test_n3_over_750_blocked_without_confirmation(self, _):
+        prop = [{"symbol": "NVDA", "action": "BUY", "amount": 800,
+                 "reason": "standard"}]
+        violations, _ = validator.validate(prop, BASE_STATE)
+        self.assertTrue(
+            any("NVDA" in v and "confirmation threshold" in v.lower()
+                for v in violations),
+            ">$750 without confirmation must be blocked (N3)")
+
+    @MARKET_OPEN
+    def test_n3_over_750_allowed_with_confirmed_flag(self, _):
+        prop = [{"symbol": "NVDA", "action": "BUY", "amount": 800,
+                 "reason": "standard", "confirmed": True}]
+        violations, warnings = validator.validate(prop, BASE_STATE)
+        self.assertFalse(
+            any("confirmation threshold" in v.lower() for v in violations),
+            "confirmed=true must remove the >$750 violation (N3)")
+        self.assertTrue(
+            any("confirmed=true" in w for w in warnings),
+            "confirmed=true must leave an audit warning (N3)")
+
+    @MARKET_OPEN
+    def test_n4_cash_neutral_rebalance_not_blocked(self, _):
+        state = copy.deepcopy(BASE_STATE)
+        state["buying_power"] = 450.0
+        prop = [
+            {"symbol": "NVDA", "action": "SELL", "amount": 300, "reason": "rebalance"},
+            {"symbol": "CEG", "action": "BUY", "amount": 300, "reason": "rebalance"},
+        ]
+        violations, _ = validator.validate(prop, state)
+        self.assertFalse(
+            any("cash reserve" in v.lower() or "deployment" in v.lower()
+                for v in violations),
+            "Cash-neutral rebalance must not be blocked (N4)")
+
+    @MARKET_OPEN
+    def test_n4_pure_overdeployment_still_blocked(self, _):
+        state = copy.deepcopy(BASE_STATE)
+        state["buying_power"] = 450.0
+        prop = [{"symbol": "CEG", "action": "BUY", "amount": 400, "reason": "standard"}]
+        violations, _ = validator.validate(prop, state)
+        self.assertTrue(
+            any("deployment" in v.lower() for v in violations),
+            "Pure over-cap deployment must still be blocked (N4 guard)")
+
+    @MARKET_OPEN
+    def test_n6_drawdown_message_uses_config_cap(self, _):
+        state = copy.deepcopy(BASE_STATE)
+        state["account_value"] = 7800.0
+        state["high_water_mark"] = 8897.80
+        prop = [{"symbol": "CEG", "action": "BUY", "amount": 30, "reason": "standard"}]
+        _, warnings = validator.validate(prop, state)
+        expect = f"{int(validator.DRAWDOWN_REDUCE_CAP*100)}%"
+        self.assertTrue(
+            any("reduced to" in w and expect in w for w in warnings),
+            f"Drawdown warning must show config cap {expect} (N6)")        
         
+
 class TestTier3AutoDetection(unittest.TestCase):
     """Tier 3 build phase auto-detection from live position data."""
 
@@ -541,8 +647,6 @@ class TestEmptyProposals(unittest.TestCase):
             "Empty proposals must produce no violations")
         self.assertEqual(warnings, [],
             "Empty proposals must produce no warnings")
-
-
 
 
 class TestTierBandInvariant(unittest.TestCase):
