@@ -1,7 +1,7 @@
 # Trading Agent — Optimization Roadmap
 
 Tracking file for `frogman263/trading-agent`. Status of fixes and planned work.
-Last updated: 2026-06-28 (v2)
+Last updated: 2026-07-01 (v3)
 
 ---
 
@@ -24,6 +24,44 @@ MCP path that previously double-encoded.
 - A1     — VST 4->5%, ASML 4->3% (Tier 2 band floor now reachable) [config v1.3]
 - A2     — prior_session_value P&L wiring (STEP 5 + STEP 10 + STEP 14)
 - A3     — deterministic 5-day move helper (STEP 7 §2a, close-to-close)
+
+### 2026-07-01 session — log-push root fix + Tier 4 fix + validator hardening
+
+- v2.8 log fix — STEP 15 session-log push now uses the GitHub MCP
+  create_or_update_file tool (same pattern as STEP 11 state push) instead of a
+  raw curl Contents API call with manual base64. This is the ROOT fix for the
+  session-log double-base64 problem — the same fix Fix 1 applied to state.json,
+  finally applied to logs. Confirmed: notify.yml parses the resulting clean
+  markdown correctly (all 6 fields). This obsoletes the C1/C2/C5 workarounds
+  (see Tier C notes below). [Routine v2.8]
+
+- C6 — Tier 4 entry-threshold split. Added tier4_low (1.0pp) for
+  AMD/AMAT/MRVL/VRT (2% target); tier4 (2.0pp) unchanged for ASML/NBIS/RIOT
+  (3% target). The flat 2.0pp threshold made the four 2%-target names
+  structurally UNBUYABLE after their initial entry — a 2% position can never be
+  2pp below target without dropping to 0% value. validator.get_entry_threshold()
+  now branches on target_pct within Tier 4. Config: entry_thresholds.tier4_low.
+  Tests 38 -> 43. [config v1.4, Routine v2.9]
+
+- C7 — Validator hardening (2026-07-01 full-repo audit). One commit, five fixes:
+  - H1  validator accepts BOTH 'reason' and 'rationale' proposal fields. The
+        docs (CLAUDE.md, Routine) instruct the agent to write 'rationale' but the
+        validator only read 'reason' — so earnings_rule / capital_injection /
+        new_position OVERRIDES were silently failing (trade still executed, but
+        every override buy threw a spurious threshold warning). Verified fix
+        against the BE-into-July-30 scenario.
+  - H2  proposal amounts coerced to float up front, before the deployment-sum
+        math. A non-numeric amount previously CRASHED validate() with a
+        TypeError at the total_buy_amount summation. Now garbage/None produce a
+        clean 'non-numeric amount' violation; numeric strings are accepted.
+  - M1  max-allocation buy buffer is now config-driven
+        (risk_controls.max_alloc_buffer_pp, default 3.0pp — behavior preserved).
+        Was a hardcoded 0.03 that let a name be bought to 3pp above its hard max.
+  - M2  drawdown reduce-deployment cap now reads config (drawdown.reduce_deploy_cap)
+        instead of a hardcoded 0.25. Values matched, so no live behavior change —
+        but editing config now actually takes effect.
+  - L2  validator.py version strings (docstring + argparse) synced to 1.4.
+  - Tests 43 -> 50 (new TestAuditFixes class). [validator v1.4, config v1.4]
 
 ---
 
@@ -48,7 +86,8 @@ MCP path that previously double-encoded.
        in session log before buy/sell logic runs. Wires earnings awareness into
        buy-weakness rule. 18 MCP calls/session, soft-fail on errors.
        Confirmed tools live: get_earnings_calendar + get_earnings_results
-       as of 2026-06-30. [UP NEXT after B3]
+       as of 2026-06-30. On completion, DELETE earnings_check.py (see L4).
+       [UP NEXT after B3]
 
 Suggested sequence: B2 -> B3 -> B4 -> B5.
 
@@ -56,18 +95,34 @@ Suggested sequence: B2 -> B3 -> B4 -> B5.
 
 ## TIER C — Hygiene / low-risk polish (whenever)
 
-- C1 — Delete 3 stale base64 logs (2026-06-26T0933 / T1112 / 2026-06-26).
-- C2 — Remove notify.yml base64-decode branch after more clean runs.
-- C3 — Auto-derive or drop build_phase (validator computes Tier 3 live).
+Note: the v2.8 log-push root fix (see DONE above) changed the status of C1/C2/C5.
+Logs now commit as clean markdown at the source, so the downstream base64
+workarounds are belt-and-suspenders rather than required. Safe to remove after
+2–3 more confirmed-clean runs.
+
+- C1 — Delete stale base64 logs from before the v2.8 fix (pre-2026-07-01
+       T-stamped logs that committed as base64 blobs). Cosmetic repo cleanup.
+- C2 — Remove the notify.yml base64-decode branch. Now SAFE post-v2.8 (logs
+       arrive as markdown), but keep for 2–3 runs as a fallback, then delete.
+- C3 — Auto-derive or drop build_phase (validator computes Tier 3 live; the
+       state.json build_phase string is redundant with the live computation).
 - C4 — Test for the Fix 9 config-missing exit path. [folds into B3]
-- C5 — Post-push verification curl in STEP 15: confirm raw URL starts with
-       '## Session:' not 'ewog'. [Grok suggestion — adopted]
-- C6 — Standardize state.json position schema between runs. Agent occasionally
-       rebuilds positions dict with slightly different field order/names (e.g.
-       'shares' vs 'quantity', single-line vs expanded dicts). Add explicit
-       schema note to STEP 5 instructing the agent to preserve the exact field
-       structure from the fetched state.json when writing positions back.
-       Flagged from 2026-06-28 Saturday run.
+- C5 — Post-push verification in STEP 15: confirm the committed raw URL starts
+       with '## Session:' not 'ewog'. Less critical post-v2.8 but still a cheap
+       guard. [Grok suggestion — adopted]
+- C8 — Standardize state.json position schema between runs. Agent occasionally
+       rebuilds the positions dict with slightly different field order/names
+       (e.g. 'shares' vs 'quantity', single-line vs expanded dicts). Add an
+       explicit schema note to STEP 5 instructing the agent to preserve the exact
+       field structure from the fetched state.json when writing positions back.
+       Flagged from 2026-06-28 Saturday run. [renumbered from C6 — that number now
+       refers to the Tier 4 threshold fix shipped 2026-07-01]
+- C9 — Periodic tax-lot reconciliation. From the 2026-07-01 audit: AVGO
+       (2.765885 sh held vs 2.762300 in tax_lots) and VST (1.829312 vs 1.826818)
+       have sub-share drift between positions.shares and sum(tax_lots.quantity),
+       almost certainly un-logged DRIP. Harmless in dollar terms but erodes the
+       short-term-gains >$500 flag accuracy over time. Reconcile on next Reno
+       return / quarterly. [audit M3]
 
 ---
 
@@ -82,6 +137,23 @@ Suggested sequence: B2 -> B3 -> B4 -> B5.
 
 ---
 
+## DOC DEBT (from 2026-07-01 audit)
+
+- L1 — CLAUDE.md is a full generation behind Routine.md: 13-step procedure
+       (Routine is 16), manual base64 log encoding via raw curl (the exact
+       double-encoding pattern fixed in v2.8), June-26 14-position / ~$8,500
+       state, and the 'rationale' field. Its own header says "keep in sync."
+       Resolution: demote CLAUDE.md to the strategy/thesis reference and make
+       Routine.md the single authoritative live procedure. [being addressed]
+- L3 — state.json last_trade_date vs last_updated naming is load-bearing: the
+       day-rollover trade-count reset keys off last_trade_date, so the two fields
+       legitimately differ on no-trade days. Document the distinction; do NOT
+       rename casually. [audit L3]
+- L4 — Delete earnings_check.py when B5 lands. Fully disabled (Yahoo 403),
+       correctly documented everywhere, but a loaded gun if re-enabled. [audit L4]
+
+---
+
 ## Notes
 
 - Crisis-mode flag (pause Tier 3 buys on a >15%/week multi-name drop):
@@ -90,3 +162,6 @@ Suggested sequence: B2 -> B3 -> B4 -> B5.
 - Master Routine lives as Routine.md in this repo (version-controlled).
   Edit there; copy from the raw URL into the cloud Routine. Do not use .rtf
   (smart-quote / dash corruption risk in shell + Python lines).
+- Numbering note: Tier C was renumbered on 2026-07-01. The old C6 (state.json
+  position schema) is now C8, because C6 shipped as the Tier 4 threshold fix.
+  C7 = validator hardening. C9 = tax-lot reconciliation (new from audit).
