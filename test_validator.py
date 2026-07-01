@@ -374,6 +374,53 @@ class TestEntryThresholds(unittest.TestCase):
         self.assertFalse(
             any("IREN" in w and "threshold" in w.lower() for w in warnings),
             "1.8pp gap must clear 1.5pp build phase threshold — no warning")
+        @MARKET_OPEN
+    def test_tier4_low_target_clears_1pp_threshold(self, _):
+        # C6 fix: AMD (2% target) at 0.8% = 1.2pp gap.
+        # New tier4_low threshold (1.0pp): 1.2 >= 1.0 -> clears, no warning.
+        # Old flat tier4 threshold (2.0pp) would have warned incorrectly.
+        state = copy.deepcopy(BASE_STATE)
+        state["positions"]["AMD"] = {"value": 71.10, "pct": 0.0080}
+        _, warnings = validator.validate(
+            [make_proposal("AMD", "BUY", 100)], state)
+        self.assertFalse(
+            any("AMD" in w and "threshold" in w.lower() for w in warnings),
+            "AMD 1.2pp gap must clear 1.0pp tier4_low threshold — no warning")
+
+    @MARKET_OPEN
+    def test_tier4_low_target_below_1pp_still_warns(self, _):
+        # AMD at 1.5% = 0.5pp gap -- below the 1.0pp tier4_low threshold.
+        state = copy.deepcopy(BASE_STATE)
+        state["positions"]["AMD"] = {"value": 133.31, "pct": 0.0150}
+        _, warnings = validator.validate(
+            [make_proposal("AMD", "BUY", 100)], state)
+        self.assertTrue(
+            any("AMD" in w and "threshold" in w.lower() for w in warnings),
+            "AMD 0.5pp gap must warn under 1.0pp tier4_low threshold")
+
+    @MARKET_OPEN
+    def test_tier4_high_target_still_uses_2pp_threshold(self, _):
+        # C6 fix must not affect ASML/NBIS/RIOT (3% target).
+        # RIOT at 1.5% = 1.5pp gap -- below the unchanged 2.0pp tier4 threshold.
+        state = copy.deepcopy(BASE_STATE)
+        state["positions"]["RIOT"] = {"value": 133.31, "pct": 0.0150}
+        _, warnings = validator.validate(
+            [make_proposal("RIOT", "BUY", 100)], state)
+        self.assertTrue(
+            any("RIOT" in w and "threshold" in w.lower() for w in warnings),
+            "RIOT 1.5pp gap must still warn under unchanged 2.0pp tier4 threshold")
+
+    def test_get_entry_threshold_direct_low_target(self):
+        # Direct function check -- AMD/AMAT/MRVL/VRT (<=2.5% target) get tier4_low.
+        threshold, label = validator.get_entry_threshold("AMD", False)
+        self.assertEqual(threshold, 1.0)
+        self.assertEqual(label, "Tier 4 (low-target)")
+
+    def test_get_entry_threshold_direct_high_target(self):
+        # Direct function check -- ASML/NBIS/RIOT (3% target) keep flat tier4.
+        threshold, label = validator.get_entry_threshold("RIOT", False)
+        self.assertEqual(threshold, 2.0)
+        self.assertEqual(label, "Tier 4")
 
 
 class TestTier3AutoDetection(unittest.TestCase):
