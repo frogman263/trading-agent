@@ -374,7 +374,8 @@ class TestEntryThresholds(unittest.TestCase):
         self.assertFalse(
             any("IREN" in w and "threshold" in w.lower() for w in warnings),
             "1.8pp gap must clear 1.5pp build phase threshold — no warning")
-        @MARKET_OPEN
+
+    @MARKET_OPEN
     def test_tier4_low_target_clears_1pp_threshold(self, _):
         # C6 fix: AMD (2% target) at 0.8% = 1.2pp gap.
         # New tier4_low threshold (1.0pp): 1.2 >= 1.0 -> clears, no warning.
