@@ -1,36 +1,144 @@
 {
   "account_number": "926627357",
-  "account_value": 8125.43,
+  "account_value": 8292.01,
   "buying_power": 452.73,
   "cash": 452.73,
   "high_water_mark": 8897.8,
-  "prior_session_value": 8125.43,
-  "last_trade_date": "2026-07-20",
+  "prior_session_value": 8292.01,
+  "last_trade_date": "2026-07-22",
   "trades_today": 0,
-  "last_updated": "2026-07-21T11:12:00-04:00",
-  "build_phase": "Build Phase (Tier3=13.3%<15%)",
+  "last_updated": "2026-07-22T11:12:00-04:00",
+  "build_phase": "Build Phase (Tier3=13.5%<15%)",
   "schema_version": "1.2",
-  "drawdown_pct": 0.0868,
-  "notes": "Session 2026-07-21: No trades — no entry thresholds met. Market-wide rally: account +$310 vs prior session, drawdown dropped from 12.16% to 8.68% (Tier 1→Tier 0). GEV earnings Jul22 AM. APLD earnings Jul27 PM. BE -8.96% 5-day, reports ~Jul30. AMAT -5.35% / MRVL -6.22% (no earnings within 7d, no buy_weakness trigger). GOOGL reports Jul22 PM (thesis-relevant).",
+  "drawdown_pct": 0.0681,
+  "notes": "Session 2026-07-22: No trades — no entry thresholds met. GEV reported Q2 earnings (miss: $2.47 vs $3.22 est, -23%); stock -6.1% today; flagged for user review. NO_CHASE flags: NBIS +11.2%, IREN +12.2%, RIOT +12.7%. NVDA at 25.0% (at max, no trim needed, buffer 3pp to 28%). Account +$166.58 vs prior. Drawdown 6.81% (Tier 0). Upcoming: APLD Jul27 PM, BE Jul28 PM.",
   "positions": {
-    "NVDA": {"shares": 9.820737, "avg_cost": 196.62, "price": 206.1654, "value": 2024.70, "pct": 24.92},
-    "AVGO": {"shares": 2.765885, "avg_cost": 401.08, "price": 384.655, "value": 1063.91, "pct": 13.09},
-    "MU":   {"shares": 0.733439, "avg_cost": 1146.91, "price": 953.009, "value": 698.97, "pct": 8.60},
-    "CEG":  {"shares": 1.272681, "avg_cost": 275.01, "price": 261.415, "value": 332.70, "pct": 4.09},
-    "GEV":  {"shares": 0.363065, "avg_cost": 1101.73, "price": 1091.165, "value": 396.16, "pct": 4.88},
-    "VST":  {"shares": 1.829312, "avg_cost": 164.23, "price": 162.21, "value": 296.73, "pct": 3.65},
-    "BE":   {"shares": 1.563393, "avg_cost": 276.93, "price": 221.59, "value": 346.43, "pct": 4.26},
-    "RIOT": {"shares": 12.077217, "avg_cost": 22.68, "price": 20.96, "value": 253.14, "pct": 3.12},
-    "CORZ": {"shares": 12.425759, "avg_cost": 27.93, "price": 24.00, "value": 298.22, "pct": 3.67},
-    "IREN": {"shares": 6.626255, "avg_cost": 54.76, "price": 41.73, "value": 276.51, "pct": 3.40},
-    "CRWV": {"shares": 3.382672, "avg_cost": 105.67, "price": 77.73, "value": 262.94, "pct": 3.24},
-    "NBIS": {"shares": 1.152174, "avg_cost": 230.31, "price": 207.20, "value": 238.73, "pct": 2.94},
-    "APLD": {"shares": 8.104545, "avg_cost": 43.67, "price": 30.395, "value": 246.34, "pct": 3.03},
-    "ASML": {"shares": 0.176076, "avg_cost": 1140.19, "price": 1810.75, "value": 318.83, "pct": 3.92},
-    "AMD":  {"shares": 0.330279, "avg_cost": 505.63, "price": 532.04, "value": 175.72, "pct": 2.16},
-    "AMAT": {"shares": 0.261869, "avg_cost": 637.72, "price": 563.81, "value": 147.64, "pct": 1.82},
-    "MRVL": {"shares": 0.626732, "avg_cost": 266.53, "price": 208.60, "value": 130.74, "pct": 1.61},
-    "VRT":  {"shares": 0.544435, "avg_cost": 306.74, "price": 301.75, "value": 164.28, "pct": 2.02}
+    "NVDA": {
+      "shares": 9.820737,
+      "avg_cost": 196.62,
+      "price": 211.02,
+      "value": 2072.37,
+      "pct": 24.99
+    },
+    "AVGO": {
+      "shares": 2.765885,
+      "avg_cost": 401.08,
+      "price": 391.65,
+      "value": 1083.26,
+      "pct": 13.06
+    },
+    "MU": {
+      "shares": 0.733439,
+      "avg_cost": 1146.91,
+      "price": 973.5,
+      "value": 714.0,
+      "pct": 8.61
+    },
+    "CEG": {
+      "shares": 1.272681,
+      "avg_cost": 275.01,
+      "price": 271.735,
+      "value": 345.83,
+      "pct": 4.17
+    },
+    "GEV": {
+      "shares": 0.363065,
+      "avg_cost": 1101.73,
+      "price": 1013.0,
+      "value": 367.78,
+      "pct": 4.44
+    },
+    "VST": {
+      "shares": 1.829312,
+      "avg_cost": 164.23,
+      "price": 166.39,
+      "value": 304.38,
+      "pct": 3.67
+    },
+    "BE": {
+      "shares": 1.563393,
+      "avg_cost": 276.93,
+      "price": 228.24,
+      "value": 356.83,
+      "pct": 4.3
+    },
+    "IREN": {
+      "shares": 6.626255,
+      "avg_cost": 54.76,
+      "price": 42.95,
+      "value": 284.6,
+      "pct": 3.43
+    },
+    "APLD": {
+      "shares": 8.104545,
+      "avg_cost": 43.67,
+      "price": 31.09,
+      "value": 251.97,
+      "pct": 3.04
+    },
+    "CORZ": {
+      "shares": 12.425759,
+      "avg_cost": 27.93,
+      "price": 24.09,
+      "value": 299.34,
+      "pct": 3.61
+    },
+    "CRWV": {
+      "shares": 3.382672,
+      "avg_cost": 105.67,
+      "price": 83.79,
+      "value": 283.43,
+      "pct": 3.42
+    },
+    "ASML": {
+      "shares": 0.176076,
+      "avg_cost": 1140.19,
+      "price": 1802.17,
+      "value": 317.32,
+      "pct": 3.83
+    },
+    "NBIS": {
+      "shares": 1.152174,
+      "avg_cost": 230.31,
+      "price": 221.935,
+      "value": 255.71,
+      "pct": 3.08
+    },
+    "RIOT": {
+      "shares": 12.077217,
+      "avg_cost": 22.68,
+      "price": 22.65,
+      "value": 273.55,
+      "pct": 3.3
+    },
+    "AMD": {
+      "shares": 0.330279,
+      "avg_cost": 505.63,
+      "price": 557.3,
+      "value": 184.06,
+      "pct": 2.22
+    },
+    "AMAT": {
+      "shares": 0.261869,
+      "avg_cost": 637.72,
+      "price": 560.04,
+      "value": 146.66,
+      "pct": 1.77
+    },
+    "MRVL": {
+      "shares": 0.626732,
+      "avg_cost": 266.53,
+      "price": 214.675,
+      "value": 134.54,
+      "pct": 1.62
+    },
+    "VRT": {
+      "shares": 0.544435,
+      "avg_cost": 306.74,
+      "price": 300.58,
+      "value": 163.65,
+      "pct": 1.97
+    }
   },
   "tax_lots": [
     {"symbol": "NVDA", "quantity": 2.404387, "cost_basis": 190.115, "acquired": "2026-01-05", "term": "short", "notes": "original 2.629987sh; 0.225600sh consumed by FIFO sell 2026-07-13"},
@@ -43,7 +151,7 @@
     {"symbol": "NVDA", "quantity": 4.284288, "cost_basis": 210.07,  "acquired": "2026-06-19", "term": "short"},
     {"symbol": "AVGO", "quantity": 2.084406, "cost_basis": 407.79,  "acquired": "2026-06-19", "term": "short"},
     {"symbol": "AVGO", "quantity": 0.677894, "cost_basis": 380.59,  "acquired": "2026-06-24", "term": "short"},
-    {"symbol": "MU",   "quantity": 0.656742, "cost_basis": 1142.00, "acquired": "2026-06-19", "term": "short"},
+    {"symbol": "MU",   "quantity": 0.656742, "cost_basis": 1142.0,  "acquired": "2026-06-19", "term": "short"},
     {"symbol": "MU",   "quantity": 0.076589, "cost_basis": 1189.22, "acquired": "2026-06-25", "term": "short"},
     {"symbol": "CEG",  "quantity": 1.272681, "cost_basis": 275.01,  "acquired": "2026-06-19", "term": "short"},
     {"symbol": "GEV",  "quantity": 0.314954, "cost_basis": 1111.27, "acquired": "2026-06-19", "term": "short"},
