@@ -106,8 +106,10 @@ jobs:
           DRAWDOWN=$(grep '^Drawdown:' /tmp/slack_message.txt | cut -d' ' -f2-)
           CASH=$(grep '^Cash:' /tmp/slack_message.txt | cut -d' ' -f2-)
 
+          SUMMARY="New trading agent session logged."
+
           PAYLOAD=$(printf '{"text":"%s","attachments":[{"color":"%s","title":"%s","title_link":"%s","fields":[{"title":"Validator","value":"%s","short":true},{"title":"Trades","value":"%s","short":true},{"title":"Account Value","value":"%s","short":true},{"title":"HWM","value":"%s","short":true},{"title":"Drawdown","value":"%s","short":true},{"title":"Cash","value":"%s","short":true}]}]}' \
-            "$TITLE" "$COLOR" "$TITLE" "$LOG_URL" "$VALIDATOR" "$TRADES" "$ACCOUNT" "$HWM" "$DRAWDOWN" "$CASH")
+            "$SUMMARY" "$COLOR" "$TITLE" "$LOG_URL" "$VALIDATOR" "$TRADES" "$ACCOUNT" "$HWM" "$DRAWDOWN" "$CASH")
 
           curl -s -X POST -H 'Content-type: application/json' \
             --data "$PAYLOAD" \
