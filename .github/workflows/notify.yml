@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Find latest session log
         id: log
@@ -92,7 +92,7 @@ jobs:
           TITLE="${{ steps.log.outputs.title }}"
           VALIDATOR="${{ steps.log.outputs.validator }}"
           TRADES="${{ steps.log.outputs.trades }}"
-          LOG_URL="https://github.com/${{ github.repository }}/blob/main/${{ steps.log.outputs.log_file }}"
+          LOG_URL="github://github.com/${{ github.repository }}/blob/main/${{ steps.log.outputs.log_file }}"
 
           if [ "$VALIDATOR" = "PASS" ]; then
             COLOR="#36a64f"
@@ -106,8 +106,8 @@ jobs:
           DRAWDOWN=$(grep '^Drawdown:' /tmp/slack_message.txt | cut -d' ' -f2-)
           CASH=$(grep '^Cash:' /tmp/slack_message.txt | cut -d' ' -f2-)
 
-          PAYLOAD=$(printf '{"attachments":[{"color":"%s","title":"%s","title_link":"%s","fields":[{"title":"Validator","value":"%s","short":true},{"title":"Trades","value":"%s","short":true},{"title":"Account Value","value":"%s","short":true},{"title":"HWM","value":"%s","short":true},{"title":"Drawdown","value":"%s","short":true},{"title":"Cash","value":"%s","short":true}]}]}' \
-            "$COLOR" "$TITLE" "$LOG_URL" "$VALIDATOR" "$TRADES" "$ACCOUNT" "$HWM" "$DRAWDOWN" "$CASH")
+          PAYLOAD=$(printf '{"text":"%s","attachments":[{"color":"%s","title":"%s","title_link":"%s","fields":[{"title":"Validator","value":"%s","short":true},{"title":"Trades","value":"%s","short":true},{"title":"Account Value","value":"%s","short":true},{"title":"HWM","value":"%s","short":true},{"title":"Drawdown","value":"%s","short":true},{"title":"Cash","value":"%s","short":true}]}]}' \
+            "$TITLE" "$COLOR" "$TITLE" "$LOG_URL" "$VALIDATOR" "$TRADES" "$ACCOUNT" "$HWM" "$DRAWDOWN" "$CASH")
 
           curl -s -X POST -H 'Content-type: application/json' \
             --data "$PAYLOAD" \
