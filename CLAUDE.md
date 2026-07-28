@@ -18,19 +18,19 @@
 > internally — passing pre-encoded content double-encodes it into a base64 blob
 > (the bug fixed in Routine v2.8). Logs commit as clean markdown to
 > `logs/YYYY-MM-DDTHHMM.md` (Eastern Time, always T-stamped; date-only names
-> break the notify.yml selector). The Pushover notification fires automatically
+> break the notify.yml selector). The Slack notification fires automatically
 > from notify.yml after the log lands. See Routine.md STEP 14–16 for the live
 > procedure.
 
 ---
 
-## Telegram Notifications
+## Telegram / Pushover Notifications (historical)
 
-> **⚠ DEPRECATED (June 2026).** Notifications now run through **Pushover via the GitHub Actions workflow `notify.yml`**, which fires after each session log is pushed. The Telegram path below is retained for history only and is not used. Pushover credentials live in GitHub repo secrets (`PUSHOVER_API_TOKEN`, `PUSHOVER_USER_KEY`); the direct-curl helper in the Routine is disabled in cloud runs (proxy blocks `api.pushover.net`).
+> **⚠ DEPRECATED (July 2026).** Notifications now run through **Slack via the GitHub Actions workflow `notify.yml`**, which fires after each session log is pushed (webhook URL lives in the `SLACK_WEBHOOK_URL` GitHub repo secret). Both the Telegram path below and the earlier Pushover path are retained for history only and are not used. The Pushover API token/user key that previously lived inline in Routine.md were removed and should be treated as burned — revoke them on Pushover's side even though the license was never purchased.
 
 Send a session summary to Telegram after every local run using:
 - **Bot token:** `$TELEGRAM_BOT_TOKEN`
-- **Chat ID:** `8760839839`
+- **Chat ID:** `$TELEGRAM_CHAT_ID`
 
 ```bash
 curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" \
@@ -111,7 +111,7 @@ Execute these steps in order on every run:
 10. **Execute trades** — only if validator returns PASS. Place market orders via Robinhood MCP. Log each with rationale.
 11. **Update state.json** — after session, update_state() handles: new high-water mark (if account_value > current HWM), position values, trade count increment, last_trade_date, and last_updated timestamp.
 12. **Log session** — write summary to `~/trading-logs/YYYY-MM-DD.md`.
-13. **Send notification** — cloud runs: handled automatically by notify.yml (GitHub Actions → Pushover) after the log is pushed; built-in PushNotification tool is a fallback only. Local runs: Telegram curl.
+13. **Send notification** — cloud runs: handled automatically by notify.yml (GitHub Actions → Slack) after the log is pushed; built-in PushNotification tool is a fallback only. Local runs: Telegram curl.
 
 ---
 
@@ -480,3 +480,4 @@ A temporary file written by Claude before each execution step. Contains all prop
 | 2.4 | 2026-06-23 | Tiered entry threshold: Tier 3 lowered to 1.5pp during active build phase (revert to 2pp at 15% combined). Capital injection protocol added. RIOT thesis updated to reflect HPC/data center pivot. PDT rule note added. Tax lot tracking added. |
 | 2.5 | 2026-06-26 | Synced to config.json v1.2: RIOT target 2%→3%; AMD/AMAT/MRVL/VRT 0%→2%; Tier 4 band 8–12%→8–18%. Refreshed Current State to June 26 (NVDA trim phase complete ~23–24%, removed stale ~34% trim instruction). Logging filename → ET T-stamped `logs/YYYY-MM-DDTHHMM.md` (date-only broke notify.yml). Telegram marked deprecated — Pushover via GitHub Actions is the live channel. |
 | 2.6 | 2026-07-01 | Demoted to strategy/thesis reference — Routine.md is now the authoritative live procedure. Removed manual base64 logging block (double-encoding bug, fixed in Routine v2.8). proposals field corrected to `reason` (validator also accepts `rationale` per H1). Refreshed Current State to July 1 (18 positions, ~$8,669). Documented Tier 4 tier4_low 1.0pp threshold (C6) and validator hardening (C7: H1/H2/M1/M2). |
+| 2.7 | 2026-07-28 | Removed Pushover references (notification fires automatically from notify.yml). Slack via Incoming Webhook is now the live channel. |
