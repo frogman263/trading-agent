@@ -82,23 +82,33 @@ jobs:
           echo "trades=$TRADES" >> $GITHUB_OUTPUT
           echo "message_b64=$MESSAGE_B64" >> $GITHUB_OUTPUT
 
-      - name: Send Pushover notification
+      - name: Send Slack notification
         if: steps.log.outputs.log_file != ''
         env:
-          PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_API_TOKEN }}
-          PUSHOVER_USER: ${{ secrets.PUSHOVER_USER_KEY }}
-          TITLE: "${{ steps.log.outputs.title }}"
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
           set -euo pipefail
 
-          echo "${{ steps.log.outputs.message_b64 }}" | base64 -d > /tmp/pushover_message.txt
+          TITLE="${{ steps.log.outputs.title }}"
+          VALIDATOR="${{ steps.log.outputs.validator }}"
+          TRADES="${{ steps.log.outputs.trades }}"
+          LOG_URL="https://github.com/${{ github.repository }}/blob/main/${{ steps.log.outputs.log_file }}"
 
-          curl -s \
-            --form-string "token=$PUSHOVER_TOKEN" \
-            --form-string "user=$PUSHOVER_USER" \
-            --form-string "title=$TITLE" \
-            --form "message=</tmp/pushover_message.txt" \
-            --form-string "url=github://github.com/${{ github.repository }}/blob/main/${{ steps.log.outputs.log_file }}" \
-            --form-string "url_title=View Full Session Log" \
-            --form-string "priority=0" \
-            https://api.pushover.net/1/messages.json
+          if [ "$VALIDATOR" = "PASS" ]; then
+            COLOR="#36a64f"
+          else
+            COLOR="#d0021b"
+          fi
+
+          echo "${{ steps.log.outputs.message_b64 }}" | base64 -d > /tmp/slack_message.txt
+          ACCOUNT=$(grep '^Account Value:' /tmp/slack_message.txt | cut -d' ' -f3-)
+          HWM=$(grep '^HWM:' /tmp/slack_message.txt | cut -d' ' -f2-)
+          DRAWDOWN=$(grep '^Drawdown:' /tmp/slack_message.txt | cut -d' ' -f2-)
+          CASH=$(grep '^Cash:' /tmp/slack_message.txt | cut -d' ' -f2-)
+
+          PAYLOAD=$(printf '{"attachments":[{"color":"%s","title":"%s","title_link":"%s","fields":[{"title":"Validator","value":"%s","short":true},{"title":"Trades","value":"%s","short":true},{"title":"Account Value","value":"%s","short":true},{"title":"HWM","value":"%s","short":true},{"title":"Drawdown","value":"%s","short":true},{"title":"Cash","value":"%s","short":true}]}]}' \
+            "$COLOR" "$TITLE" "$LOG_URL" "$VALIDATOR" "$TRADES" "$ACCOUNT" "$HWM" "$DRAWDOWN" "$CASH")
+
+          curl -s -X POST -H 'Content-type: application/json' \
+            --data "$PAYLOAD" \
+            "$SLACK_WEBHOOK_URL"
