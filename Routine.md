@@ -1,8 +1,14 @@
 # ──────────────────────────────────────────────────────────────────────────
 # TRADING AGENT ROUTINE
-# Version: 2.9   |   Updated: 2026-07-01   |   Repo: frogman263/trading-agent
+# Version: 3.0   |   Updated: 2026-07-28   |   Repo: frogman263/trading-agent
 #
 # Changelog (newest first):
+#   v3.0 (2026-07-28)
+#     - Removed Pushover entirely. Notifications now route through Slack via
+#           a repo-secret Incoming Webhook (SLACK_WEBHOOK_URL) in notify.yml.
+#           Deleted the plaintext Pushover API token/user key that had been
+#           hardcoded in this file since v2.5 — that credential was exposed
+#           in a public repo and should be revoked on Pushover's side.
 #   v2.9 (2026-07-01)
 #     - C6: Tier 4 entry threshold split — tier4_low (1.0pp) added for
 #           AMD/AMAT/MRVL/VRT (2% target). Flat 2.0pp threshold made these
@@ -37,13 +43,11 @@ ONLY account you may trade: 926627357 (Agentic 7357)
 NEVER touch: Income (4986), Growth (0003), Grok (8304)
 If you are ever uncertain which account to use, stop and do nothing.
 
-Pushover Notification Helper
-Note: Direct Pushover sending via curl is disabled in cloud runs due to network restrictions. Notifications are reliably handled by the GitHub Actions workflow (notify.yml) after the session log is pushed to GitHub.
-All notifications use this curl format:
-curl -s --form-string "token=a56hkf93gtj2pekdus3btgxprc8m1y" --form-string "user=ucdnsev66puc3x5brospeqr4nqmunt" --form-string "title=TITLE_HERE" --form-string "message=MESSAGE_HERE" https://api.pushover.net/1/messages.json
+Slack Notification Helper
+Notifications are handled entirely by the GitHub Actions workflow (notify.yml) after the session log is pushed to GitHub. It posts to a Slack Incoming Webhook (SLACK_WEBHOOK_URL, stored as a GitHub repo secret). No direct call from within a session is needed or attempted.
 
 HALT PROTOCOL
-If any critical error occurs in STEPS 1-9: write what you know to /tmp/session_log.md including the error, timestamp, and the word HALTED. Best-effort push to GitHub using the timestamped log filename format (logs/YYYY-MM-DDTHHMM.md). Send Pushover notification (via GitHub Actions workflow). Stop. Do not execute any trades.
+If any critical error occurs in STEPS 1-9: write what you know to /tmp/session_log.md including the error, timestamp, and the word HALTED. Best-effort push to GitHub using the timestamped log filename format (logs/YYYY-MM-DDTHHMM.md). Send Slack notification (via GitHub Actions workflow). Stop. Do not execute any trades.
 HALT titles and messages:
 GitHub fetch fail: title "Trading Agent HALTED — DATE" message "ERROR: Could not fetch FILE from GitHub. No trades executed."
 Validator FAIL: title "Trading Agent HALTED — Validator FAIL DATE" message "Validator blocked trades. Violations: FULL OUTPUT. No trades executed."
@@ -94,7 +98,7 @@ Rate each hyperscaler (Microsoft, Amazon, Google, Meta) as Bullish/Neutral/Conce
 Monthly Extended Summary — First Monday of Each Month
 Account P&L, tier breakdown, biggest winner and loser, cash deployment efficiency, removal candidates, new names, macro assessment. No trades triggered.
 
-Run Procedure (v2.9)
+Run Procedure (v3.0)
 
 STEP 1 — Fetch validator, config, and state from GitHub
 DATE=$(date +%Y-%m-%d)
@@ -146,7 +150,7 @@ python3 -c "import json; s=json.load(open('/tmp/state.json')); s['pending_propos
 
 STEP 6 — Calculate drawdown tier
 drawdown = (high_water_mark - account_value) / high_water_mark
-20% or more: execute HALT PROTOCOL — full stop, Pushover alert, manual reset required.
+20% or more: execute HALT PROTOCOL — full stop, Slack alert, manual reset required.
 15% or more: pause all new buys, trims only, flag in summary.
 10% or more: reduced deployment, cap session buys at 25% of buying_power, flag in summary.
 Under 10%: normal operation, cap at 50% of buying_power.
@@ -304,10 +308,8 @@ The notification workflow parses these exact bold-colon lines from the log body.
 **Validator:** <PASS | FAIL | N/A> ...
 If any of these labels change, update the corresponding grep in notify.yml.
 
-STEP 16 — Send Pushover notification
-Note: Direct Pushover sending is disabled in cloud runs (network restricted). Notifications are now handled reliably by the GitHub Actions workflow (notify.yml) after the session log is pushed.
-If running locally on desktop, the direct curl method may be re-enabled. For cloud runs, rely on the GitHub Actions notification.
-Claude built-in PushNotification tool may be used as a secondary fallback if needed.
+STEP 16 — Send Slack notification
+Notifications are handled entirely by the GitHub Actions workflow (notify.yml) after the session log is pushed. No action needed from within the session, locally or in the cloud.
 
 Entry Rules
 Buy new position: stock in universe, does not exceed max allocation, cash stays at or above 5%, no open order, no macro red flag, drawdown tier permits.
@@ -336,13 +338,13 @@ Capital Injection Protocol
 If buying_power at session start exceeds prior state buying_power by more than $500, treat as capital injection. Log the detected amount. Recalculate all position weights using new account value. Proceed with normal trade evaluation against updated weights.
 
 What You Can Do Without Asking
-Buy or sell within universe within all rules and validator PASS. Trim NVDA at $500 or less per session. Rebalance drifted positions. Act on earnings setups. Run Monday thesis review and monthly summary. Push state.json and session logs. Send Pushover notifications.
+Buy or sell within universe within all rules and validator PASS. Trim NVDA at $500 or less per session. Rebalance drifted positions. Act on earnings setups. Run Monday thesis review and monthly summary. Push state.json and session logs. Send Slack notifications.
 
 What Requires User Confirmation
 Adding ticker not in universe. Full exit of any position. Resuming after drawdown pause or full stop. Resuming new buying after macro red flag. Removing stock from universe. Changing target allocations. Any single trade over $750.
 
 Session Summary Format
-## Session: DATE TIME ET (v2.9)
+## Session: DATE TIME ET (v3.0)
 **Trades executed:** X
 
 **Status:** COMPLETED or HALTED with reason
