@@ -1,43 +1,199 @@
 {
   "account_number": "926627357",
-  "account_value": 8769.79,
+  "account_value": 8674.45,
   "buying_power": 542.31,
   "cash": 542.31,
   "high_water_mark": 8897.8,
-  "prior_session_value": 8769.79,
-  "last_trade_date": "2026-08-06",
-  "trades_today": 1,
-  "last_updated": "2026-08-06 11:48 ET",
+  "prior_session_value": 8674.45,
+  "last_trade_date": "2026-08-07",
+  "trades_today": 0,
+  "last_updated": "2026-08-07 11:29 ET",
   "build_phase": "Build Phase (Tier3<15%)",
   "schema_version": "1.2",
-  "drawdown_pct": 0.0144,
-  "notes": "Session 2026-08-06 (Thu): TRADE MU BUY $212 (~0.234sh @ $906.58). MU 2.42pp below 10% Tier 1 target. Validator PASS. CEG beat Q2 earnings ($2.55 vs $2.37 est, AM). No_chase: BE(+17%), CRWV(+20%), MRVL(+18%), NBIS(+11%), NVDA(+12%), VRT(+25%). VST earns tomorrow AM. CRWV earns Aug 11 PM. NBIS earns Aug 12 AM. Tier 3 build phase active (12.25% combined, threshold 15%). P&L: -$40.15 vs prior ($8,809.94->$8,769.79).",
+  "drawdown_pct": 0.0251,
+  "notes": "Session 2026-08-07 (Fri): NO TRADES. No entry thresholds met. NVDA 25.37% (marginally over 25% max, below 3pp trim trigger). Tier 3 at 12.2% — build phase active (1.5pp threshold). VST Q2 miss ($0.908 vs $2.21 est) flagged for user review. BE Q2 beat confirmed ($0.78 vs $0.36). No_chase: CRWV(+24.5%), MRVL(+14.3%), VRT(+15.1%), NVDA(+11.6%). CRWV earns Aug 11, NBIS Aug 12, AMAT Aug 13. P&L: -$95.34 vs prior ($8,769.79->$8,674.45).",
   "positions": {
-    "NVDA": {"shares": 9.820737, "avg_buy_price": 196.62, "live_price": 217.6999, "value": 2137.97, "pct": 24.3788, "lots": []},
-    "AVGO": {"shares": 2.765885, "avg_buy_price": 401.08, "live_price": 423.77, "value": 1172.10, "pct": 13.3652, "lots": []},
-    "MU": {"shares": 0.967228, "avg_buy_price": 1088.82, "live_price": 905.87, "value": 876.18, "pct": 9.9909, "lots": [{"shares": 0.233789, "cost_per_share": 906.58, "date": "2026-08-06"}]},
-    "CEG": {"shares": 1.272681, "avg_buy_price": 275.01, "live_price": 264.79, "value": 336.99, "pct": 3.8427, "lots": []},
-    "GEV": {"shares": 0.363065, "avg_buy_price": 1101.73, "live_price": 1021.73, "value": 370.95, "pct": 4.2299, "lots": []},
-    "VST": {"shares": 2.888185, "avg_buy_price": 155.95, "live_price": 142.09, "value": 410.38, "pct": 4.6795, "lots": [{"shares": 1.058873, "cost_per_share": 141.63, "date": "2026-08-05"}]},
-    "BE": {"shares": 1.810807, "avg_buy_price": 266.70, "live_price": 242.515, "value": 439.15, "pct": 5.0075, "lots": []},
-    "RIOT": {"shares": 12.077217, "avg_buy_price": 22.68, "live_price": 22.01, "value": 265.82, "pct": 3.0311, "lots": []},
-    "CORZ": {"shares": 12.425759, "avg_buy_price": 27.93, "live_price": 21.49, "value": 267.03, "pct": 3.0449, "lots": []},
-    "IREN": {"shares": 6.626255, "avg_buy_price": 54.76, "live_price": 39.9628, "value": 264.80, "pct": 3.0195, "lots": []},
-    "CRWV": {"shares": 3.382672, "avg_buy_price": 105.67, "live_price": 88.3156, "value": 298.74, "pct": 3.4065, "lots": []},
-    "NBIS": {"shares": 1.152174, "avg_buy_price": 230.31, "live_price": 208.97, "value": 240.77, "pct": 2.7454, "lots": []},
-    "APLD": {"shares": 8.104545, "avg_buy_price": 43.67, "live_price": 30.0201, "value": 243.30, "pct": 2.7743, "lots": []},
-    "ASML": {"shares": 0.176262, "avg_buy_price": 1140.80, "live_price": 1722.04, "value": 303.53, "pct": 3.4611, "lots": []},
-    "AMD": {"shares": 0.330279, "avg_buy_price": 505.63, "live_price": 491.54, "value": 162.35, "pct": 1.8512, "lots": []},
-    "AMAT": {"shares": 0.261869, "avg_buy_price": 637.72, "live_price": 535.28, "value": 140.17, "pct": 1.5984, "lots": []},
-    "MRVL": {"shares": 0.626732, "avg_buy_price": 266.53, "live_price": 215.615, "value": 135.13, "pct": 1.5409, "lots": []},
-    "VRT": {"shares": 0.544435, "avg_buy_price": 306.74, "live_price": 283.245, "value": 154.21, "pct": 1.7584, "lots": []}
+    "NVDA": {
+      "value": 2200.73,
+      "pct": 0.2537,
+      "shares": 9.820737,
+      "avg_buy_price": 196.62,
+      "tier": 1,
+      "lots": [],
+      "live_price": 224.0903
+    },
+    "AVGO": {
+      "value": 1174.93,
+      "pct": 0.1354,
+      "shares": 2.765885,
+      "avg_buy_price": 401.08,
+      "tier": 1,
+      "lots": [],
+      "live_price": 424.795
+    },
+    "MU": {
+      "value": 840.83,
+      "pct": 0.0969,
+      "shares": 0.967228,
+      "avg_buy_price": 1088.87,
+      "tier": 1,
+      "lots": [
+        {
+          "shares": 0.233789,
+          "cost_per_share": 906.58,
+          "date": "2026-08-06"
+        }
+      ],
+      "live_price": 869.322
+    },
+    "CEG": {
+      "value": 341.43,
+      "pct": 0.0394,
+      "shares": 1.272681,
+      "avg_buy_price": 275.01,
+      "tier": 2,
+      "lots": [],
+      "live_price": 268.28
+    },
+    "GEV": {
+      "value": 359.8,
+      "pct": 0.0415,
+      "shares": 0.363065,
+      "avg_buy_price": 1101.73,
+      "tier": 2,
+      "lots": [],
+      "live_price": 990.9999
+    },
+    "VST": {
+      "value": 403.77,
+      "pct": 0.0465,
+      "shares": 2.888185,
+      "avg_buy_price": 155.95,
+      "tier": 2,
+      "lots": [
+        {
+          "shares": 1.058873,
+          "cost_per_share": 141.63,
+          "date": "2026-08-05"
+        }
+      ],
+      "live_price": 139.7999
+    },
+    "BE": {
+      "value": 396.15,
+      "pct": 0.0457,
+      "shares": 1.810807,
+      "avg_buy_price": 266.7,
+      "tier": 2,
+      "lots": [],
+      "live_price": 218.77
+    },
+    "RIOT": {
+      "value": 252.84,
+      "pct": 0.0291,
+      "shares": 12.077217,
+      "avg_buy_price": 22.68,
+      "tier": 4,
+      "lots": [],
+      "live_price": 20.935
+    },
+    "CORZ": {
+      "value": 263.92,
+      "pct": 0.0304,
+      "shares": 12.425759,
+      "avg_buy_price": 27.93,
+      "tier": 3,
+      "lots": [],
+      "live_price": 21.24
+    },
+    "IREN": {
+      "value": 257.1,
+      "pct": 0.0296,
+      "shares": 6.626255,
+      "avg_buy_price": 54.76,
+      "tier": 3,
+      "lots": [],
+      "live_price": 38.8
+    },
+    "CRWV": {
+      "value": 302.24,
+      "pct": 0.0348,
+      "shares": 3.382672,
+      "avg_buy_price": 105.67,
+      "tier": 3,
+      "lots": [],
+      "live_price": 89.35
+    },
+    "NBIS": {
+      "value": 213.39,
+      "pct": 0.0246,
+      "shares": 1.152174,
+      "avg_buy_price": 230.31,
+      "tier": 4,
+      "lots": [],
+      "live_price": 185.21
+    },
+    "APLD": {
+      "value": 235.32,
+      "pct": 0.0271,
+      "shares": 8.104545,
+      "avg_buy_price": 43.67,
+      "tier": 3,
+      "lots": [],
+      "live_price": 29.035
+    },
+    "ASML": {
+      "value": 304.47,
+      "pct": 0.0351,
+      "shares": 0.176262,
+      "avg_buy_price": 1140.8,
+      "tier": 4,
+      "lots": [],
+      "live_price": 1727.38
+    },
+    "AMD": {
+      "value": 158.79,
+      "pct": 0.0183,
+      "shares": 0.330279,
+      "avg_buy_price": 505.63,
+      "tier": 4,
+      "lots": [],
+      "live_price": 480.77
+    },
+    "AMAT": {
+      "value": 140.68,
+      "pct": 0.0162,
+      "shares": 0.261869,
+      "avg_buy_price": 637.72,
+      "tier": 4,
+      "lots": [],
+      "live_price": 537.21
+    },
+    "MRVL": {
+      "value": 134.32,
+      "pct": 0.0155,
+      "shares": 0.626732,
+      "avg_buy_price": 266.53,
+      "tier": 4,
+      "lots": [],
+      "live_price": 214.32
+    },
+    "VRT": {
+      "value": 151.43,
+      "pct": 0.0175,
+      "shares": 0.544435,
+      "avg_buy_price": 306.74,
+      "tier": 4,
+      "lots": [],
+      "live_price": 278.135
+    }
   },
   "tax_lots": [
     {"symbol": "NVDA", "quantity": 2.404387, "cost_basis": 190.115, "acquired": "2026-01-05", "term": "short", "notes": "original 2.629987sh; 0.225600sh consumed by FIFO sell 2026-07-13"},
     {"symbol": "NVDA", "quantity": 0.432549, "cost_basis": 184.95, "acquired": "2026-01-13", "term": "short"},
     {"symbol": "NVDA", "quantity": 1.351533, "cost_basis": 184.975, "acquired": "2026-02-02", "term": "short"},
     {"symbol": "NVDA", "quantity": 0.509762, "cost_basis": 179.77, "acquired": "2026-02-27", "term": "short"},
-    {"symbol": "NVDA", "quantity": 0.827746, "cost_basis": 181.215, "acquired": "2026-03-05", "term": "short"},
+    {"symbol": "NVDA", "quantity": 0.827746, "cost_basis": 181.215, "acquired": "2026-03-03", "term": "short"},
     {"symbol": "NVDA", "quantity": 0.000459, "cost_basis": 174.15, "acquired": "2026-04-02", "term": "short", "notes": "DRIP"},
     {"symbol": "NVDA", "quantity": 0.01, "cost_basis": 208.73, "acquired": "2026-06-05", "term": "short", "notes": "DRIP"},
     {"symbol": "NVDA", "quantity": 4.284288, "cost_basis": 210.07, "acquired": "2026-06-19", "term": "short"},
