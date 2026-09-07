@@ -1,143 +1,143 @@
 {
   "account_number": "926627357",
-  "account_value": 8764.2648,
+  "account_value": 8839.0675,
   "buying_power": 414.71,
   "cash": 414.71,
   "high_water_mark": 9134.5048,
-  "prior_session_value": 8764.2648,
+  "prior_session_value": 8839.0675,
   "last_trade_date": "2026-09-01",
   "trades_today": 0,
-  "last_updated": "2026-09-04T15:17:18Z",
+  "last_updated": "2026-09-07T15:18:20Z",
   "build_phase": "Build Phase (Tier3<15%)",
   "schema_version": "1.2",
-  "drawdown_pct": 4.05,
-  "notes": "Session 2026-09-04 (Fri): 0 TRADES. Cash at 4.73% below 5% floor — no buys possible. Drawdown 4.05% from HWM $9134.5048. NVDA at 26.03% (1.03pp above 25% max; trim requires 3pp excess). CORZ at 1.46pp below target (build-phase trigger 1.5pp — closest but not triggered). AVGO Q3 earnings reported after close 2026-09-03 — results pending review. Tier3 build phase active (12.65% < 15%). All positions held.",
+  "drawdown_pct": 3.23,
+  "notes": "Session 2026-09-07 (Mon/Holiday): 0 TRADES. Market closed (Labor Day). Cash 4.69% below 5% floor. Drawdown 3.23% from HWM $9134.50. NVDA 25.59% (above 25% max; trim triggers at 28%). CORZ closest to build-phase trigger at -1.48pp (threshold 1.5pp). AVGO Q3 beat $3.32 vs $3.16 est.; post-earnings -2.76% Sep 3, thesis intact. NO_CHASE: IREN +26%, BE +20%, RIOT +15%. Monday thesis review + monthly extended summary complete. Tier3 build phase 12.79%.",
   "positions": {
     "NVDA": {
       "quantity": 9.820737,
-      "value": 2281.65,
-      "pct": 26.03,
+      "value": 2262.16,
+      "pct": 25.59,
       "average_buy_price": 196.62,
-      "last_price": 232.33
+      "last_price": 230.345
     },
     "AVGO": {
       "quantity": 2.765885,
-      "value": 988.28,
-      "pct": 11.28,
+      "value": 989.83,
+      "pct": 11.2,
       "average_buy_price": 401.08,
-      "last_price": 357.31
+      "last_price": 357.87
     },
     "MU": {
       "quantity": 0.967228,
-      "value": 966.32,
-      "pct": 11.03,
+      "value": 981.69,
+      "pct": 11.11,
       "average_buy_price": 1088.87,
-      "last_price": 999.065
+      "last_price": 1014.95
     },
     "CEG": {
       "quantity": 1.274665,
-      "value": 372.07,
-      "pct": 4.25,
+      "value": 381.06,
+      "pct": 4.31,
       "average_buy_price": 275.01,
-      "last_price": 291.9
+      "last_price": 298.95
     },
     "GEV": {
       "quantity": 0.363065,
-      "value": 343.56,
-      "pct": 3.92,
+      "value": 341.98,
+      "pct": 3.87,
       "average_buy_price": 1101.73,
-      "last_price": 946.27
+      "last_price": 941.925
     },
     "VST": {
       "quantity": 2.888185,
-      "value": 427.73,
+      "value": 431.15,
       "pct": 4.88,
       "average_buy_price": 155.95,
-      "last_price": 148.095
+      "last_price": 149.28
     },
     "BE": {
       "quantity": 1.810807,
-      "value": 442.64,
-      "pct": 5.05,
+      "value": 457.9,
+      "pct": 5.18,
       "average_buy_price": 266.7,
-      "last_price": 244.445
+      "last_price": 252.87
     },
     "RIOT": {
       "quantity": 12.077217,
-      "value": 258.25,
-      "pct": 2.95,
+      "value": 263.34,
+      "pct": 2.98,
       "average_buy_price": 22.68,
-      "last_price": 21.3836
+      "last_price": 21.805
     },
     "CORZ": {
       "quantity": 12.425759,
-      "value": 222.55,
-      "pct": 2.54,
+      "value": 222.42,
+      "pct": 2.52,
       "average_buy_price": 27.93,
-      "last_price": 17.91
+      "last_price": 17.9
     },
     "IREN": {
       "quantity": 8.14433,
-      "value": 351.71,
-      "pct": 4.01,
+      "value": 363.89,
+      "pct": 4.12,
       "average_buy_price": 52.29,
-      "last_price": 43.185
+      "last_price": 44.68
     },
     "CRWV": {
       "quantity": 3.382672,
-      "value": 293.73,
-      "pct": 3.35,
+      "value": 302.24,
+      "pct": 3.42,
       "average_buy_price": 105.67,
-      "last_price": 86.835
+      "last_price": 89.35
     },
     "NBIS": {
       "quantity": 1.361138,
-      "value": 293.01,
-      "pct": 3.34,
+      "value": 308.26,
+      "pct": 3.49,
       "average_buy_price": 224.34,
-      "last_price": 215.27
+      "last_price": 226.47
     },
     "APLD": {
       "quantity": 9.152513,
-      "value": 241.26,
-      "pct": 2.75,
+      "value": 241.35,
+      "pct": 2.73,
       "average_buy_price": 41.51,
-      "last_price": 26.36
+      "last_price": 26.37
     },
     "ASML": {
       "quantity": 0.176262,
-      "value": 302.33,
-      "pct": 3.45,
+      "value": 302.29,
+      "pct": 3.42,
       "average_buy_price": 1140.8,
-      "last_price": 1715.23
+      "last_price": 1715.0
     },
     "AMD": {
       "quantity": 0.330279,
-      "value": 155.72,
+      "value": 157.69,
       "pct": 1.78,
       "average_buy_price": 505.63,
-      "last_price": 471.49
+      "last_price": 477.45
     },
     "AMAT": {
       "quantity": 0.262156,
-      "value": 119.72,
-      "pct": 1.37,
+      "value": 119.2,
+      "pct": 1.35,
       "average_buy_price": 637.56,
-      "last_price": 456.66
+      "last_price": 454.709
     },
     "MRVL": {
       "quantity": 0.626732,
-      "value": 139.06,
-      "pct": 1.59,
+      "value": 140.07,
+      "pct": 1.58,
       "average_buy_price": 266.53,
-      "last_price": 221.88
+      "last_price": 223.5
     },
     "VRT": {
       "quantity": 0.544435,
-      "value": 149.78,
-      "pct": 1.71,
+      "value": 152.72,
+      "pct": 1.73,
       "average_buy_price": 306.74,
-      "last_price": 275.11
+      "last_price": 280.52
     }
   },
   "tax_lots": [
@@ -173,7 +173,7 @@
     {"symbol": "APLD", "quantity": 0.106675, "cost_basis": 45.84, "acquired": "2026-06-01", "term": "short"},
     {"symbol": "APLD", "quantity": 3.487346, "cost_basis": 45.59, "acquired": "2026-06-23", "term": "short"},
     {"symbol": "APLD", "quantity": 3.919747, "cost_basis": 42.86, "acquired": "2026-06-25", "term": "short"},
-    {"symbol": "APLD", "quantity": 1.04838, "cost_basis": 24.80, "acquired": "2026-09-01", "term": "short"},
+    {"symbol": "APLD", "quantity": 1.04838, "cost_basis": 24.8, "acquired": "2026-09-01", "term": "short"},
     {"symbol": "CORZ", "quantity": 1.310892, "cost_basis": 22.7, "acquired": "2026-05-19", "term": "short"},
     {"symbol": "CORZ", "quantity": 0.233459, "cost_basis": 26.69, "acquired": "2026-06-01", "term": "short"},
     {"symbol": "CORZ", "quantity": 5.448937, "cost_basis": 29.18, "acquired": "2026-06-23", "term": "short"},
