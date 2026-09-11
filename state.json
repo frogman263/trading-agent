@@ -1,36 +1,108 @@
 {
   "account_number": "926627357",
-  "account_value": 8752.99,
+  "account_value": 8733.9514,
   "buying_power": 414.72,
   "cash": 414.72,
   "high_water_mark": 9134.5,
-  "prior_session_value": 8752.99,
+  "prior_session_value": 8733.9514,
   "last_trade_date": "2026-09-01",
   "trades_today": 0,
-  "last_updated": "2026-09-10T11:14:00-04:00",
+  "last_updated": "2026-09-11T11:13:00-04:00",
   "build_phase": "build",
   "schema_version": "1.2",
-  "drawdown_pct": 4.18,
-  "notes": "Session 2026-09-10: 0 TRADES. Validator FAIL — cash 4.74% below 5% floor (structural: equity rally from prior week lifted portfolio, buying power static). 7 symbols NO_CHASE (BE +22.9%, RIOT +15.7%, IREN +14.8%, NBIS +13.3%, CRWV +13.1%, MRVL +12.2%, AMD +11.5%). No entry thresholds crossed. Tier3 build phase 13.1%. VRT single-day drop -9.6% (Sep 9) worth monitoring. FLAG: cash <5% — deposit ~$23 or authorize small trim to restore floor.",
+  "drawdown_pct": 4.385,
+  "notes": "Session 2026-09-11: 0 TRADES. Validator FAIL — cash 4.75% below 5% floor (structural). No entry thresholds crossed (all gaps below tier minimums). 3 symbols NO_CHASE: BE +16.26%, AMD +12.50%, MRVL +12.21%. VRT at -4.77% approaching buy_weakness threshold (-5%). Tier 3 build phase at 12.97%. FLAG: cash <5% — deposit ~$23 or authorize small trim to restore floor.",
   "positions": {
-    "NVDA": {"value": 2143.29, "pct": 24.4864, "shares": 9.820737},
-    "AVGO": {"value": 1009.69, "pct": 11.5353, "shares": 2.765885},
-    "MU":   {"value": 953.78,  "pct": 10.8967, "shares": 0.967228},
-    "CEG":  {"value": 369.91,  "pct": 4.2261,  "shares": 1.274665},
-    "GEV":  {"value": 340.06,  "pct": 3.885,   "shares": 0.363065},
-    "VST":  {"value": 438.93,  "pct": 5.0147,  "shares": 2.888185},
-    "BE":   {"value": 483.69,  "pct": 5.526,   "shares": 1.810807},
-    "IREN": {"value": 370.16,  "pct": 4.229,   "shares": 8.144330},
-    "APLD": {"value": 245.29,  "pct": 2.8023,  "shares": 9.152513},
-    "CORZ": {"value": 224.41,  "pct": 2.5638,  "shares": 12.425759},
-    "CRWV": {"value": 309.76,  "pct": 3.5389,  "shares": 3.382672},
-    "ASML": {"value": 302.13,  "pct": 3.4518,  "shares": 0.176262},
-    "NBIS": {"value": 314.82,  "pct": 3.5967,  "shares": 1.361138},
-    "RIOT": {"value": 260.38,  "pct": 2.9748,  "shares": 12.077217},
-    "AMD":  {"value": 168.34,  "pct": 1.9232,  "shares": 0.330279},
-    "AMAT": {"value": 120.45,  "pct": 1.3761,  "shares": 0.262156},
-    "MRVL": {"value": 145.20,  "pct": 1.6588,  "shares": 0.626732},
-    "VRT":  {"value": 137.11,  "pct": 1.5664,  "shares": 0.544435}
+    "NVDA": {
+      "value": 2158.5,
+      "pct": 24.7139,
+      "shares": 9.820737
+    },
+    "AVGO": {
+      "value": 1007.06,
+      "pct": 11.5304,
+      "shares": 2.765885
+    },
+    "MU": {
+      "value": 939.88,
+      "pct": 10.7612,
+      "shares": 0.967228
+    },
+    "CEG": {
+      "value": 367.41,
+      "pct": 4.2067,
+      "shares": 1.274665
+    },
+    "GEV": {
+      "value": 345.5,
+      "pct": 3.9558,
+      "shares": 0.363065
+    },
+    "VST": {
+      "value": 427.23,
+      "pct": 4.8916,
+      "shares": 2.888185
+    },
+    "BE": {
+      "value": 495.91,
+      "pct": 5.678,
+      "shares": 1.810807
+    },
+    "RIOT": {
+      "value": 263.1,
+      "pct": 3.0124,
+      "shares": 12.077217
+    },
+    "CORZ": {
+      "value": 224.16,
+      "pct": 2.5665,
+      "shares": 12.425759
+    },
+    "IREN": {
+      "value": 357.54,
+      "pct": 4.0937,
+      "shares": 8.14433
+    },
+    "CRWV": {
+      "value": 307.01,
+      "pct": 3.5151,
+      "shares": 3.382672
+    },
+    "NBIS": {
+      "value": 309.68,
+      "pct": 3.5457,
+      "shares": 1.361138
+    },
+    "APLD": {
+      "value": 243.91,
+      "pct": 2.7927,
+      "shares": 9.152513
+    },
+    "ASML": {
+      "value": 301.13,
+      "pct": 3.4478,
+      "shares": 0.176262
+    },
+    "AMD": {
+      "value": 169.49,
+      "pct": 1.9406,
+      "shares": 0.330279
+    },
+    "AMAT": {
+      "value": 120.74,
+      "pct": 1.3824,
+      "shares": 0.262156
+    },
+    "MRVL": {
+      "value": 146.86,
+      "pct": 1.6815,
+      "shares": 0.626732
+    },
+    "VRT": {
+      "value": 139.38,
+      "pct": 1.5958,
+      "shares": 0.544435
+    }
   },
   "tax_lots": [
     {"symbol": "NVDA", "quantity": 2.404387, "cost_basis": 190.115, "acquired": "2026-01-05", "term": "short", "notes": "original 2.629987sh; 0.225600sh consumed by FIFO sell 2026-07-13"},
