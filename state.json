@@ -1,106 +1,106 @@
 {
   "account_number": "926627357",
-  "account_value": 8733.9514,
+  "account_value": 8274.5164,
   "buying_power": 414.72,
   "cash": 414.72,
   "high_water_mark": 9134.5,
-  "prior_session_value": 8733.9514,
-  "last_trade_date": "2026-09-01",
+  "prior_session_value": 8274.5164,
+  "last_trade_date": "2026-09-14",
   "trades_today": 0,
-  "last_updated": "2026-09-11T11:13:00-04:00",
+  "last_updated": "2026-09-14 11:19:02 ET",
   "build_phase": "build",
   "schema_version": "1.2",
-  "drawdown_pct": 4.385,
-  "notes": "Session 2026-09-11: 0 TRADES. Validator FAIL — cash 4.75% below 5% floor (structural). No entry thresholds crossed (all gaps below tier minimums). 3 symbols NO_CHASE: BE +16.26%, AMD +12.50%, MRVL +12.21%. VRT at -4.77% approaching buy_weakness threshold (-5%). Tier 3 build phase at 12.97%. FLAG: cash <5% — deposit ~$23 or authorize small trim to restore floor.",
+  "drawdown_pct": 9.415,
+  "notes": "Session 2026-09-14: 0 TRADES. Broad AI/tech selloff — 12 of 18 symbols down ≥5% over 5 days. Cash at 5.01% (barely above floor). No entry thresholds crossed. VRT -16.49% 5-day flagged for user review. Drawdown 9.4% — approaching 10% tier. NVDA at 25.0% (at max). No earnings in universe next 7 days.",
   "positions": {
     "NVDA": {
-      "value": 2158.5,
-      "pct": 24.7139,
+      "value": 2070.11,
+      "pct": 25.0179,
       "shares": 9.820737
     },
     "AVGO": {
-      "value": 1007.06,
-      "pct": 11.5304,
+      "value": 952.1,
+      "pct": 11.5064,
       "shares": 2.765885
     },
     "MU": {
-      "value": 939.88,
-      "pct": 10.7612,
+      "value": 884.84,
+      "pct": 10.6935,
       "shares": 0.967228
     },
     "CEG": {
-      "value": 367.41,
-      "pct": 4.2067,
+      "value": 338.83,
+      "pct": 4.0948,
       "shares": 1.274665
     },
     "GEV": {
-      "value": 345.5,
-      "pct": 3.9558,
+      "value": 316.0,
+      "pct": 3.819,
       "shares": 0.363065
     },
     "VST": {
-      "value": 427.23,
-      "pct": 4.8916,
+      "value": 408.27,
+      "pct": 4.9341,
       "shares": 2.888185
     },
     "BE": {
-      "value": 495.91,
-      "pct": 5.678,
+      "value": 459.63,
+      "pct": 5.5547,
       "shares": 1.810807
     },
     "RIOT": {
-      "value": 263.1,
-      "pct": 3.0124,
+      "value": 250.02,
+      "pct": 3.0216,
       "shares": 12.077217
     },
     "CORZ": {
-      "value": 224.16,
-      "pct": 2.5665,
+      "value": 211.7,
+      "pct": 2.5584,
       "shares": 12.425759
     },
     "IREN": {
-      "value": 357.54,
-      "pct": 4.0937,
+      "value": 351.47,
+      "pct": 4.2476,
       "shares": 8.14433
     },
     "CRWV": {
-      "value": 307.01,
-      "pct": 3.5151,
+      "value": 281.59,
+      "pct": 3.4031,
       "shares": 3.382672
     },
     "NBIS": {
-      "value": 309.68,
-      "pct": 3.5457,
+      "value": 289.79,
+      "pct": 3.5022,
       "shares": 1.361138
     },
     "APLD": {
-      "value": 243.91,
-      "pct": 2.7927,
+      "value": 227.35,
+      "pct": 2.7476,
       "shares": 9.152513
     },
     "ASML": {
-      "value": 301.13,
-      "pct": 3.4478,
+      "value": 282.21,
+      "pct": 3.4105,
       "shares": 0.176262
     },
     "AMD": {
-      "value": 169.49,
-      "pct": 1.9406,
+      "value": 159.92,
+      "pct": 1.9327,
       "shares": 0.330279
     },
     "AMAT": {
-      "value": 120.74,
-      "pct": 1.3824,
+      "value": 111.56,
+      "pct": 1.3483,
       "shares": 0.262156
     },
     "MRVL": {
-      "value": 146.86,
-      "pct": 1.6815,
+      "value": 136.98,
+      "pct": 1.6555,
       "shares": 0.626732
     },
     "VRT": {
-      "value": 139.38,
-      "pct": 1.5958,
+      "value": 127.54,
+      "pct": 1.5414,
       "shares": 0.544435
     }
   },
@@ -147,7 +147,7 @@
     {"symbol": "CRWV", "quantity": 1.449449, "cost_basis": 109.73, "acquired": "2026-06-23", "term": "short"},
     {"symbol": "CRWV", "quantity": 1.361007, "cost_basis": 102.87, "acquired": "2026-06-25", "term": "short"},
     {"symbol": "ASML", "quantity": 0.135096, "cost_basis": 1110.32, "acquired": "2025-12-04", "term": "short"},
-    {"symbol": "ASML", "quantity": 0.040469, "cost_basis": 1235.5, "acquired": "2026-01-05", "term": "short"},
+    {"symbol": "ASML", "quantity": 0.040469, "cost_basis": 1235.5, "acquired": "2026-01-01", "term": "short"},
     {"symbol": "ASML", "quantity": 0.000316, "cost_basis": 1515.48, "acquired": "2026-05-06", "term": "short"},
     {"symbol": "ASML", "quantity": 0.000195, "cost_basis": 1140.19, "acquired": "2026-01-01", "term": "short"},
     {"symbol": "NBIS", "quantity": 0.022549, "cost_basis": 226.61, "acquired": "2026-05-28", "term": "short"},
