@@ -77,7 +77,7 @@ MCP path that previously double-encoded.
         Tests 50 -> 59. [validator v1.4]
 - B2 — Tier bands in config.json (tier_bands) + validator
        check_tier_band_invariant() on load (logs a warning) +
-       TestTierBandInvariant (3 tests, the hard check). Tests 59 -> 62.
+       TestTierBandInvariant (3 tests, the hard check). Suite total: 59 tests.
        Confirmed live on main 2026-10-04. Only enforced on every push
        once B3 (CI) lands; until then, run the tests manually.
 ---
