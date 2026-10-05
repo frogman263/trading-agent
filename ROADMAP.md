@@ -1,7 +1,7 @@
 # Trading Agent — Optimization Roadmap
 
 Tracking file for `frogman263/trading-agent`. Status of fixes and planned work.
-Last updated: 2026-07-01 (v3)
+Last updated: 2026-10-04
 
 ---
 
@@ -75,15 +75,17 @@ MCP path that previously double-encoded.
         N6  Drawdown reduce-cap warning text reads DRAWDOWN_REDUCE_CAP instead
             of a hardcoded 25%.
         Tests 50 -> 59. [validator v1.4]
+- B2 — Tier bands in config.json (tier_bands) + validator
+       check_tier_band_invariant() on load (logs a warning) +
+       TestTierBandInvariant (3 tests, the hard check). Tests 59 -> 62.
+       Confirmed live on main 2026-10-04. Only enforced on every push
+       once B3 (CI) lands; until then, run the tests manually.
 ---
 
 ## TIER B — Real robustness, moderate effort (in progress)
 
 - B1 — Post-execution reconciliation: verify fills matched proposals
        (symbols + dollar size); flag partial fills / material slippage.
-- B2 — Tier bands into config.json + validator self-checks the
-       name-target-sum-vs-band invariant. Would have auto-caught the Tier 2
-       contradiction. [interlocks with B3]
 - B3 — CI: GitHub Actions runs test_validator.py on every push to
        validator.py or config.json. Catches regressions before a live run.
        Absorbs C4. [Grok suggestion — adopted] [UP NEXT]
@@ -101,7 +103,7 @@ MCP path that previously double-encoded.
        as of 2026-06-30. On completion, DELETE earnings_check.py (see L4).
        [UP NEXT after B3]
 
-Suggested sequence: B2 -> B3 -> B4 -> B5.
+Suggested sequence: B3 -> B4 -> B5.
 
 ---
 
