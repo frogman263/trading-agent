@@ -1,174 +1,108 @@
 {
   "account_number": "926627357",
-  "account_value": 7601.3661,
+  "account_value": 8160.8198943763,
   "buying_power": 447.82,
-  "cash": 447.81,
+  "cash": 447.82,
   "high_water_mark": 10338.52,
-  "prior_session_value": 7601.3661,
+  "prior_session_value": 8160.8198943763,
   "last_trade_date": "2026-11-03",
   "trades_today": 0,
-  "last_updated": "2026-11-10T16:06:53.509524+00:00",
+  "last_updated": "2026-11-11T16:07:28.114603+00:00",
   "build_phase": "active",
   "schema_version": "1.2",
-  "drawdown_pct": 26.48,
-  "notes": "Session 2026-11-10: NO TRADES - DRAWDOWN FULL STOP (26.48%). Account $7601.37 vs HWM $10338.52. P&L today: -$138.05 vs prior session ($7739.42). Third consecutive full-stop session. Manual reset required before any trades can execute. Broad market decline today: NVDA -5.24%, GEV -6.72%, MU -3.01%, VRT -4.09%, BE -4.01%.",
+  "drawdown_pct": 21.06,
+  "notes": "Session 2026-11-11: NO TRADES - DRAWDOWN FULL STOP (21.06%). Account $8160.82 vs HWM $10338.52. P&L today: $+559.45 vs prior session ($7601.37). Account recovering from recent drawdown; still above 20% threshold. Manual reset required before any trades can execute.",
   "pending_proposals": {},
   "positions": {
     "NVDA": {
-      "value": 1664.61,
-      "quantity": 9.832297,
-      "avg_cost": 196.64,
-      "price": 169.3,
-      "pct": 21.9,
-      "lots": []
+      "value": 1727.98,
+      "pct": 21.1741,
+      "quantity": 9.832297
     },
     "AVGO": {
-      "value": 1093.39,
-      "quantity": 3.334114,
-      "avg_cost": 393.85,
-      "price": 327.94,
-      "pct": 14.38,
-      "lots": []
+      "value": 1171.49,
+      "pct": 14.355,
+      "quantity": 3.334114
     },
     "MU": {
-      "value": 687.9,
-      "quantity": 0.967392,
-      "avg_cost": 1088.85,
-      "price": 711.09,
-      "pct": 9.05,
-      "lots": []
+      "value": 788.06,
+      "pct": 9.6567,
+      "quantity": 0.967392
     },
     "CEG": {
-      "value": 339.18,
-      "quantity": 1.274665,
-      "avg_cost": 275.01,
-      "price": 266.095,
-      "pct": 4.46,
-      "lots": []
+      "value": 349.55,
+      "pct": 4.2833,
+      "quantity": 1.274665
     },
     "GEV": {
-      "value": 280.99,
-      "quantity": 0.363271,
-      "avg_cost": 1101.6,
-      "price": 773.51,
-      "pct": 3.7,
-      "lots": []
+      "value": 299.79,
+      "pct": 3.6735,
+      "quantity": 0.363271
     },
     "VST": {
-      "value": 378.38,
-      "quantity": 2.893021,
-      "avg_cost": 155.92,
-      "price": 130.79,
-      "pct": 4.98,
-      "lots": []
+      "value": 390.36,
+      "pct": 4.7833,
+      "quantity": 2.893021
     },
     "BE": {
-      "value": 459.05,
-      "quantity": 2.466602,
-      "avg_cost": 256.61,
-      "price": 186.105,
-      "pct": 6.04,
-      "lots": [
-        {
-          "shares": 0.65628,
-          "cost_per_share": 228.56,
-          "date": "2026-10-16"
-        }
-      ]
-    },
-    "IREN": {
-      "value": 227.83,
-      "quantity": 11.079043,
-      "avg_cost": 45.66,
-      "price": 20.5636,
-      "pct": 3.0,
-      "lots": [
-        {
-          "shares": 2.93362,
-          "cost_per_share": 27.27,
-          "date": "2026-10-28"
-        }
-      ]
-    },
-    "APLD": {
-      "value": 312.81,
-      "quantity": 18.697441,
-      "avg_cost": 32.51,
-      "price": 16.73,
-      "pct": 4.12,
-      "lots": []
-    },
-    "CORZ": {
-      "value": 290.97,
-      "quantity": 22.626185,
-      "avg_cost": 22.76,
-      "price": 12.86,
-      "pct": 3.83,
-      "lots": []
-    },
-    "CRWV": {
-      "value": 272.01,
-      "quantity": 5.540514,
-      "avg_cost": 90.33,
-      "price": 49.095,
-      "pct": 3.58,
-      "lots": []
-    },
-    "NBIS": {
-      "value": 187.56,
-      "quantity": 1.361138,
-      "avg_cost": 224.34,
-      "price": 137.8,
-      "pct": 2.47,
-      "lots": []
-    },
-    "ASML": {
-      "value": 267.39,
-      "quantity": 0.176481,
-      "avg_cost": 1141.14,
-      "price": 1515.12,
-      "pct": 3.52,
-      "lots": []
+      "value": 530.8,
+      "pct": 6.5043,
+      "quantity": 2.466602
     },
     "RIOT": {
-      "value": 215.94,
-      "quantity": 12.077217,
-      "avg_cost": 22.68,
-      "price": 17.88,
-      "pct": 2.84,
-      "lots": []
+      "value": 227.9,
+      "pct": 2.7926,
+      "quantity": 12.077217
+    },
+    "CORZ": {
+      "value": 326.84,
+      "pct": 4.0049,
+      "quantity": 22.626185
+    },
+    "IREN": {
+      "value": 236.48,
+      "pct": 2.8978,
+      "quantity": 11.079043
+    },
+    "CRWV": {
+      "value": 332.1,
+      "pct": 4.0694,
+      "quantity": 5.540514
+    },
+    "NBIS": {
+      "value": 212.61,
+      "pct": 2.6052,
+      "quantity": 1.361138
+    },
+    "APLD": {
+      "value": 340.2,
+      "pct": 4.1687,
+      "quantity": 18.697441
+    },
+    "ASML": {
+      "value": 274.29,
+      "pct": 3.3611,
+      "quantity": 0.176481
     },
     "AMD": {
-      "value": 174.04,
-      "quantity": 0.330279,
-      "avg_cost": 505.63,
-      "price": 526.95,
-      "pct": 2.29,
-      "lots": []
+      "value": 182.12,
+      "pct": 2.2317,
+      "quantity": 0.330279
     },
     "AMAT": {
-      "value": 97.52,
-      "quantity": 0.262156,
-      "avg_cost": 637.56,
-      "price": 372.0,
-      "pct": 1.28,
-      "lots": []
+      "value": 104.22,
+      "pct": 1.2771,
+      "quantity": 0.262156
     },
     "MRVL": {
-      "value": 96.61,
-      "quantity": 0.626885,
-      "avg_cost": 266.52,
-      "price": 154.115,
-      "pct": 1.27,
-      "lots": []
+      "value": 107.67,
+      "pct": 1.3194,
+      "quantity": 0.626885
     },
     "VRT": {
-      "value": 104.7,
-      "quantity": 0.544555,
-      "avg_cost": 306.73,
-      "price": 192.26,
-      "pct": 1.38,
-      "lots": []
+      "value": 113.36,
+      "pct": 1.3891,
+      "quantity": 0.544555
     }
   },
   "tax_lots": [
