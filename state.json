@@ -1,37 +1,109 @@
 {
   "account_number": "926627357",
-  "account_value": 7317.53,
+  "account_value": 7383.21,
   "buying_power": 447.82,
   "cash": 447.82,
   "high_water_mark": 10338.52,
-  "prior_session_value": 7317.53,
+  "prior_session_value": 7383.21,
   "last_trade_date": "2026-11-03",
   "trades_today": 0,
-  "last_updated": "2026-11-18T11:08:00-05:00",
+  "last_updated": "2026-11-19T16:06:43-05:00",
   "build_phase": "active",
   "schema_version": "1.2",
-  "drawdown_pct": 29.2,
-  "notes": "Session 2026-11-18: NO TRADES - DRAWDOWN FULL STOP (29.2%). Account $7317.53 vs HWM $10338.52. Full stop active. Manual reset required before any trades can execute.",
+  "drawdown_pct": 28.59,
+  "notes": "Session 2026-11-19: NO TRADES - DRAWDOWN FULL STOP (28.59%). Account $7383.21 vs HWM $10338.52. Full stop active. Broad sector selloff: 14/18 symbols down >5% over 5 days. Manual reset required before any trades can execute.",
   "pending_proposals": {},
   "positions": {
-    "NVDA": {"value": 1500.31, "pct": 0.205, "shares": 9.832297},
-    "AVGO": {"value": 1183.49, "pct": 0.1617, "shares": 3.334114},
-    "MU": {"value": 678.88, "pct": 0.0928, "shares": 0.967392},
-    "CEG": {"value": 339.39, "pct": 0.0464, "shares": 1.274665},
-    "GEV": {"value": 286.46, "pct": 0.0391, "shares": 0.363271},
-    "VST": {"value": 367.96, "pct": 0.0503, "shares": 2.893021},
-    "BE": {"value": 426.27, "pct": 0.0583, "shares": 2.466602},
-    "RIOT": {"value": 218.11, "pct": 0.0298, "shares": 12.077217},
-    "CORZ": {"value": 316.65, "pct": 0.0433, "shares": 22.626185},
-    "IREN": {"value": 170.34, "pct": 0.0233, "shares": 11.079043},
-    "CRWV": {"value": 263.56, "pct": 0.036, "shares": 5.540514},
-    "NBIS": {"value": 146.73, "pct": 0.0201, "shares": 1.361138},
-    "APLD": {"value": 267.19, "pct": 0.0365, "shares": 18.697441},
-    "ASML": {"value": 245.10, "pct": 0.0335, "shares": 0.176481},
-    "AMD": {"value": 169.14, "pct": 0.0231, "shares": 0.330279},
-    "AMAT": {"value": 92.09, "pct": 0.0126, "shares": 0.262156},
-    "MRVL": {"value": 91.57, "pct": 0.0125, "shares": 0.626885},
-    "VRT": {"value": 106.45, "pct": 0.0145, "shares": 0.544555}
+    "NVDA": {
+      "value": 1506.55,
+      "pct": 0.2041,
+      "shares": 9.832297
+    },
+    "AVGO": {
+      "value": 1198.61,
+      "pct": 0.1623,
+      "shares": 3.334114
+    },
+    "MU": {
+      "value": 702.37,
+      "pct": 0.0951,
+      "shares": 0.967392
+    },
+    "CEG": {
+      "value": 331.71,
+      "pct": 0.0449,
+      "shares": 1.274665
+    },
+    "GEV": {
+      "value": 285.15,
+      "pct": 0.0386,
+      "shares": 0.363271
+    },
+    "VST": {
+      "value": 367.37,
+      "pct": 0.0498,
+      "shares": 2.893021
+    },
+    "BE": {
+      "value": 433.6,
+      "pct": 0.0587,
+      "shares": 2.466602
+    },
+    "RIOT": {
+      "value": 219.93,
+      "pct": 0.0298,
+      "shares": 12.077217
+    },
+    "CORZ": {
+      "value": 318.35,
+      "pct": 0.0431,
+      "shares": 22.626185
+    },
+    "IREN": {
+      "value": 168.84,
+      "pct": 0.0229,
+      "shares": 11.079043
+    },
+    "CRWV": {
+      "value": 268.05,
+      "pct": 0.0363,
+      "shares": 5.540514
+    },
+    "NBIS": {
+      "value": 143.59,
+      "pct": 0.0194,
+      "shares": 1.361138
+    },
+    "APLD": {
+      "value": 276.25,
+      "pct": 0.0374,
+      "shares": 18.697441
+    },
+    "ASML": {
+      "value": 250.33,
+      "pct": 0.0339,
+      "shares": 0.176481
+    },
+    "AMD": {
+      "value": 162.45,
+      "pct": 0.022,
+      "shares": 0.330279
+    },
+    "AMAT": {
+      "value": 93.48,
+      "pct": 0.0127,
+      "shares": 0.262156
+    },
+    "MRVL": {
+      "value": 92.46,
+      "pct": 0.0125,
+      "shares": 0.626885
+    },
+    "VRT": {
+      "value": 104.98,
+      "pct": 0.0142,
+      "shares": 0.544555
+    }
   },
   "tax_lots": [
     {"symbol": "NVDA", "quantity": 2.404387, "cost_basis": 190.115, "acquired": "2026-01-05", "term": "short"},
@@ -99,5 +171,5 @@
     {"symbol": "MRVL", "quantity": 0.626547, "cost_basis": 266.54, "acquired": "2026-06-26", "term": "short"},
     {"symbol": "VRT", "quantity": 0.544435, "cost_basis": 306.74, "acquired": "2026-06-26", "term": "short"}
   ],
-  "cash_pct": 6.12
+  "cash_pct": 6.07
 }
