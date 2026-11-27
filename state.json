@@ -1,143 +1,143 @@
 {
   "account_number": "926627357",
-  "account_value": 6692.18,
+  "account_value": 6709.08,
   "buying_power": 447.82,
   "cash": 447.82,
   "high_water_mark": 10338.52,
-  "prior_session_value": 6692.18,
+  "prior_session_value": 6709.08,
   "last_trade_date": "2026-11-03",
   "trades_today": 0,
-  "last_updated": "2026-11-26T11:10:04-05:00",
+  "last_updated": "2026-11-27T16:06:35.740136+00:00",
   "build_phase": "active",
   "schema_version": "1.2",
-  "drawdown_pct": 35.27,
-  "notes": "Session 2026-11-26: NO TRADES - Market closed (Thanksgiving) + DRAWDOWN FULL STOP (35.27%). Account $6,692.18 vs HWM $10,338.52. Loss from peak: -$3,646.34. P&L vs prior: +$105.73. Broad AI/tech selloff week of Nov 18-25. Manual reset required.",
+  "drawdown_pct": 35.11,
+  "notes": "Session 2026-11-27: NO TRADES - DRAWDOWN FULL STOP (35.11%). Account $6,709.08 vs HWM $10,338.52. Loss from peak: -$3,629.44. P&L vs prior: +$16.90. Black Friday (early close 1PM ET). Manual reset required. Last trade: 2026-11-03.",
   "pending_proposals": {},
   "positions": {
     "NVDA": {
-      "value": 1468.26,
-      "pct": 0.2194,
+      "value": 1457.15,
+      "pct": 0.2172,
       "shares": 9.832297,
-      "price": 149.33,
+      "price": 148.2,
       "avg_cost": 196.64
     },
     "AVGO": {
-      "value": 1002.45,
-      "pct": 0.1498,
+      "value": 1036.24,
+      "pct": 0.1545,
       "shares": 3.334114,
-      "price": 300.665,
+      "price": 310.8,
       "avg_cost": 393.85
     },
     "MU": {
-      "value": 580.6,
-      "pct": 0.0868,
+      "value": 616.73,
+      "pct": 0.0919,
       "shares": 0.967392,
-      "price": 600.17,
+      "price": 637.52,
       "avg_cost": 1088.85
     },
     "CEG": {
-      "value": 300.46,
-      "pct": 0.0449,
+      "value": 299.73,
+      "pct": 0.0447,
       "shares": 1.276686,
-      "price": 235.34,
+      "price": 234.77,
       "avg_cost": 274.99
     },
     "GEV": {
-      "value": 259.61,
-      "pct": 0.0388,
+      "value": 263.55,
+      "pct": 0.0393,
       "shares": 0.363271,
-      "price": 714.64,
+      "price": 725.4812,
       "avg_cost": 1101.6
     },
     "VST": {
-      "value": 351.0,
-      "pct": 0.0524,
+      "value": 352.95,
+      "pct": 0.0526,
       "shares": 2.893021,
-      "price": 121.325,
+      "price": 122.0,
       "avg_cost": 155.92
     },
     "BE": {
-      "value": 377.09,
-      "pct": 0.0563,
+      "value": 397.37,
+      "pct": 0.0592,
       "shares": 2.466602,
-      "price": 152.88,
+      "price": 161.1,
       "avg_cost": 256.61
     },
     "RIOT": {
-      "value": 200.96,
-      "pct": 0.03,
+      "value": 209.48,
+      "pct": 0.0312,
       "shares": 12.077217,
-      "price": 16.64,
+      "price": 17.345,
       "avg_cost": 22.68
     },
     "CORZ": {
-      "value": 244.82,
-      "pct": 0.0366,
+      "value": 252.85,
+      "pct": 0.0377,
       "shares": 22.626185,
-      "price": 10.82,
+      "price": 11.175,
       "avg_cost": 22.76
     },
     "IREN": {
-      "value": 142.37,
-      "pct": 0.0213,
+      "value": 148.4,
+      "pct": 0.0221,
       "shares": 11.079043,
-      "price": 12.85,
+      "price": 13.395,
       "avg_cost": 45.66
     },
     "CRWV": {
-      "value": 235.83,
+      "value": 236.19,
       "pct": 0.0352,
       "shares": 5.540514,
-      "price": 42.565,
+      "price": 42.6299,
       "avg_cost": 90.33
     },
     "NBIS": {
-      "value": 115.74,
-      "pct": 0.0173,
+      "value": 119.55,
+      "pct": 0.0178,
       "shares": 1.361138,
-      "price": 85.0325,
+      "price": 87.83,
       "avg_cost": 224.34
     },
     "APLD": {
-      "value": 229.79,
-      "pct": 0.0343,
+      "value": 240.45,
+      "pct": 0.0358,
       "shares": 18.697441,
-      "price": 12.29,
+      "price": 12.86,
       "avg_cost": 32.51
     },
     "ASML": {
-      "value": 230.03,
-      "pct": 0.0344,
+      "value": 230.38,
+      "pct": 0.0343,
       "shares": 0.176481,
-      "price": 1303.43,
+      "price": 1305.42,
       "avg_cost": 1141.14
     },
     "AMD": {
-      "value": 134.13,
-      "pct": 0.02,
+      "value": 137.11,
+      "pct": 0.0204,
       "shares": 0.330279,
-      "price": 406.1,
+      "price": 415.12,
       "avg_cost": 505.63
     },
     "AMAT": {
-      "value": 81.71,
-      "pct": 0.0122,
+      "value": 82.3,
+      "pct": 0.0123,
       "shares": 0.262582,
-      "price": 311.17,
+      "price": 313.43,
       "avg_cost": 637.06
     },
     "MRVL": {
-      "value": 82.12,
-      "pct": 0.0123,
+      "value": 86.54,
+      "pct": 0.0129,
       "shares": 0.626885,
-      "price": 131.0,
+      "price": 138.04,
       "avg_cost": 266.52
     },
     "VRT": {
-      "value": 94.4,
-      "pct": 0.0141,
+      "value": 96.37,
+      "pct": 0.0144,
       "shares": 0.544555,
-      "price": 173.36,
+      "price": 176.97,
       "avg_cost": 306.73
     }
   },
@@ -207,6 +207,6 @@
     {"symbol": "MRVL", "quantity": 0.626547, "cost_basis": 266.54, "acquired": "2026-06-26", "term": "short"},
     {"symbol": "VRT", "quantity": 0.544435, "cost_basis": 306.74, "acquired": "2026-06-26", "term": "short"}
   ],
-  "cash_pct": 6.7,
-  "drawdown": 0.3527
+  "cash_pct": 6.67,
+  "drawdown": 0.3511
 }
